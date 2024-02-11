@@ -7,7 +7,7 @@ using namespace std;
 const int SCREEN_WIDTH = 800, SCREEN_HEIGHT = 600;
 
 //Loads individual image
-SDL_Surface* loadSurface( std::string path );
+SDL_Surface* loadSurface(string path);
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -32,18 +32,29 @@ SDL_Surface* loadSurface( std::string path );
 
 int main(int argc, char *argv[])
 {
+    //Game loop flag
+    bool gaming = true;
+
     SDL_Init(SDL_INIT_EVERYTHING);
-    init();
+    if (init() == false)
+        printf("Failed to initialize!\n");
+
+    if(!loadMedia())
+			printf("Failed to load media!\n");
 
     SDL_Event windowEvent;
 
-    while ( true )
+    while (gaming)
     {
         if ( SDL_PollEvent( &windowEvent ) )
-        {
             if (SDL_QUIT == windowEvent.type )
-            { break; }
-        }
+                gaming = false;
+
+        //Apply the PNG image
+        SDL_BlitSurface( gPNGSurface, NULL, gScreenSurface, NULL );
+    
+        //Update the surface
+        SDL_UpdateWindowSurface( gWindow );
     }
 
     close();
@@ -55,9 +66,6 @@ int main(int argc, char *argv[])
 
 bool init()
 {
-	//Initialization flag
-	bool success = true;
-
 	//Initialize SDL
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
@@ -74,15 +82,15 @@ bool init()
     }
     
     // Create an SDL window in fullscreen
-    SDL_Window* window = SDL_CreateWindow("Full Size Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, dm.w, dm.h, SDL_WINDOW_SHOWN);
-    if (window == nullptr) 
+    gWindow = SDL_CreateWindow("Full Size Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, dm.w, dm.h, SDL_WINDOW_SHOWN);
+    if (gWindow == NULL) 
     {
         SDL_Log("Unable to create SDL window: %s", SDL_GetError());
         SDL_Quit();
         return false;
     }
 
-    //Initialize PNG loading
+    //Initialize SDL_image
     int imgFlags = IMG_INIT_PNG;
     if( !( IMG_Init( imgFlags ) & imgFlags ) )
     {
@@ -90,26 +98,53 @@ bool init()
         return false;
     }
     //Get window surface
-    else
-        gScreenSurface = SDL_GetWindowSurface( gWindow );
+    gScreenSurface = SDL_GetWindowSurface(gWindow);
+    if (gScreenSurface == NULL)
+    {
+        printf( "Screen Surface is still NULL.\n");
+        return false;
+    }
 
 	return true;
 }
 
 bool loadMedia()
 {
-	//Loading success flag
-	bool success = true;
-
 	//Load PNG surface
 	gPNGSurface = loadSurface( "loaded.png" );
 	if( gPNGSurface == NULL )
 	{
 		printf( "Failed to load PNG image!\n" );
-		success = false;
+		return false;
 	}
+	return true;
+}
 
-	return success;
+SDL_Surface* loadSurface(string path)
+{
+	//The final optimized image
+	SDL_Surface* optimizedSurface = NULL;
+
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+	if( loadedSurface == NULL )
+	{
+		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+        return NULL;
+    }
+
+    //Convert surface to screen format
+    optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface->format, 0 );
+    if( optimizedSurface == NULL )
+    {
+        printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+        return NULL;
+    }
+
+    //Get rid of old loaded surface
+    SDL_FreeSurface( loadedSurface );
+
+	return optimizedSurface;
 }
 
 void close()
@@ -125,31 +160,4 @@ void close()
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
-}
-
-SDL_Surface* loadSurface( std::string path )
-{
-	//The final optimized image
-	SDL_Surface* optimizedSurface = NULL;
-
-	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-	if( loadedSurface == NULL )
-	{
-		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
-	}
-	else
-	{
-		//Convert surface to screen format
-		optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface->format, 0 );
-		if( optimizedSurface == NULL )
-		{
-			printf( "Unable to optimize image %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
-		}
-
-		//Get rid of old loaded surface
-		SDL_FreeSurface( loadedSurface );
-	}
-
-	return optimizedSurface;
 }
