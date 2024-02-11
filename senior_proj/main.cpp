@@ -1,22 +1,31 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <stdio.h>
+#include <SDL2/SDL_ttf.h>
+#include <string>
+#include <cmath>
+#include <../ltexture.hpp>
 
 using namespace std;
 
-const int SCREEN_WIDTH = 800, SCREEN_HEIGHT = 600;
+//Global variable to hold display size
+SDL_DisplayMode dm;
 
 //Loads individual image
-SDL_Surface* loadSurface(string path);
+//SDL_Surface* loadSurface(string path);
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
-	
+
 //The surface contained by the window
-SDL_Surface* gScreenSurface = NULL;
+//SDL_Surface* gScreenSurface = NULL;
 
 //Current displayed PNG image
 SDL_Surface* gPNGSurface = NULL;
+
+//Rendered texture
+LTexture gTextTexture;
 
 //Starts up SDL and creates window
 bool init();
@@ -28,7 +37,7 @@ bool loadMedia();
 void close();
 
 //Loads individual image
-SDL_Surface* loadSurface( std::string path );
+//SDL_Surface* loadSurface(string path);
 
 int main(int argc, char *argv[])
 {
@@ -46,15 +55,26 @@ int main(int argc, char *argv[])
 
     while (gaming)
     {
-        if ( SDL_PollEvent( &windowEvent ) )
-            if (SDL_QUIT == windowEvent.type )
+        if ( SDL_PollEvent(&windowEvent))
+            if (SDL_QUIT == windowEvent.type)
                 gaming = false;
 
-        //Apply the PNG image
-        SDL_BlitSurface( gPNGSurface, NULL, gScreenSurface, NULL );
+        //Clear Screen
+        SDL_SetRenderDrawColor( gTextTexture.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+        SDL_RenderClear( gTextTexture.gRenderer );
+
+        //Render current frame
+        gTextTexture.render( ( dm.w - gTextTexture.getWidth() ) / 2, ( dm.h - gTextTexture.getHeight() ) / 2 );
+
+        //Update screen
+        SDL_RenderPresent( gTextTexture.gRenderer );
+        
+
+        // //Apply the PNG image
+        //SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, NULL);
     
-        //Update the surface
-        SDL_UpdateWindowSurface( gWindow );
+        // //Update the surface
+        // SDL_UpdateWindowSurface(gWindow);
     }
 
     close();
@@ -74,7 +94,6 @@ bool init()
 	}
     
     // Get the user's primary display size
-    SDL_DisplayMode dm;
     if (SDL_GetCurrentDisplayMode(0, &dm) != 0) 
     {
         SDL_Log("Unable to get display mode: %s", SDL_GetError());
@@ -97,11 +116,19 @@ bool init()
         printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
         return false;
     }
-    //Get window surface
-    gScreenSurface = SDL_GetWindowSurface(gWindow);
-    if (gScreenSurface == NULL)
+
+    // //Get window surface
+    // gScreenSurface = SDL_GetWindowSurface(gWindow);
+    // if (gScreenSurface == NULL)
+    // {
+    //     printf( "Screen Surface is still NULL.\n");
+    //     return false;
+    // }
+
+    //Initialize SDL_ttf
+    if( TTF_Init() == -1 )
     {
-        printf( "Screen Surface is still NULL.\n");
+        printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
         return false;
     }
 
@@ -110,21 +137,42 @@ bool init()
 
 bool loadMedia()
 {
-	//Load PNG surface
-	gPNGSurface = loadSurface( "loaded.png" );
-	if( gPNGSurface == NULL )
-	{
-		printf( "Failed to load PNG image!\n" );
-		return false;
-	}
+    /*PNG LOADING -- CURRENTLY UNNEEDED*/
+	// //Load PNG surface
+	// gPNGSurface = loadSurface( "loaded.png" );
+	// if( gPNGSurface == NULL )
+	// {
+	// 	printf( "Failed to load PNG image!\n" );
+	// 	return false;
+	// }
+
+    //Open the font
+    gTextTexture.gFont = TTF_OpenFont( "lazy.ttf", 28 );
+    if(gTextTexture.gFont == NULL)
+    {
+        printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
+        return false;
+    }
+
+    //Render text
+    SDL_Color textColor = { 0, 0, 0 };
+    if( !gTextTexture.loadFromRenderedText( "The quick brown fox jumps over the lazy dog", textColor ) )
+    {
+        printf( "Failed to render text texture!\n" );
+        return false;
+    }
+    
 	return true;
 }
 
-SDL_Surface* loadSurface(string path)
+/*
+//SDL_Surface* loadSurface(string path)
 {
+    PNG LOADING -- CURRENTLY UNNEEDED
 	//The final optimized image
 	SDL_Surface* optimizedSurface = NULL;
 
+    
 	//Load image at specified path
 	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
 	if( loadedSurface == NULL )
@@ -132,7 +180,7 @@ SDL_Surface* loadSurface(string path)
 		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
         return NULL;
     }
-
+    
     //Convert surface to screen format
     optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface->format, 0 );
     if( optimizedSurface == NULL )
@@ -145,7 +193,11 @@ SDL_Surface* loadSurface(string path)
     SDL_FreeSurface( loadedSurface );
 
 	return optimizedSurface;
+    
+   return 0;
 }
+*/
+
 
 void close()
 {
@@ -153,11 +205,18 @@ void close()
 	SDL_FreeSurface( gPNGSurface );
 	gPNGSurface = NULL;
 
-	//Destroy window
-	SDL_DestroyWindow( gWindow );
-	gWindow = NULL;
+    //Free global font
+    TTF_CloseFont( gTextTexture.gFont );
+    gTextTexture.gFont = NULL;
+
+    //Destroy window    
+    SDL_DestroyRenderer( gTextTexture.gRenderer );
+    SDL_DestroyWindow( gWindow );
+    gWindow = NULL;
+    gTextTexture.gRenderer = NULL;
 
 	//Quit SDL subsystems
+    TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }
