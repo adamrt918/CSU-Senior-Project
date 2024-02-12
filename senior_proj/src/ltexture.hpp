@@ -8,6 +8,8 @@
 #include <string>
 #include <iostream>
 
+using namespace std;
+
 //Texture wrapper class
 class LTexture
 {

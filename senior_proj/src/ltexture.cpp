@@ -61,28 +61,25 @@ bool LTexture::loadFromRenderedText( std::string textureText, SDL_Color textColo
     if( textSurface == NULL )
     {
         printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+        return false;
     }
-    else
-    {
-        //Create texture from surface pixels
-        mTexture = SDL_CreateTextureFromSurface( gRenderer, textSurface );
-        if( mTexture == NULL )
-        {
-            printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
-        }
-        else
-        {
-            //Get image dimensions
-            mWidth = textSurface->w;
-            mHeight = textSurface->h;
-        }
 
-        //Get rid of old surface
-        SDL_FreeSurface( textSurface );
+    //Create texture from surface pixels
+    mTexture = SDL_CreateTextureFromSurface( gRenderer, textSurface );
+    if( mTexture == NULL )
+    {
+        printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
+        return false;
     }
+
+    //Get image dimensions
+    mWidth = textSurface->w;
+    mHeight = textSurface->h;
+
+    //Get rid of old surface
+    SDL_FreeSurface( textSurface );
     
-    //Return success
-    return mTexture != NULL;
+    return true;
 }
 
 void LTexture::free()
@@ -101,7 +98,7 @@ void LTexture::render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* ce
 {
 	//Set rendering space and render to screen
 	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
-
+    cout << "x: " << x << endl << "y: " << y << endl << "mW: " << mWidth << endl << "mH: " << endl;
 	//Set clip rendering dimensions
 	if( clip != NULL )
 	{

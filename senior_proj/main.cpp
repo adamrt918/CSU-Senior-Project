@@ -9,6 +9,12 @@
 
 using namespace std;
 
+// White color (R, G, B)
+const SDL_Color TEXT_COLOR = {255, 255, 255};
+
+// Black color (R, G, B)
+const SDL_Color BACKGROUND_COLOR = {0, 0, 0};
+
 //Global variable to hold display size
 SDL_DisplayMode dm;
 
@@ -19,7 +25,7 @@ SDL_DisplayMode dm;
 SDL_Window* gWindow = NULL;
 
 //The surface contained by the window
-//SDL_Surface* gScreenSurface = NULL;
+SDL_Surface* gScreenSurface = NULL;
 
 //Current displayed PNG image
 SDL_Surface* gPNGSurface = NULL;
@@ -66,7 +72,7 @@ int main(int argc, char *argv[])
                 gaming = false;
 
         //Clear Screen
-        SDL_SetRenderDrawColor( gTextTexture.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+        SDL_SetRenderDrawColor( gTextTexture.gRenderer, TEXT_COLOR.r, TEXT_COLOR.g, TEXT_COLOR.b, 255 );
         SDL_RenderClear( gTextTexture.gRenderer );
 
         //Render current frame
@@ -108,7 +114,7 @@ bool init()
     }
     
     // Create an SDL window in fullscreen
-    gWindow = SDL_CreateWindow("Full Size Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, dm.w, dm.h, SDL_WINDOW_SHOWN);
+    gWindow = SDL_CreateWindow("Full Size Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, dm.w, dm.h - 50, SDL_WINDOW_SHOWN);
     if (gWindow == NULL) 
     {
         SDL_Log("Unable to create SDL window: %s", SDL_GetError());
@@ -146,8 +152,9 @@ bool init()
         printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
         return false;
     }
-    //Initialize renderer color
-    SDL_SetRenderDrawColor( gTextTexture.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+
+    //Initialize background color to black
+    SDL_SetRenderDrawColor( gTextTexture.gRenderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, 255 );
 
 	return true;
 }
@@ -163,7 +170,7 @@ bool loadMedia()
 	// 	return false;
 	// }
 
-    //Open the font
+    //Load the font
     gTextTexture.gFont = TTF_OpenFont( "lazy.ttf", 28 );
     if(gTextTexture.gFont == NULL)
     {
@@ -172,8 +179,7 @@ bool loadMedia()
     }
 
     //Render text
-    SDL_Color textColor = { 0, 0, 0 };
-    if( !gTextTexture.loadFromRenderedText( "The quick brown fox jumps over the lazy dog", textColor ) )
+    if( !gTextTexture.loadFromRenderedText( "The quick brown fox jumps over the lazy dog", TEXT_COLOR ) )
     {
         printf( "Failed to render text texture!\n" );
         return false;
