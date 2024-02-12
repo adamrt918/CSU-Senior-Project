@@ -25,7 +25,7 @@ SDL_Window* gWindow = NULL;
 SDL_Surface* gPNGSurface = NULL;
 
 //Rendered texture
-LTexture gTextTexture;
+LTexture gTextTexture = LTexture();
 
 //Starts up SDL and creates window
 bool init();
@@ -43,6 +43,12 @@ int main(int argc, char *argv[])
 {
     //Game loop flag
     bool gaming = true;
+
+    //Variables for TTF Rendering
+    SDL_Rect* clip;
+    double angle;
+    SDL_Point* center;
+    SDL_RendererFlip flip;
 
     SDL_Init(SDL_INIT_EVERYTHING);
     if (init() == false)
@@ -64,9 +70,10 @@ int main(int argc, char *argv[])
         SDL_RenderClear( gTextTexture.gRenderer );
 
         //Render current frame
-        gTextTexture.render( ( dm.w - gTextTexture.getWidth() ) / 2, ( dm.h - gTextTexture.getHeight() ) / 2 );
+        gTextTexture.render( ( dm.w - gTextTexture.getWidth() ) / 2, ( dm.h - gTextTexture.getHeight() ) / 2, clip, angle, center, flip );
 
         //Update screen
+        //cout << gTextTexture.gRenderer << endl;
         SDL_RenderPresent( gTextTexture.gRenderer );
         
 
@@ -109,13 +116,13 @@ bool init()
         return false;
     }
 
-    //Initialize SDL_image
-    int imgFlags = IMG_INIT_PNG;
-    if( !( IMG_Init( imgFlags ) & imgFlags ) )
-    {
-        printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-        return false;
-    }
+    // //Initialize SDL_image
+    // int imgFlags = IMG_INIT_PNG;
+    // if( !( IMG_Init( imgFlags ) & imgFlags ) )
+    // {
+    //     printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+    //     return false;
+    // }
 
     // //Get window surface
     // gScreenSurface = SDL_GetWindowSurface(gWindow);
@@ -131,6 +138,16 @@ bool init()
         printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
         return false;
     }
+
+    //Create vsynced renderer for window
+    gTextTexture.gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+    if( gTextTexture.gRenderer == NULL )
+    {
+        printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+        return false;
+    }
+    //Initialize renderer color
+    SDL_SetRenderDrawColor( gTextTexture.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
 	return true;
 }

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
+#include <iostream>
 
 //Texture wrapper class
 class LTexture
@@ -15,7 +16,6 @@ class LTexture
         //The window renderer
         SDL_Renderer* gRenderer = NULL;
 
-        
         //Globally used font
         TTF_Font* gFont = NULL;
 
@@ -44,7 +44,7 @@ class LTexture
         void setAlpha( Uint8 alpha );
         
         //Renders texture at given point
-        void render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip );
+       void render( int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip );
 
         //Gets image dimensions
         int getWidth();
