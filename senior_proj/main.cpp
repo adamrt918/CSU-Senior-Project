@@ -1,174 +1,188 @@
-#include <iostream>
+//Using SDL, SDL_image, SDL_ttf, standard IO, math, and strings
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <stdio.h>
 #include <SDL2/SDL_ttf.h>
+#include <stdio.h>
 #include <string>
 #include <cmath>
 #include <../ltexture.hpp>
-#include <iostream>
-#include <vector>
-#include <../initializer.hpp>
 
-using namespace std;
-
-//Black background color {r, g, b}
+//Background color black {r, g, b}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0};
 
-//White text color {r, g, b}
+//Text color white {r, g, b}
 const SDL_Color TEXT_COLOR = {255, 255, 255};
 
-//Monitor dimensions for fullscreen
-SDL_DisplayMode dm;
-
-//SDL window
-SDL_Window* window;
-
-//Holds texture being rendered to the window.
-SDL_Renderer* renderer; 
-
-//ttf font type
-TTF_Font* font;
-
-//Holds raw pixel data/metadata
-SDL_Surface* surface;
-
-//Texture to be rendered at a given time
-SDL_Texture* texture;
-
-//Text box
-SDL_Rect textRect;
-
-
-
-//Initialize various SDL libraries and pointers.
+//Starts up SDL and creates window
 bool init();
 
-//Load in necessary media for font, images, etc.
+//Loads media
 bool loadMedia();
 
-//Close out all the initialized SDL libraries and variables.
+//Frees media and shuts down SDL
 void close();
 
-int main(int argc, char* args[]) {
-  
-    
-    if (!init())
-        return 1;
-    if (!loadMedia())
-        return 1;
+//The window we'll be rendering to
+SDL_Window* gWindow = NULL;
 
-    // // Clear the screen
-    // SDL_RenderClear(renderer);
+//Rendered texture
+LTexture gTextTexture;
 
-    // // Render the text
-    // SDL_RenderCopy(renderer, texture, NULL, &textRect);
 
-    // // Present the renderer
-    // SDL_RenderPresent(renderer);
+int main( int argc, char* args[] )
+{
+	//Start up SDL and create window
+	if( !init() )
+		printf( "Failed to initialize!\n" );
 
-    //Game flag
-    bool gaming = true;
+    //Load media
+    if( !loadMedia() )
+			printf( "Failed to load media!\n" );
+
+    //Get the monitor dimensions
+
+
+    //Main loop flag
+    bool quit = false;
 
     //Event handler
     SDL_Event e;
 
-    while (gaming) {
-        while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT) {
-                gaming = false;
+    //While application is running
+    while( !quit )
+    {
+        //Handle events on queue
+        while( SDL_PollEvent( &e ) != 0 )
+        {
+            //User requests quit
+            if( e.type == SDL_QUIT )
+            {
+                quit = true;
             }
         }
 
-        // Get text dimensions
-        int textW, textH;
-        SDL_QueryTexture(texture, NULL, NULL, &textW, &textH);
+        //Clear screen
+        SDL_SetRenderDrawColor( gTextTexture.gRenderer, 0, 0, 0, 255 );
+        SDL_RenderClear( gTextTexture.gRenderer );
 
-        //Calculate text position to be in the center of the screen
-        int textX = (dm.w - textW) / 2;
-        int textY = (dm.h - textH) / 2;
+        //Render current frame
+        gTextTexture.render( ( 1000 - gTextTexture.getWidth() ) / 2, ( 800 - gTextTexture.getHeight() ) / 2, NULL, NULL, NULL, SDL_FLIP_NONE );
 
-        // Clear screen
-        SDL_RenderClear(renderer);
-
-        // Render text
-        SDL_Rect renderQuad = {textX, textY, textW, textH};
-        SDL_RenderCopy(renderer, texture, NULL, &renderQuad);
-
-        // Update screen
-        SDL_RenderPresent(renderer);
+        //Update screen
+        SDL_RenderPresent( gTextTexture.gRenderer );
     }
-    close();
-    return 0;
+	
+	//Free resources and close SDL
+	close();
+
+	return 0;
 }
+
 
 bool init()
 {
-    //Initialize everything in the SDL Library
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-        return false;
-    
-        
-    //Initialize the ttf SDL extension
-    if (TTF_Init() < 0)
-        return false;
-
-    // Get the user's primary display size
-    if (SDL_GetCurrentDisplayMode(0, &dm) != 0) 
+	//Initialize SDL
+	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+	{
+		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
+		return false;
+	}
+    //Set texture filtering to linear
+    if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
     {
-        printf("Unable to get display mode: %s\n", SDL_GetError());
-        SDL_Quit();
+        printf( "Warning: Linear texture filtering not enabled!" );
         return false;
     }
 
-    // Create an SDL window
-    window = SDL_CreateWindow("Full Size Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, dm.w, dm.h, SDL_WINDOW_FULLSCREEN);
-    if (window == nullptr) {
-        printf("Unable to create SDL window: %s\n", SDL_GetError());
-        SDL_Quit();
+    //Get monitor dimensions
+    SDL_DisplayMode dimensions;
+    if (SDL_GetCurrentDisplayMode(0, &dimensions) != 0)
+    {
+        printf("Unable to get display mode: %s", SDL_GetError());
         return false;
     }
 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    //Create window
+    gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, dimensions.w, dimensions.h, SDL_WINDOW_SHOWN );
+    if( gWindow == NULL )
+    {
+        printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
+        return false;
+    }
 
-    // Set background color
-    SDL_SetRenderDrawColor(renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, 255); // Alpha set to full
+    //Create vsynced renderer for window
+    gTextTexture.gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+    if( gTextTexture.gRenderer == NULL )
+    {
+        printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+        return false;
+    }
 
+    //Initialize renderer color to black
+    SDL_SetRenderDrawColor( gTextTexture.gRenderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, 255 );
 
-    return true;
+    //Initialize PNG loading
+    int imgFlags = IMG_INIT_PNG;
+    if( !( IMG_Init( imgFlags ) & imgFlags ) )
+    {
+        printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+        return false;
+    }
+
+    //Initialize SDL_ttf
+    if( TTF_Init() == -1 )
+    {
+        printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+        return false;
+    }
+	return true;
 }
 
 bool loadMedia()
 {
-    font = TTF_OpenFont("resources/Abadi_MT_Std.ttf", 28);
-    if (font == nullptr) {
-        std::cerr << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << std::endl;
-        return false;
-    }
-        
-    surface = TTF_RenderText_Solid(font, "Hello, SDL!", TEXT_COLOR);
-    if (surface == nullptr) {
-        std::cerr << "Failed to create surface! SDL_ttf Error: " << TTF_GetError() << std::endl;
-        return false;
-    }
+	//Loading success flag
+	bool success = true;
 
-    texture = SDL_CreateTextureFromSurface(renderer, surface);
-    if (texture == nullptr) {
-        std::cerr << "Failed to create texture! SDL Error: " << SDL_GetError() << std::endl;
-        return false;
-    }
-    return true;
+	//Open the font
+	gTextTexture.gFont = TTF_OpenFont( "resources/Abadi_MT_Std.ttf", 28 );
+	if( gTextTexture.gFont == NULL )
+	{
+		printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() );
+		success = false;
+	}
+	else
+	{
+		//Render text
+		SDL_Color textColor = { 255, 255, 255 };
+		if( !gTextTexture.loadFromRenderedText( "The quick brown fox jumps over the lazy dog", textColor ) )
+		{
+			printf( "Failed to render text texture!\n" );
+			success = false;
+		}
+	}
+
+	return success;
 }
-
 
 void close()
-{    
-    SDL_DestroyTexture(texture);
-    SDL_FreeSurface(surface);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    TTF_CloseFont(font);
-    TTF_Quit();
-    SDL_Quit();
+{
+	//Free loaded images
+	gTextTexture.free();
+
+	//Free global font
+	TTF_CloseFont( gTextTexture.gFont );
+	gTextTexture.gFont = NULL;
+
+	//Destroy window	
+	SDL_DestroyRenderer( gTextTexture.gRenderer );
+	SDL_DestroyWindow( gWindow );
+	gWindow = NULL;
+	gTextTexture.gRenderer = NULL;
+
+	//Quit SDL subsystems
+	TTF_Quit();
+	IMG_Quit();
+	SDL_Quit();
 }
+
 
