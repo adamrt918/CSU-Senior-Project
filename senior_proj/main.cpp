@@ -20,15 +20,6 @@ const SDL_Color TEXT_COLOR = {255, 255, 255};
 //Monitor data
 SDL_DisplayMode dimensions;
 
-//Starts up SDL and creates window
-bool init();
-
-//Loads media
-bool loadMedia();
-
-//Frees media and shuts down SDL
-void close();
-
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 
@@ -37,11 +28,13 @@ SDL_Renderer* renderer;
 
 //Mouse button sprites and text texture
 const int TEMP_PLACEHOLDER = 4;
+int totalWordWidth;
 string words[4] = {"Begin", "Tutorial", "Survey", "Exit"};
 LTexture gTextTexture;
 //LButton gButtons[TEMP_PLACEHOLDER];
 LTexture gButtonSpriteSheetTexture;
 SDL_Rect gSpriteClips[TEMP_PLACEHOLDER];
+
 
 vector <SDL_Rect> wordBox;
 LTexture textures[4];
@@ -50,6 +43,19 @@ LTexture textures[4];
 //The page number that is being rendered to the texture.
 int pgNum = 0;
 int currentPg = 0;
+
+//Starts up SDL and creates window
+bool init();
+
+//Loads media
+bool loadMedia();
+
+int calcXSpacing(int word, int i);
+
+//Frees media and shuts down SDL
+void close();
+
+
 
 int main( int argc, char* args[] )
 {
@@ -88,9 +94,12 @@ int main( int argc, char* args[] )
         SDL_RenderClear( renderer );
 
         //Render current frame
-        for (int i = 0; i < TEMP_PLACEHOLDER; i++)
-            textures[i].render( ( dimensions.w - gTextTexture.getWidth() ) / 2, ( dimensions.h - gTextTexture.getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        
+        for (int i = 0; i < TEMP_PLACEHOLDER; i++){
+            textures[i].render( calcXSpacing(textures[i].getWidth(), i), ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+                // cout << "monitor width: " << dimensions.w << endl;
+                // cout << "Slot: " << i << endl;
+                // cout << "Word width: " << textures[i].getWidth() << endl;
+        }
 
         //Update screen
         SDL_RenderPresent( renderer);
@@ -202,9 +211,18 @@ bool loadMedia()
             printf( "Failed to render text texture!\n" );
             return false;
         }
+        totalWordWidth += textures[i].getWidth();
     }
 
 	return true;
+}
+
+
+int calcXSpacing(int word, int i){
+    int remainingWidth = dimensions.w - totalWordWidth;
+    int spacing = dimensions.w / (TEMP_PLACEHOLDER + 1);
+    spacing *= i + 1;
+    return spacing;
 }
 
 void close()

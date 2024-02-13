@@ -30,7 +30,6 @@ class LTexture
         bool loadFromFile(std::string path, SDL_Renderer* gRenderer);
         
         //Creates image from font string
-        //Overloaded for multiple textures.
         bool loadFromRenderedText(SDL_Renderer* gRenderer, std::string textureText, SDL_Color textColor );
         
         //Deallocates texture
