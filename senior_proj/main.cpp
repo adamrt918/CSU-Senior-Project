@@ -6,7 +6,6 @@
 #include <string>
 #include <cmath>
 #include <../ltexture.hpp>
-#include <../lbutton.hpp>
 #include <vector>
 
 /*Notes
@@ -17,8 +16,13 @@
 
 using namespace std;
 
+//Page Numbers
 const int START_PAGE = 0;
 const int MAIN_MENU_PAGE = 1;
+
+//Textures Per Page
+const int START_PAGE_TEXTURES = 1;
+const int MAIN_MENU_TEXTURES = 4;
 
 //Background color black {r, g, b}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE};
@@ -39,7 +43,11 @@ SDL_Renderer* renderer;
 const int TEMP_PLACEHOLDER = 4;
 int totalWordWidth;
 string words[4] = {"Begin", "Tutorial", "Survey", "Exit"};
-LTexture textures[4];
+LTexture textures[10];
+
+//The current page variable so the game knows what to load.
+int currentPage = -1;
+int newPage = 1;
 
 //Starts up SDL and creates window
 bool init();
@@ -60,9 +68,7 @@ int main( int argc, char* args[] )
 	//Start up SDL and create window
 	if( !init() )
 		printf( "Failed to initialize!\n" );
-    //Initial media load
-    if( !loadMedia() )
-        printf( "Failed to load media!\n" );
+
     //Main loop flag
     bool gaming = true;
 
@@ -92,7 +98,15 @@ int main( int argc, char* args[] )
                 }
             }
         }
-
+        //Load new media whenever the page we are on does not match the new page we
+        //are supposed to be on
+        if (currentPage != newPage ) 
+        {
+                if( !loadMedia() ){
+                    cout << "Failed to load media on page " << newPage << "!\n";
+                    break;
+                }
+        }
         //Clear screen
         SDL_SetRenderDrawColor( renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a );
         SDL_RenderClear( renderer );
@@ -170,42 +184,42 @@ bool init()
 
 bool loadMedia()
 {
-	//Open the font
-        //Need to put a variable for font size depending on the page
-    for (int i = 0; i < TEMP_PLACEHOLDER; i++){
-        textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", 72);
-        if (textures[i].gFont == NULL)
-        {
-            printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
-		    return false;
-        }
+    //The following function can size text
+    //SDL_TTF.SizeText(game.font, text_cstring, &text.rect.w, &text.rect.h)
+    switch (newPage)
+    {
+        case START_PAGE:
+            break;
+        case MAIN_MENU_PAGE:
+            //Open the font
+            int textureNum = 4;
+            for (int i = 0; i < textureNum; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", 72);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, words[i], TEXT_COLOR))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+                totalWordWidth += textures[i].getWidth();   
+            }
+            break;  
+        
+        
     }
 
-    //Render text, determines the page that is loaded.
-        //I need to create a function to format and change text sizes based on
-        //what I want to display
-        //
-        //The following function can size text
-        //SDL_TTF.SizeText(game.font, text_cstring, &text.rect.w, &text.rect.h)
-    for (int i = 0; i < TEMP_PLACEHOLDER; i++){
-        //Load in the textures for rendering
-        if (!textures[i].loadFromRenderedText(renderer, words[i], TEXT_COLOR))
-        {
-            printf( "Failed to render text texture!\n" );
-            return false;
-        }
-    
-        //Get the total width of all loaded textures for the main menu because
-        //they are in a straight line
-        totalWordWidth += textures[i].getWidth();
-    }
 	return true;
 }
 
 int calcXSpacing(int word, int i){
     int remainingWidth = dimensions.w - totalWordWidth;
     int spacing = dimensions.w / (TEMP_PLACEHOLDER + 1);
-    spacing *= i + 1;
+    spacing *= (i + 1);
     return spacing;
 }
 
