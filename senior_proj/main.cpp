@@ -88,7 +88,8 @@ int main( int argc, char* args[] )
         SDL_RenderClear( renderer );
 
         //Render current frame
-        gTextTexture.render( ( dimensions.w - gTextTexture.getWidth() ) / 2, ( dimensions.h - gTextTexture.getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        for (int i = 0; i < TEMP_PLACEHOLDER; i++)
+            textures[i].render( ( dimensions.w - gTextTexture.getWidth() ) / 2, ( dimensions.h - gTextTexture.getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
         
 
         //Update screen
@@ -164,12 +165,24 @@ bool loadMedia()
 {
 	//Open the font
         //Need to put a variable for font size depending on the page
-	gTextTexture.gFont = TTF_OpenFont( "resources/Abadi_MT_Std.ttf", 72 );
-	if( gTextTexture.gFont == NULL )
-	{
-		printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
-		return false;
-	}
+    
+	// gTextTexture.gFont = TTF_OpenFont( "resources/Abadi_MT_Std.ttf", 72 );
+	// if( gTextTexture.gFont == NULL )
+	// {
+	// 	printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+	// 	return false;
+	// }
+
+    for (int i = 0; i < TEMP_PLACEHOLDER; i++){
+        textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", 72);
+        if (textures[i].gFont == NULL)
+        {
+            printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+		    return false;
+        }
+        
+        
+    }
 
     //Render text, determines the page that is loaded.
         //I need to create a function to format and change text sizes based on
@@ -178,11 +191,19 @@ bool loadMedia()
         //The following function can size text
         //SDL_TTF.SizeText(game.font, text_cstring, &text.rect.w, &text.rect.h)
 
-    if (!gTextTexture.loadFromRenderedText(renderer, "Begin    Survey    Tutorial    Exit", TEXT_COLOR))
-    {
-        printf( "Failed to render text texture!\n" );
-        return false;
-    }  
+    // if (!gTextTexture.loadFromRenderedText(renderer, "Begin    Survey    Tutorial    Exit", TEXT_COLOR))
+    // {
+    //     printf( "Failed to render text texture!\n" );
+    //     return false;
+    // }  
+    for (int i = 0; i < TEMP_PLACEHOLDER; i++){
+        if (!textures[i].loadFromRenderedText(renderer, words[i], TEXT_COLOR))
+        {
+            printf( "Failed to render text texture!\n" );
+            return false;
+        }
+    }
+
 	return true;
 }
 
