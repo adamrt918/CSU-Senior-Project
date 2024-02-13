@@ -47,6 +47,9 @@ class LTexture
         //Renders texture at given point
         void render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip, SDL_Renderer* gRenderer);
 
+        //Checks if the mouse is over the text rectangle
+        bool isMouseOver(SDL_Rect rect); 
+        
         //Gets image dimensions
         int getWidth();
         int getHeight();

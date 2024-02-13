@@ -25,13 +25,13 @@ void LButton::handleEvent( SDL_Event* e ){
         if( x < mPosition.x )
             inside = false;
         //Mouse is right of the button
-        else if( x > mPosition.x + BUTTON_WIDTH )
+        else if( x > mPosition.x + buttonW )
             inside = false;
         //Mouse above the button
         else if( y < mPosition.y )
             inside = false;
         //Mouse below the button
-        else if( y > mPosition.y + BUTTON_HEIGHT )
+        else if( y > mPosition.y + buttonH )
             inside = false;
 
         //Mouse is outside button
@@ -53,9 +53,12 @@ void LButton::handleEvent( SDL_Event* e ){
     }
 }
 
-void LButton::render(){
+void LButton::render(LTexture texture, SDL_Rect* gSpriteClips, SDL_Renderer* gRenderer){
+    buttonW = texture.getWidth();
+    buttonH = texture.getHeight();
+
     //Show current button sprite
-    gButtonSpriteSheetTexture.render( mPosition.x, mPosition.y, &gSpriteClips[ mCurrentSprite ] );
+    texture.render( mPosition.x, mPosition.y, &gSpriteClips[ mCurrentSprite ], 0, NULL, SDL_FLIP_NONE, gRenderer);
 }
 
 #endif

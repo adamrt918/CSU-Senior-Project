@@ -6,16 +6,23 @@
 #include <string>
 #include <cmath>
 #include <../ltexture.hpp>
-//#include <../lbutton.hpp>
+#include <../lbutton.hpp>
 #include <vector>
-
+/*Notes
+    - The coordinates (0,0) in SDL is the top left of the screen, the y
+      increases as the point moves down the screen, and decreases back to 0 if
+      it moves up.
+*/
 using namespace std;
 
+//Total number of mouse inputs
+const int TOTAL_BUTTONS = 3;
+
 //Background color black {r, g, b}
-const SDL_Color BACKGROUND_COLOR = {0, 0, 0};
+const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE};
 
 //Text color white {r, g, b}
-const SDL_Color TEXT_COLOR = {255, 255, 255};
+const SDL_Color TEXT_COLOR = {255, 255, 255, SDL_ALPHA_OPAQUE};
 
 //Monitor data
 SDL_DisplayMode dimensions;
@@ -31,7 +38,7 @@ const int TEMP_PLACEHOLDER = 4;
 int totalWordWidth;
 string words[4] = {"Begin", "Tutorial", "Survey", "Exit"};
 LTexture gTextTexture;
-//LButton gButtons[TEMP_PLACEHOLDER];
+LButton gButtons[TEMP_PLACEHOLDER];
 LTexture gButtonSpriteSheetTexture;
 SDL_Rect gSpriteClips[TEMP_PLACEHOLDER];
 
@@ -84,23 +91,31 @@ int main( int argc, char* args[] )
         {
             //User requests quit
             if( e.type == SDL_QUIT )
-            {
                 gaming = false;
+            //Handle mouse clicking events
+            else if (e.type == SDL_MOUSEBUTTONDOWN)
+            {   
+                //Check if the mouse click is on a button
+                for (int i = 0; i < TEMP_PLACEHOLDER; i++)
+                {
+                    if (textures[i].isMouseOver(gSpriteClips[i]))
+                    {
+                        cout << "Clicked on " << words[i] << endl;
+                        break;
+                    }
+                }
             }
         }
 
         //Clear screen
-        SDL_SetRenderDrawColor( renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, 255 );
+        SDL_SetRenderDrawColor( renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a );
         SDL_RenderClear( renderer );
 
         //Render current frame
         for (int i = 0; i < TEMP_PLACEHOLDER; i++){
-            textures[i].render( calcXSpacing(textures[i].getWidth(), i), ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-                // cout << "monitor width: " << dimensions.w << endl;
-                // cout << "Slot: " << i << endl;
-                // cout << "Word width: " << textures[i].getWidth() << endl;
+            //textures
+            textures[i].render(calcXSpacing(textures[i].getWidth(), i), ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
         }
-
         //Update screen
         SDL_RenderPresent( renderer);
     }
@@ -109,7 +124,6 @@ int main( int argc, char* args[] )
 	close();
 	return 0;
 }
-
 
 bool init()
 {
@@ -174,14 +188,6 @@ bool loadMedia()
 {
 	//Open the font
         //Need to put a variable for font size depending on the page
-    
-	// gTextTexture.gFont = TTF_OpenFont( "resources/Abadi_MT_Std.ttf", 72 );
-	// if( gTextTexture.gFont == NULL )
-	// {
-	// 	printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
-	// 	return false;
-	// }
-
     for (int i = 0; i < TEMP_PLACEHOLDER; i++){
         textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", 72);
         if (textures[i].gFont == NULL)
@@ -189,8 +195,6 @@ bool loadMedia()
             printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
 		    return false;
         }
-        
-        
     }
 
     //Render text, determines the page that is loaded.
@@ -199,24 +203,29 @@ bool loadMedia()
         //
         //The following function can size text
         //SDL_TTF.SizeText(game.font, text_cstring, &text.rect.w, &text.rect.h)
-
-    // if (!gTextTexture.loadFromRenderedText(renderer, "Begin    Survey    Tutorial    Exit", TEXT_COLOR))
-    // {
-    //     printf( "Failed to render text texture!\n" );
-    //     return false;
-    // }  
     for (int i = 0; i < TEMP_PLACEHOLDER; i++){
+        //Load in the textures for rendering
         if (!textures[i].loadFromRenderedText(renderer, words[i], TEXT_COLOR))
         {
             printf( "Failed to render text texture!\n" );
             return false;
         }
+
+        //Set the rectangles for the buttons
+        gSpriteClips[ i ].x = calcXSpacing(textures[i].getWidth(), i);
+        gSpriteClips[ i ].y = (dimensions.h - textures[i].getHeight() ) / 2;
+        gSpriteClips[ i ].w = textures[i].getWidth();
+        gSpriteClips[ i ].h = textures[i].getHeight();
+    
+        //Get the total width of all loaded textures for the main menu because
+        //they are in a straight line
         totalWordWidth += textures[i].getWidth();
     }
 
+
+
 	return true;
 }
-
 
 int calcXSpacing(int word, int i){
     int remainingWidth = dimensions.w - totalWordWidth;

@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
-
+#include <../ltexture.hpp>
 
 //The mouse button
 class LButton
@@ -26,7 +26,7 @@ class LButton
         void handleEvent( SDL_Event* e );
     
         //Shows button sprite
-        void render();
+        void render(LTexture texture, SDL_Rect* gSpriteClips, SDL_Renderer* gRenderer);
 
     private:
         //Top left position
@@ -34,6 +34,9 @@ class LButton
 
         //Currently used global sprite
         LButtonSprite mCurrentSprite;
+
+        int buttonW;
+        int buttonH;
 };
 
 #include "lbutton.cpp"
