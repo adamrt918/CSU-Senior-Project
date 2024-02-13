@@ -13,6 +13,9 @@ const SDL_Color BACKGROUND_COLOR = {0, 0, 0};
 //Text color white {r, g, b}
 const SDL_Color TEXT_COLOR = {255, 255, 255};
 
+//Monitor data
+SDL_DisplayMode dimensions;
+
 //Starts up SDL and creates window
 bool init();
 
@@ -66,7 +69,7 @@ int main( int argc, char* args[] )
         SDL_RenderClear( gTextTexture.gRenderer );
 
         //Render current frame
-        gTextTexture.render( ( 1000 - gTextTexture.getWidth() ) / 2, ( 800 - gTextTexture.getHeight() ) / 2, NULL, NULL, NULL, SDL_FLIP_NONE );
+        gTextTexture.render( ( dimensions.w - gTextTexture.getWidth() ) / 2, ( dimensions.h - gTextTexture.getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE );
 
         //Update screen
         SDL_RenderPresent( gTextTexture.gRenderer );
@@ -87,6 +90,7 @@ bool init()
 		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
 		return false;
 	}
+
     //Set texture filtering to linear
     if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
     {
@@ -95,7 +99,6 @@ bool init()
     }
 
     //Get monitor dimensions
-    SDL_DisplayMode dimensions;
     if (SDL_GetCurrentDisplayMode(0, &dimensions) != 0)
     {
         printf("Unable to get display mode: %s", SDL_GetError());
