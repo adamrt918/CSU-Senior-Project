@@ -6,6 +6,7 @@
 #include <string>
 #include <cmath>
 #include <../ltexture.hpp>
+//#include <../lbutton.hpp>
 #include <vector>
 
 using namespace std;
@@ -31,68 +32,47 @@ void close();
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 
-//Rendered global texture and Text Rectangles
+//Renderer
+SDL_Renderer* renderer;
+
+//Mouse button sprites and text texture
+const int TEMP_PLACEHOLDER = 4;
+string words[4] = {"Begin", "Tutorial", "Survey", "Exit"};
 LTexture gTextTexture;
-LTexture lTextTexture[4];
-SDL_Rect selection[4];
+//LButton gButtons[TEMP_PLACEHOLDER];
+LTexture gButtonSpriteSheetTexture;
+SDL_Rect gSpriteClips[TEMP_PLACEHOLDER];
+
+vector <SDL_Rect> wordBox;
+LTexture textures[4];
+
 
 //The page number that is being rendered to the texture.
 int pgNum = 0;
-
-//DELETE IF NECESSARY Messing around, text vector and texture vector
-vector<string> mmVector;
-vector<SDL_Texture*> tVector;
-std::vector<SDL_Rect> wordRects;
+int currentPg = 0;
 
 int main( int argc, char* args[] )
 {
 	//Start up SDL and create window
 	if( !init() )
 		printf( "Failed to initialize!\n" );
-
-    //Load media
+    //Initial media load
     if( !loadMedia() )
         printf( "Failed to load media!\n" );
-
     //Main loop flag
     bool gaming = true;
 
     //Event handler
     SDL_Event e;
-
     
-        /*BEGIN DELETE*/
-        // // Split text into words
-        // std::string text = "Begin Tutorial Survey Exit";
-        // std::vector<std::string> words;
-        // std::string word;
-        // for (char c : text) {
-        //     if (c == ' ') {
-        //         words.push_back(word);
-        //         word.clear();
-        //     } else {
-        //         word += c;
-        //     }
-        // }
-        // if (!word.empty())
-        //     words.push_back(word);
-        // // for (int i = 0; i < words.size(); i++)
-        // // {
-        // //     cout << "i: " << i << "\tword: " << words[i] << endl;
-        // // }
-        // // Calculate individual word positions and render textures
-        // int textX;
-        // int textY;
-        // //This will only load the last word because it is part of a loop
-        // for (int i = 0; i < words.size(); i++)
-        // {
-
-        // }
-        /*END DELETE*/
-
     //While application is running
     while( gaming )
     {
+        //Load media only when the page is different
+        if (currentPg != pgNum)
+            if( !loadMedia() )
+                printf( "Failed to load media!\n" );
+
         //Handle events on queue
         while( SDL_PollEvent( &e ) != 0 )
         {
@@ -102,15 +82,17 @@ int main( int argc, char* args[] )
                 gaming = false;
             }
         }
+
         //Clear screen
-        SDL_SetRenderDrawColor( gTextTexture.gRenderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, 255 );
-        SDL_RenderClear( gTextTexture.gRenderer );
+        SDL_SetRenderDrawColor( renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, 255 );
+        SDL_RenderClear( renderer );
 
         //Render current frame
-        gTextTexture.render( ( dimensions.w - gTextTexture.getWidth() ) / 2, ( dimensions.h - gTextTexture.getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE );
+        gTextTexture.render( ( dimensions.w - gTextTexture.getWidth() ) / 2, ( dimensions.h - gTextTexture.getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        
 
         //Update screen
-        SDL_RenderPresent( gTextTexture.gRenderer );
+        SDL_RenderPresent( renderer);
     }
 	
 	//Free resources and close SDL
@@ -151,15 +133,15 @@ bool init()
     }
 
     //Create vsynced renderer for window
-    gTextTexture.gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
-    if( gTextTexture.gRenderer == NULL )
+    renderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+    if( renderer == NULL )
     {
         printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
         return false;
     }
 
     //Initialize renderer color to black
-    SDL_SetRenderDrawColor( gTextTexture.gRenderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, 255 );
+    SDL_SetRenderDrawColor( renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, 255 );
 
     //Initialize PNG loading
     int imgFlags = IMG_INIT_PNG;
@@ -196,13 +178,11 @@ bool loadMedia()
         //The following function can size text
         //SDL_TTF.SizeText(game.font, text_cstring, &text.rect.w, &text.rect.h)
 
-   
-    if( !gTextTexture.loadFromRenderedText("Begin Tutorial Survey Exit", TEXT_COLOR ) )
+    if (!gTextTexture.loadFromRenderedText(renderer, "Begin    Survey    Tutorial    Exit", TEXT_COLOR))
     {
         printf( "Failed to render text texture!\n" );
         return false;
-    }
-   
+    }  
 	return true;
 }
 
@@ -216,10 +196,10 @@ void close()
 	gTextTexture.gFont = NULL;
 
 	//Destroy window	
-	SDL_DestroyRenderer( gTextTexture.gRenderer );
+	SDL_DestroyRenderer( renderer );
 	SDL_DestroyWindow( gWindow );
 	gWindow = NULL;
-	gTextTexture.gRenderer = NULL;
+	renderer = NULL;
 
 	//Quit SDL subsystems
 	TTF_Quit();
