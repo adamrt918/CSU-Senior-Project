@@ -50,6 +50,9 @@ class LTexture
         //Checks if the mouse is over the text rectangle
         bool isMouseOver(SDL_Rect rect); 
         
+        //Gets the rectangle
+        SDL_Rect getRect();
+
         //Gets image dimensions
         int getWidth();
         int getHeight();
@@ -57,6 +60,9 @@ class LTexture
     private:
         //The actual hardware texture
         SDL_Texture* mTexture;
+
+        //A locally used rectangle
+        SDL_Rect lRect;
 
         //Image dimensions
         int mWidth;

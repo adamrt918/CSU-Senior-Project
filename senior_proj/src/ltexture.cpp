@@ -63,9 +63,6 @@ bool LTexture::loadFromRenderedText(SDL_Renderer* gRenderer, std::string texture
         printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
         return false;
     }
-    //Do any blending or alpha modification to the surface.
-    SDL_SetSurfaceBlendMode(textSurface, SDL_BLENDMODE_BLEND);
-    SDL_SetSurfaceAlphaMod(textSurface, textColor.a);
 
     //Create texture from surface pixels
     mTexture = SDL_CreateTextureFromSurface( gRenderer, textSurface );
@@ -74,8 +71,6 @@ bool LTexture::loadFromRenderedText(SDL_Renderer* gRenderer, std::string texture
         printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
         return false;
     }
-
-
 
     //Get image dimensions
     mWidth = textSurface->w;
@@ -103,7 +98,7 @@ void LTexture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* cen
 {
 	//Set rendering space and render to screen
 	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
-    
+    lRect = renderQuad;
 	//Set clip rendering dimensions
 	if( clip != NULL )
 	{
@@ -121,6 +116,10 @@ bool LTexture::isMouseOver(SDL_Rect rect){
     SDL_GetMouseState(&mouseX, &mouseY);
     //Return whether or not the mouse is in the rectangle
     return (mouseX >= rect.x && mouseX <= rect.x + rect.w && mouseY >= rect.y && mouseY <= rect.y + rect.h);
+}
+
+SDL_Rect LTexture::getRect(){
+    return lRect;
 }
 
 int LTexture::getWidth()

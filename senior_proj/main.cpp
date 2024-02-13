@@ -8,15 +8,17 @@
 #include <../ltexture.hpp>
 #include <../lbutton.hpp>
 #include <vector>
+
 /*Notes
     - The coordinates (0,0) in SDL is the top left of the screen, the y
       increases as the point moves down the screen, and decreases back to 0 if
       it moves up.
 */
+
 using namespace std;
 
-//Total number of mouse inputs
-const int TOTAL_BUTTONS = 3;
+const int START_PAGE = 0;
+const int MAIN_MENU_PAGE = 1;
 
 //Background color black {r, g, b}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE};
@@ -33,23 +35,11 @@ SDL_Window* gWindow = NULL;
 //Renderer
 SDL_Renderer* renderer;
 
-//Mouse button sprites and text texture
+//Mouse button sprites and textures
 const int TEMP_PLACEHOLDER = 4;
 int totalWordWidth;
 string words[4] = {"Begin", "Tutorial", "Survey", "Exit"};
-LTexture gTextTexture;
-LButton gButtons[TEMP_PLACEHOLDER];
-LTexture gButtonSpriteSheetTexture;
-SDL_Rect gSpriteClips[TEMP_PLACEHOLDER];
-
-
-vector <SDL_Rect> wordBox;
 LTexture textures[4];
-
-
-//The page number that is being rendered to the texture.
-int pgNum = 0;
-int currentPg = 0;
 
 //Starts up SDL and creates window
 bool init();
@@ -57,6 +47,7 @@ bool init();
 //Loads media
 bool loadMedia();
 
+//Calculates what the X spacing should be between words that are rendered.
 int calcXSpacing(int word, int i);
 
 //Frees media and shuts down SDL
@@ -78,14 +69,9 @@ int main( int argc, char* args[] )
     //Event handler
     SDL_Event e;
     
-    //While application is running
+    /*GAME LOOP*/
     while( gaming )
     {
-        //Load media only when the page is different
-        if (currentPg != pgNum)
-            if( !loadMedia() )
-                printf( "Failed to load media!\n" );
-
         //Handle events on queue
         while( SDL_PollEvent( &e ) != 0 )
         {
@@ -98,7 +84,7 @@ int main( int argc, char* args[] )
                 //Check if the mouse click is on a button
                 for (int i = 0; i < TEMP_PLACEHOLDER; i++)
                 {
-                    if (textures[i].isMouseOver(gSpriteClips[i]))
+                    if (textures[i].isMouseOver(textures[i].getRect()))
                     {
                         cout << "Clicked on " << words[i] << endl;
                         break;
@@ -112,15 +98,13 @@ int main( int argc, char* args[] )
         SDL_RenderClear( renderer );
 
         //Render current frame
-        for (int i = 0; i < TEMP_PLACEHOLDER; i++){
-            //textures
+        for (int i = 0; i < TEMP_PLACEHOLDER; i++)
             textures[i].render(calcXSpacing(textures[i].getWidth(), i), ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        }
+
         //Update screen
         SDL_RenderPresent( renderer);
     }
-	
-	//Free resources and close SDL
+	/*END GAME LOOP*/
 	close();
 	return 0;
 }
@@ -210,20 +194,11 @@ bool loadMedia()
             printf( "Failed to render text texture!\n" );
             return false;
         }
-
-        //Set the rectangles for the buttons
-        gSpriteClips[ i ].x = calcXSpacing(textures[i].getWidth(), i);
-        gSpriteClips[ i ].y = (dimensions.h - textures[i].getHeight() ) / 2;
-        gSpriteClips[ i ].w = textures[i].getWidth();
-        gSpriteClips[ i ].h = textures[i].getHeight();
     
         //Get the total width of all loaded textures for the main menu because
         //they are in a straight line
         totalWordWidth += textures[i].getWidth();
     }
-
-
-
 	return true;
 }
 
@@ -236,12 +211,11 @@ int calcXSpacing(int word, int i){
 
 void close()
 {
-	//Free loaded images
-	gTextTexture.free();
-
-	//Free global font
-	TTF_CloseFont( gTextTexture.gFont );
-	gTextTexture.gFont = NULL;
+	//Free loaded textures, images, and font
+    for (int i = 0; i < TEMP_PLACEHOLDER; i++){
+        textures[i].free();
+        TTF_CloseFont( textures[i].gFont );
+    }
 
 	//Destroy window	
 	SDL_DestroyRenderer( renderer );
