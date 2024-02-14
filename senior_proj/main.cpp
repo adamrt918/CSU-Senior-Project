@@ -16,16 +16,20 @@
 
 using namespace std;
 
-//Page Numbers
+/*Page Numbers*/
 const int START_PAGE = 0;
 const int MAIN_MENU_PAGE = 1;
 const int TUTORIAL_PAGE = 2;
+const int SURVEY_PAGE = 3;
+const int GAME_PAGE_1 = 4;
+const int GAME_PAGE_2 = 5;
 
 //Textures Per Page
 const int TASKBAR_TEXTURES = 2;
 const int START_PAGE_TEXTURES = 1;
 const int MAIN_MENU_TEXTURES = 4; // 1 texture for each clickable word
 const int TUTORIAL_TEXTURES = 12; // textures for individual highlights and going back to the main menu
+const int GAME_PAGE_1_TEXTURES = 3;
 
 
 //Words Per Page
@@ -44,6 +48,10 @@ const string TUTORIAL_WORDS[TUTORIAL_TEXTURES] = {"Tutorial",
     "Decisions",
     "    At various points throughout the novel, the player will need to make decisions by clicking on them with their mouse. It is not always clear what the right choice is in these decisions, as it is not always clear in life what decisions one should make. Often, decisions which are competent and correct in one situation are deluded and ineffective in another. Sometimes, there is no correct decision. Other times, decisions need to be made quickly. The decisions in this game are no different. It is meant to display the futility of choice in certain situations and the need for a higher power. Decisions affect health and/or sanity, and reputation."
 };
+const string GAME_PAGE_1_WORDS[GAME_PAGE_1_TEXTURES] = {"Chapter 1", 
+    "To each there comes in their lifetime a special moment when they are figuratively tapped on the shoulder and offered the chance to do a very special thing, unique to them and fitted to their talents. What a tragedy if that moment finds them unprepared or unqualified for that which could have been their finest hour.",  
+    "- Winston Churchill"};
+
 
 //Background color black {r, g, b, alpha}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE};
@@ -55,6 +63,7 @@ const SDL_Color GREY = {128, 128, 128, SDL_ALPHA_OPAQUE};
 const int HEADING_1 = 72;
 const int HEADING_2 = 48;
 const int HEADING_3 = 36;
+const int QUOTATION = 18;
 const int WRITING = 24;
 
 //Text color white {r, g, b}
@@ -69,7 +78,7 @@ SDL_Window* gWindow = NULL;
 //Renderer
 SDL_Renderer* renderer;
 
-//Mouse button sprites and textures
+//Textures
 const int MAX_TEXTURES = 20;
 int totalWordWidth;
 LTexture textures[MAX_TEXTURES];
@@ -102,6 +111,8 @@ int main( int argc, char* args[] )
     //Main loop flag
     bool gaming = true;
 
+                int height = 0;
+
     //Event handler
     SDL_Event e;
     
@@ -133,8 +144,7 @@ int main( int argc, char* args[] )
                                 {
                                     switch (i){
                                         case 0: 
-                                            cout << "Going into main game loop" << endl;
-
+                                            newPage = GAME_PAGE_1;
                                             break;
                                         case 1:
                                             newPage = TUTORIAL_PAGE;
@@ -163,7 +173,6 @@ int main( int argc, char* args[] )
                     {
                         if (TASKBAR[i].isMouseOver(TASKBAR[i].getRect()))
                         {   textColor = RED;
-                            TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], textColor);
                             {
                                 if(e.type == SDL_MOUSEBUTTONDOWN)
                                 {
@@ -181,11 +190,57 @@ int main( int argc, char* args[] )
                             }
                         }
                         else
-                            textColor = WHITE;
-                            TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], textColor);
+                            textColor = GREY;
+                        TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], textColor);
                     }
                     break;
                     /*END TUTORIAL EVENTS*/
+                case SURVEY_PAGE:
+                    break;
+                    /*END SURVEY EVENTS*/
+                case GAME_PAGE_1:
+                    //Check if the mouse click is on a button
+                    for (int i = 0; i < TASKBAR_TEXTURES; i++)
+                    {
+                        if (TASKBAR[i].isMouseOver(TASKBAR[i].getRect()))
+                        {   
+                            textColor = RED;
+                            // TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], textColor);
+                            if(e.type == SDL_MOUSEBUTTONDOWN)
+                                {
+                                    switch (i){
+                                        case 0: 
+                                            newPage = MAIN_MENU_PAGE;
+                                            break;
+                                        case 1:
+                                            gaming = false;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                        }
+                        else
+                            textColor = GREY;
+                        TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], textColor);
+                    }
+                    if (textures[2].isMouseOver(textures[2].getRect())){
+                        textColor = GREY;
+                        textures[2].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", QUOTATION + 2);
+                        textures[2].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[2], textColor, dimensions.w/3);
+                        
+                        if(e.type == SDL_MOUSEBUTTONDOWN)
+                            newPage = GAME_PAGE_2;
+                    }
+                    else
+                    {
+                        textColor = WHITE;
+                        textures[2].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", QUOTATION);
+                    }
+                    textures[2].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[2], textColor, dimensions.w/3);
+
+                    break;
+                    /*END GAME PAGE 1 EVENTS*/
                 default:
                     break;
                 /*END EVENTS BASED ON PAGE SWITCH STATEMENT*/
@@ -216,7 +271,7 @@ int main( int argc, char* args[] )
                     textures[i].render(calcXSpacing(textures[i].getWidth(), i, MAIN_MENU_TEXTURES), ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
                 break;
             case TUTORIAL_PAGE:
-                int height = 0;
+
                 //Render the taskbar
                 for (int i = 0; i < TASKBAR_TEXTURES; i++)
                     TASKBAR[i].render((dimensions.w * (1 + i) / 3) - (TASKBAR[i].getWidth() / 2), (TASKBAR[i].getHeight() / 2), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
@@ -230,7 +285,22 @@ int main( int argc, char* args[] )
 
                     height += textures[i].getHeight();
                 }
+                height = 0;
                 break;
+            case SURVEY_PAGE:
+                break;
+            case GAME_PAGE_1:
+                //Render the taskbar
+                for (int i = 0; i < TASKBAR_TEXTURES; i++)
+                    TASKBAR[i].render((dimensions.w * (1 + i) / 3) - (TASKBAR[i].getWidth() / 2), (TASKBAR[i].getHeight() / 2), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+                textures[0].render(dimensions.w / 2 - textures[0].getWidth() / 2, dimensions.h / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+                for (int i = 1; i < GAME_PAGE_1_TEXTURES; i++){
+                    textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + height + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+                    height += textures[i].getHeight();
+                }
+                height = 0;
+                break;
+
         }
         /*End switch for rendering frames*/
 
@@ -367,7 +437,36 @@ bool loadMedia()
                 }
             }
             break;  
-        
+        case SURVEY_PAGE:
+            break;
+        case GAME_PAGE_1:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            //Load in the textures for rendering
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[0], WHITE, dimensions.w / 3))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < GAME_PAGE_1_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", QUOTATION);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[i], WHITE, dimensions.w / 3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
         
     }
 
