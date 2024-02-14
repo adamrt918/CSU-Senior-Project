@@ -26,9 +26,11 @@ const int MAIN_MENU_TEXTURES = 4;
 
 //Background color black {r, g, b}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE};
+const SDL_Color RED = {255, 0, 0, SDL_ALPHA_OPAQUE};
+const SDL_Color WHITE = {255, 255, 255, SDL_ALPHA_OPAQUE};
 
 //Text color white {r, g, b}
-const SDL_Color TEXT_COLOR = {255, 255, 255, SDL_ALPHA_OPAQUE};
+SDL_Color textColor = {255, 255, 255, SDL_ALPHA_OPAQUE};
 
 //Monitor data
 SDL_DisplayMode dimensions;
@@ -84,29 +86,66 @@ int main( int argc, char* args[] )
             //User requests quit
             if( e.type == SDL_QUIT )
                 gaming = false;
-            //Handle mouse clicking events
-            else if (e.type == SDL_MOUSEBUTTONDOWN)
-            {   
-                //Check if the mouse click is on a button
-                for (int i = 0; i < TEMP_PLACEHOLDER; i++)
-                {
-                    if (textures[i].isMouseOver(textures[i].getRect()))
-                    {
-                        cout << "Clicked on " << words[i] << endl;
-                        break;
+
+            //Handle events based on the page
+            /*START SWITCH STATEMENT FOR EVENTS BASED ON PAGE*/
+            switch (currentPage)
+            {
+                case START_PAGE:
+                    break;
+                case MAIN_MENU_PAGE:                        
+                    //Check if the mouse click is on a button
+                    for (int i = 0; i < MAIN_MENU_TEXTURES; i++){
+                        if (textures[i].isMouseOver(textures[i].getRect()))
+                        {   textColor = RED;
+                            textures[i].loadFromRenderedText(renderer, words[i], textColor);
+                            {
+                                if(e.type == SDL_MOUSEBUTTONDOWN)
+                                {
+                                    /*MAIN MENU SPECIFIC SWITCH*/
+                                    switch (i){
+                                        case 0: 
+                                            cout << "Going into main game loop" << endl;
+
+                                            break;
+                                        case 1:
+                                            cout << "Display the tutorial" << endl;
+                                            break;
+                                        case 2: 
+                                            cout << "Here is the survey link: " << endl;
+                                            break;
+                                        case 3:
+                                            gaming = false;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    /*END MAIN MENU SPECIFIC SWITCH*/
+                                }
+                            }
+                        }
+                        else
+                            textColor = WHITE;
+                            textures[i].loadFromRenderedText(renderer, words[i], textColor);
                     }
-                }
+                    break;
+                default:
+                    break;
+                /*END EVENTS BASED ON PAGE SWITCH STATEMENT*/
             }
         }
         //Load new media whenever the page we are on does not match the new page we
         //are supposed to be on
         if (currentPage != newPage ) 
         {
-                if( !loadMedia() ){
-                    cout << "Failed to load media on page " << newPage << "!\n";
-                    break;
-                }
+            if( !loadMedia() ){
+                cout << "Failed to load media on page " << newPage << "!\n";
+                break;
+            }
+            //Once the media is loaded, the player is on the new page.
+            currentPage = newPage;
         }
+
         //Clear screen
         SDL_SetRenderDrawColor( renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a );
         SDL_RenderClear( renderer );
@@ -201,7 +240,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, words[i], TEXT_COLOR))
+                if (!textures[i].loadFromRenderedText(renderer, words[i], textColor))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;

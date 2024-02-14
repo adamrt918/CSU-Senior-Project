@@ -63,7 +63,7 @@ class LTexture
 
         //A locally used rectangle
         SDL_Rect lRect;
-
+        
         //Image dimensions
         int mWidth;
         int mHeight;
