@@ -19,10 +19,16 @@ using namespace std;
 //Page Numbers
 const int START_PAGE = 0;
 const int MAIN_MENU_PAGE = 1;
+const int TUTORIAL_PAGE = 1.1;
 
 //Textures Per Page
 const int START_PAGE_TEXTURES = 1;
-const int MAIN_MENU_TEXTURES = 4;
+const int MAIN_MENU_TEXTURES = 4; // 1 texture for each clickable word
+const int TUTORIAL_TEXTURES = 2; // textures for individual highlights and going back to the main menu
+
+//Words Per Page
+const string MAIN_MENU_WORDS[4] = {"Begin", "Tutorial", "Survey", "Exit"};
+
 
 //Background color black {r, g, b}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE};
@@ -44,7 +50,6 @@ SDL_Renderer* renderer;
 //Mouse button sprites and textures
 const int TEMP_PLACEHOLDER = 4;
 int totalWordWidth;
-string words[4] = {"Begin", "Tutorial", "Survey", "Exit"};
 LTexture textures[10];
 
 //The current page variable so the game knows what to load.
@@ -95,14 +100,14 @@ int main( int argc, char* args[] )
                     break;
                 case MAIN_MENU_PAGE:                        
                     //Check if the mouse click is on a button
-                    for (int i = 0; i < MAIN_MENU_TEXTURES; i++){
+                    for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
+                    {
                         if (textures[i].isMouseOver(textures[i].getRect()))
                         {   textColor = RED;
-                            textures[i].loadFromRenderedText(renderer, words[i], textColor);
+                            textures[i].loadFromRenderedText(renderer, MAIN_MENU_WORDS[i], textColor);
                             {
                                 if(e.type == SDL_MOUSEBUTTONDOWN)
                                 {
-                                    /*MAIN MENU SPECIFIC SWITCH*/
                                     switch (i){
                                         case 0: 
                                             cout << "Going into main game loop" << endl;
@@ -120,15 +125,16 @@ int main( int argc, char* args[] )
                                         default:
                                             break;
                                     }
-                                    /*END MAIN MENU SPECIFIC SWITCH*/
                                 }
                             }
                         }
                         else
                             textColor = WHITE;
-                            textures[i].loadFromRenderedText(renderer, words[i], textColor);
+                            textures[i].loadFromRenderedText(renderer, MAIN_MENU_WORDS[i], textColor);
                     }
                     break;
+                /*END MAIN MENU Events*/
+
                 default:
                     break;
                 /*END EVENTS BASED ON PAGE SWITCH STATEMENT*/
@@ -240,7 +246,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, words[i], textColor))
+                if (!textures[i].loadFromRenderedText(renderer, MAIN_MENU_WORDS[i], textColor))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
