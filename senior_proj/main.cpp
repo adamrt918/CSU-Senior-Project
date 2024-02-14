@@ -22,12 +22,14 @@ const int MAIN_MENU_PAGE = 1;
 const int TUTORIAL_PAGE = 2;
 
 //Textures Per Page
+const int TASKBAR_TEXTURES = 2;
 const int START_PAGE_TEXTURES = 1;
 const int MAIN_MENU_TEXTURES = 4; // 1 texture for each clickable word
 const int TUTORIAL_TEXTURES = 12; // textures for individual highlights and going back to the main menu
 
+
 //Words Per Page
-const string TASKBAR_WORDS[2]{"Main Menu", "Exit to Desktop"};
+const string TASKBAR_WORDS[TASKBAR_TEXTURES]{"Main Menu", "Exit to Desktop"};
 const string MAIN_MENU_WORDS[MAIN_MENU_TEXTURES] = {"Begin", "Tutorial", "Survey", "Exit"};
 const string TUTORIAL_WORDS[TUTORIAL_TEXTURES] = {"Tutorial", 
     "    The novel will measure three metrics throughout the chapter, health and sanity which affect the individual player, and reputation, which affects the games ending. The metrics are affected through user-made decisions. The page of the visual novel is turned by clicking the interactive text. The novel is only advanced when a decision is made or when the timer runs out. Once the game ends, the player can choose to return to the main menu or exit the game. Progress is not saved, but the game should only take about 20 minutes to complete. Once complete, please fill out the survey.",  
@@ -47,6 +49,7 @@ const string TUTORIAL_WORDS[TUTORIAL_TEXTURES] = {"Tutorial",
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE};
 const SDL_Color RED = {255, 0, 0, SDL_ALPHA_OPAQUE};
 const SDL_Color WHITE = {255, 255, 255, SDL_ALPHA_OPAQUE};
+const SDL_Color GREY = {128, 128, 128, SDL_ALPHA_OPAQUE};
 
 //Text sizes
 const int HEADING_1 = 72;
@@ -70,7 +73,7 @@ SDL_Renderer* renderer;
 const int MAX_TEXTURES = 20;
 int totalWordWidth;
 LTexture textures[MAX_TEXTURES];
-LTexture MENU_BAR[2];
+LTexture TASKBAR[TASKBAR_TEXTURES];
 
 //The current page variable so the game knows what to load.
 int currentPage = -1;
@@ -134,7 +137,6 @@ int main( int argc, char* args[] )
 
                                             break;
                                         case 1:
-                                            cout << "Display the tutorial" << endl;
                                             newPage = TUTORIAL_PAGE;
                                             break;
                                         case 2: 
@@ -155,7 +157,35 @@ int main( int argc, char* args[] )
                     }
                     break;
                 /*END MAIN MENU Events*/
-
+                case TUTORIAL_PAGE:
+                    //Check if the mouse click is on a button
+                    for (int i = 0; i < TASKBAR_TEXTURES; i++)
+                    {
+                        if (TASKBAR[i].isMouseOver(TASKBAR[i].getRect()))
+                        {   textColor = RED;
+                            TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], textColor);
+                            {
+                                if(e.type == SDL_MOUSEBUTTONDOWN)
+                                {
+                                    switch (i){
+                                        case 0: 
+                                            newPage = MAIN_MENU_PAGE;
+                                            break;
+                                        case 1:
+                                            gaming = false;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                            textColor = WHITE;
+                            TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], textColor);
+                    }
+                    break;
+                    /*END TUTORIAL EVENTS*/
                 default:
                     break;
                 /*END EVENTS BASED ON PAGE SWITCH STATEMENT*/
@@ -163,7 +193,7 @@ int main( int argc, char* args[] )
         }
         //Load new media whenever the page we are on does not match the new page we
         //are supposed to be on
-        if (currentPage != newPage ) 
+        if (currentPage != newPage) 
         {
             if( !loadMedia() ){
                 cout << "Failed to load media on page " << newPage << "!\n";
@@ -174,8 +204,8 @@ int main( int argc, char* args[] )
         }
 
         //Clear screen
-        SDL_SetRenderDrawColor( renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a );
-        SDL_RenderClear( renderer );
+        SDL_SetRenderDrawColor(renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
+        SDL_RenderClear(renderer);
 
         //Render current frame
         /*Begin switch for which frames to Render*/
@@ -187,6 +217,9 @@ int main( int argc, char* args[] )
                 break;
             case TUTORIAL_PAGE:
                 int height = 0;
+                //Render the taskbar
+                for (int i = 0; i < TASKBAR_TEXTURES; i++)
+                    TASKBAR[i].render((dimensions.w * (1 + i) / 3) - (TASKBAR[i].getWidth() / 2), (TASKBAR[i].getHeight() / 2), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
                 for (int i = 0; i < TUTORIAL_TEXTURES; i++){
                     if (i == 0)
                         textures[i].render((dimensions.w / 2) - textures[i].getWidth() / 2, (dimensions.h / 8) + height, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
@@ -199,7 +232,7 @@ int main( int argc, char* args[] )
                 }
                 break;
         }
-        
+        /*End switch for rendering frames*/
 
         //Update screen
         SDL_RenderPresent( renderer);
@@ -273,6 +306,23 @@ bool loadMedia()
 {
     //The following function can size text
     //SDL_TTF.SizeText(game.font, text_cstring, &text.rect.w, &text.rect.h)
+    //Render the tasbar before getting into specific pages
+    //Open the font
+    for (int i = 0; i < TASKBAR_TEXTURES; i++){
+        TASKBAR[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+        if (TASKBAR[i].gFont == NULL)
+        {
+            printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+            return false;
+        }
+        //Load in the textures for rendering
+        if (!TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], GREY))
+        {
+            printf( "Failed to render text texture!\n" );
+            return false;
+        }
+    }
+
     switch (newPage)
     {
         case START_PAGE:
