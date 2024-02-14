@@ -31,6 +31,9 @@ class LTexture
         
         //Creates image from font string
         bool loadFromRenderedText(SDL_Renderer* gRenderer, std::string textureText, SDL_Color textColor );
+
+        //Overload that includes wrap length
+        bool loadFromRenderedText(SDL_Renderer* gRenderer, std::string textureText, SDL_Color textColor, int wrapLength);
         
         //Deallocates texture
         void free();

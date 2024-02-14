@@ -82,6 +82,37 @@ bool LTexture::loadFromRenderedText(SDL_Renderer* gRenderer, std::string texture
     return true;
 }
 
+bool LTexture::loadFromRenderedText(SDL_Renderer* gRenderer, std::string textureText, SDL_Color textColor, int wrapLength)
+{
+     //Get rid of preexisting texture
+    free();
+
+    //Render text surface
+    SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped( gFont, textureText.c_str(), textColor, wrapLength );
+    if( textSurface == NULL )
+    {
+        printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
+        return false;
+    }
+
+    //Create texture from surface pixels
+    mTexture = SDL_CreateTextureFromSurface( gRenderer, textSurface );
+    if( mTexture == NULL )
+    {
+        printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
+        return false;
+    }
+
+    //Get image dimensions
+    mWidth = textSurface->w;
+    mHeight = textSurface->h;
+
+    //Get rid of old surface
+    SDL_FreeSurface( textSurface );
+    
+    return true;
+}
+
 void LTexture::free()
 {
     //Free texture if it exists
