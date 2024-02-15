@@ -37,22 +37,15 @@ class LTexture
         
         //Deallocates texture
         void free();
-
-        //Set color modulation
-        void setColor( Uint8 red, Uint8 green, Uint8 blue );
-
-        //Set blending
-        void setBlendMode( SDL_BlendMode blending );
-
-        //Set alpha modulation
-        void setAlpha( Uint8 alpha );
-        
+    
         //Renders texture at given point
         void render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip, SDL_Renderer* gRenderer);
 
         //Checks if the mouse is over the text rectangle
         bool isMouseOver(SDL_Rect rect); 
         
+        bool taskBarEvents();
+
         //Gets the rectangle
         SDL_Rect getRect();
 
