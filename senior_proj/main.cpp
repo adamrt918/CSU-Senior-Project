@@ -19,6 +19,10 @@
     - I need to figure out how to get a class to handle the taskbar events and
       the main page events. It should be repeatable between pages but I keep
       messing up when I'm copy pasting.
+    - I have the pages class, but now I need to load in all of the pages. I also
+      have to decide how I will hold the textures whether that be in main or in
+      the pages class. Pages class would make sense because then each page can
+      hold its' own texture
 */
 
 using namespace std;
@@ -99,6 +103,7 @@ const int MAX_TEXTURES = 20;
 LTexture textures[MAX_TEXTURES];
 LTexture TASKBAR[TASKBAR_TEXTURES];
 Pages MAIN_MENU_PAGES(1, 4, MAIN_MENU_WORDS);
+
 
 //The current page variable so the game knows what to load.
 int currentPage = -1;
