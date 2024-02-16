@@ -16,9 +16,9 @@ using namespace std;
 class Pages
 {
     public:
-
+    
     //Constructor
-    Pages(const int pages, const int textures, const string word[]);
+    Pages(int pages, int textures, string word[]);
     //Destructor
     ~Pages();
     
@@ -38,7 +38,7 @@ class Pages
     private:
         int pageNum;
         int textureNum;
-        string words[];
+        vector<string> words;
 };
 
 #include "pages.cpp"

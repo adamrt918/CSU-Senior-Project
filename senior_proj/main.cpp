@@ -6,7 +6,7 @@
 #include <string>
 #include <cmath>
 #include <../ltexture.hpp>
-// #include <../pages.hpp>
+#include <../pages.hpp>
 #include <vector>
 
 /*Notes
@@ -22,8 +22,6 @@
 */
 
 using namespace std;
-
-// Pages MAIN_MENU_PAGES(MAIN_MENU_PAGE, MAIN_MENU_TEXTURES, MAIN_MENU_WORDS);
 
 /*Page Numbers*/
 const int START_PAGE = 0;
@@ -100,6 +98,7 @@ SDL_Renderer* renderer;
 const int MAX_TEXTURES = 20;
 LTexture textures[MAX_TEXTURES];
 LTexture TASKBAR[TASKBAR_TEXTURES];
+Pages MAIN_MENU_PAGES(1, 4, MAIN_MENU_WORDS);
 
 //The current page variable so the game knows what to load.
 int currentPage = -1;
