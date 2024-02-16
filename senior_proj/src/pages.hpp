@@ -1,4 +1,4 @@
-#ifdef PAGES_H
+#ifndef PAGES_H
 #define PAGES_H
 
 #include <SDL2/SDL.h>
@@ -7,6 +7,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <string>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ class Pages
     public:
 
     //Constructor
-    Pages();
+    Pages(const int pages, const int textures, const string word[]);
     //Destructor
     ~Pages();
     
@@ -25,8 +26,19 @@ class Pages
     bool mediaLoader(int newPage);
     bool events();
 
+    void setPageNum(int page);
+    int getPageNum();
+
+    void setTextureNum(int texture);
+    int getTextureNum();
+
+    void setWords(string word);
+    vector<string> getWords();
+
     private:
-        int num;
+        int pageNum;
+        int textureNum;
+        string words[];
 };
 
 #include "pages.cpp"

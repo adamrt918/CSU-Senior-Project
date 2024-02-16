@@ -6,7 +6,7 @@
 #include <string>
 #include <cmath>
 #include <../ltexture.hpp>
-#include <../pages.hpp>
+// #include <../pages.hpp>
 #include <vector>
 
 /*Notes
@@ -15,8 +15,15 @@
       it moves up.
 */
 
+/*TODO
+    - I need to figure out how to get a class to handle the taskbar events and
+      the main page events. It should be repeatable between pages but I keep
+      messing up when I'm copy pasting.
+*/
 
 using namespace std;
+
+// Pages MAIN_MENU_PAGES(MAIN_MENU_PAGE, MAIN_MENU_TEXTURES, MAIN_MENU_WORDS);
 
 /*Page Numbers*/
 const int START_PAGE = 0;
@@ -41,7 +48,7 @@ const int GAME_PAGE_2_TEXTURES = 4;
 
 //Words Per Page
 const string TASKBAR_WORDS[TASKBAR_TEXTURES]{"Main Menu", "Exit to Desktop"};
-const string MAIN_MENU_WORDS[MAIN_MENU_TEXTURES] = {"Begin", "Tutorial", "Survey", "Exit"};
+string MAIN_MENU_WORDS[MAIN_MENU_TEXTURES] = {"Begin", "Tutorial", "Survey", "Exit"};
 const string TUTORIAL_WORDS[TUTORIAL_TEXTURES] = {"Tutorial", 
     "    The novel will measure three metrics throughout the chapter, health and sanity which affect the individual player, and reputation, which affects the games ending. The metrics are affected through user-made decisions. The page of the visual novel is turned by clicking the interactive text. The novel is only advanced when a decision is made or when the timer runs out. Once the game ends, the player can choose to return to the main menu or exit the game. Progress is not saved, but the game should only take about 20 minutes to complete. Once complete, please fill out the survey.",  
     "Health", 
@@ -444,6 +451,9 @@ bool init()
         printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
         return false;
     }
+
+    //Initialize the pages
+
 
 	return true;
 }
