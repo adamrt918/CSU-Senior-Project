@@ -6,7 +6,7 @@
 #include <string>
 #include <cmath>
 #include <../ltexture.hpp>
-#include <../pages.hpp>
+#include <../player.hpp>
 #include <vector>
 
 /*Notes
@@ -27,6 +27,7 @@
 
 using namespace std;
 
+
 /*Page Numbers*/
 const int START_PAGE = 0;
 const int MAIN_MENU_PAGE = 1;
@@ -41,6 +42,7 @@ const int GAME_PAGE_4 = 400;
 
 //Textures Per Page
 const int TASKBAR_TEXTURES = 2;
+const int PLAYER_TEXTURES = 3;
 const int START_PAGE_TEXTURES = 1;
 const int MAIN_MENU_TEXTURES = 4; // 1 texture for each clickable word
 const int TUTORIAL_TEXTURES = 12; // textures for individual highlights and going back to the main menu
@@ -49,7 +51,8 @@ const int GAME_PAGE_2_TEXTURES = 4;
 
 
 //Words Per Page
-const string TASKBAR_WORDS[TASKBAR_TEXTURES]{"Main Menu", "Exit to Desktop"};
+string TASKBAR_WORDS[TASKBAR_TEXTURES]{"Main Menu", "Exit to Desktop"};
+string PLAYER_WORDS[PLAYER_TEXTURES]{"Health: ", "Sanity: ", "Reputation: "};
 string MAIN_MENU_WORDS[MAIN_MENU_TEXTURES] = {"Begin", "Tutorial", "Survey", "Exit"};
 const string TUTORIAL_WORDS[TUTORIAL_TEXTURES] = {"Tutorial", 
     "    The novel will measure three metrics throughout the chapter, health and sanity which affect the individual player, and reputation, which affects the games ending. The metrics are affected through user-made decisions. The page of the visual novel is turned by clicking the interactive text. The novel is only advanced when a decision is made or when the timer runs out. Once the game ends, the player can choose to return to the main menu or exit the game. Progress is not saved, but the game should only take about 20 minutes to complete. Once complete, please fill out the survey.",  
@@ -78,6 +81,7 @@ const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE};
 const SDL_Color RED = {255, 0, 0, SDL_ALPHA_OPAQUE};
 const SDL_Color WHITE = {255, 255, 255, SDL_ALPHA_OPAQUE};
 const SDL_Color GREY = {128, 128, 128, SDL_ALPHA_OPAQUE};
+SDL_Color textColor = {255, 255, 255, SDL_ALPHA_OPAQUE}; //Text color white for use in the main loop.
 
 //Text sizes
 const int HEADING_1 = 72;
@@ -86,8 +90,7 @@ const int HEADING_3 = 36;
 const int QUOTATION = 18;
 const int WRITING = 24;
 
-//Text color white {r, g, b}
-SDL_Color textColor = {255, 255, 255, SDL_ALPHA_OPAQUE};
+
 
 //Monitor data
 SDL_DisplayMode dimensions;
@@ -98,44 +101,59 @@ SDL_Window* gWindow = NULL;
 //Renderer
 SDL_Renderer* renderer;
 
-//Textures
+//Textures and pages
 const int MAX_TEXTURES = 20;
 LTexture textures[MAX_TEXTURES];
 LTexture TASKBAR[TASKBAR_TEXTURES];
-Pages MAIN_MENU_PAGES(1, 4, MAIN_MENU_WORDS);
-
+LTexture PLAYER_STATS[PLAYER_TEXTURES];
+Player gamer;
 
 //The current page variable so the game knows what to load.
 int currentPage = -1;
 int newPage = 1;
+
+//Main loop flag
+bool gaming = true;
+
+//Event handler
+SDL_Event e;
 
 //Starts up SDL and creates window
 bool init();
 
 //Loads media
 bool loadMedia();
+bool loadPlayerMedia(); //Load the player textures and fonts
 
 //Calculates what the X spacing should be between words that are rendered.
 int calcXSpacing(int word, int i, int tNum);
 
+//Calculates total height of all rendered words in a section
+int totalHeight(int tNum);
+
 //Frees media and shuts down SDL
 void close();
 
+//Event functions to determine what happens for different pages upon mouse events
+void mainMenuEvents();
+void taskBarEvents();
+void quotationPageEvents(int currentPage, int nextPage);
+int choicePageEvents(int currentPage);
 
+//Rendering functions to determine what happens for different loaded text
+//depending on page
+void mainMenuRenderer();
+void taskBarRenderer();
+void playerBarRenderer();
+void tutorialRenderer();
+void quotationPageRenderer();
+void choicePageRenderer();
 
 int main( int argc, char* args[] )
 {
 	//Start up SDL and create window
 	if( !init() )
 		printf( "Failed to initialize!\n" );
-
-    //Main loop flag
-    bool gaming = true;
-
-                int height = 0;
-
-    //Event handler
-    SDL_Event e;
     
     /*GAME LOOP*/
     while( gaming )
@@ -154,166 +172,20 @@ int main( int argc, char* args[] )
                 case START_PAGE:
                     break;
                 case MAIN_MENU_PAGE:                        
-                    //Check if the mouse click is on a button
-                    for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
-                    {
-                        if (textures[i].isMouseOver(textures[i].getRect()))
-                        {   textColor = RED;
-                            textures[i].loadFromRenderedText(renderer, MAIN_MENU_WORDS[i], textColor);
-                            {
-                                if(e.type == SDL_MOUSEBUTTONDOWN)
-                                {
-                                    switch (i){
-                                        case 0: 
-                                            newPage = GAME_PAGE_1;
-                                            break;
-                                        case 1:
-                                            newPage = TUTORIAL_PAGE;
-                                            break;
-                                        case 2: 
-                                            cout << "Here is the survey link: " << endl;
-                                            break;
-                                        case 3:
-                                            gaming = false;
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-                            }
-                        }
-                        else
-                            textColor = WHITE;
-                            textures[i].loadFromRenderedText(renderer, MAIN_MENU_WORDS[i], textColor);
-                    }
+                    mainMenuEvents();                    
                     break;
-                /*END MAIN MENU Events*/
                 case TUTORIAL_PAGE:
-                    //Check if the mouse click is on a button
-                    for (int i = 0; i < TASKBAR_TEXTURES; i++)
-                    {
-                        if (TASKBAR[i].isMouseOver(TASKBAR[i].getRect()))
-                        {   textColor = RED;
-                            {
-                                if(e.type == SDL_MOUSEBUTTONDOWN)
-                                {
-                                    switch (i){
-                                        case 0: 
-                                            newPage = MAIN_MENU_PAGE;
-                                            break;
-                                        case 1:
-                                            gaming = false;
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-                            }
-                        }
-                        else
-                            textColor = GREY;
-                        TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], textColor);
-                    }
+                    taskBarEvents();
                     break;
-                    /*END TUTORIAL EVENTS*/
                 case SURVEY_PAGE:
                     break;
-                    /*END SURVEY EVENTS*/
                 case GAME_PAGE_1:
-                    //Check if the mouse click is on a button
-                    for (int i = 0; i < TASKBAR_TEXTURES; i++)
-                    {
-                        if (TASKBAR[i].isMouseOver(TASKBAR[i].getRect()))
-                        {   
-                            textColor = RED;
-                            if(e.type == SDL_MOUSEBUTTONDOWN)
-                            {
-                                switch (i){
-                                    case 0: 
-                                        newPage = MAIN_MENU_PAGE;
-                                        break;
-                                    case 1:
-                                        gaming = false;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                        else
-                            textColor = GREY;
-                        TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], textColor);
-                    }
-                    if (textures[2].isMouseOver(textures[2].getRect())){
-                        textColor = GREY;
-                        textures[2].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", QUOTATION + 2);                        
-                        if(e.type == SDL_MOUSEBUTTONDOWN)
-                            newPage = GAME_PAGE_2;
-                    }
-                    else
-                    {
-                        textColor = WHITE;
-                        textures[2].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", QUOTATION);
-                    }
-                    textures[2].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[2], textColor, dimensions.w/3);
-
+                    taskBarEvents();
+                    quotationPageEvents(currentPage, GAME_PAGE_2);                    
                     break;
-                /*END GAME PAGE 1 EVENTS*/
                 case GAME_PAGE_2:
-                    //Taskbar
-                    //Check if the mouse click is on a button
-                    for (int i = 0; i < TASKBAR_TEXTURES; i++)
-                    {
-                        if (TASKBAR[i].isMouseOver(TASKBAR[i].getRect()))
-                        {   
-                            textColor = RED;
-                            if(e.type == SDL_MOUSEBUTTONDOWN)
-                            { 
-                                switch (i){
-                                    case 0: 
-                                        newPage = MAIN_MENU_PAGE;
-                                        break;
-                                    case 1:
-                                        gaming = false;
-                                        break;
-                                }
-                            }
-                        }
-                        else
-                            textColor = GREY;
-                        TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], textColor);
-                    }
-                    //Game Text
-                    for (int i = 1; i < GAME_PAGE_2_TEXTURES; i++)
-                    {
-                        if (textures[i].isMouseOver(textures[i].getRect())){
-                            textColor = GREY;
-                            textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
-                            textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], textColor, dimensions.w/1.3);
-                            if(e.type == SDL_MOUSEBUTTONDOWN)
-                            { 
-                                switch (i){
-                                    case 1: 
-                                        newPage = GAME_PAGE_3_1;
-                                        break;
-                                    case 2:
-                                        newPage = GAME_PAGE_3_2;
-                                        break;
-                                    case 3:
-                                        newPage = GAME_PAGE_3_3;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            textColor = WHITE;
-                            textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-                        }
-                        textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], textColor, dimensions.w/1.3);
-                    }
+                    taskBarEvents();
+                    choicePageEvents(currentPage);
                     break;
                 default:
                     break;
@@ -324,10 +196,10 @@ int main( int argc, char* args[] )
         //are supposed to be on
         if (currentPage != newPage) 
         {
-            if( !loadMedia() ){
+            if( !loadMedia() )
                 cout << "Failed to load media on page " << newPage << "!\n";
-                break;
-            }
+            if ( !loadPlayerMedia())
+                cout << "Failed to load player media on page " << newPage << "!\n";
             //Once the media is loaded, the player is on the new page.
             currentPage = newPage;
         }
@@ -341,50 +213,23 @@ int main( int argc, char* args[] )
         switch (currentPage)
         {
             case MAIN_MENU_PAGE:
-                for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
-                    textures[i].render(calcXSpacing(textures[i].getWidth(), i, MAIN_MENU_TEXTURES), ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+                mainMenuRenderer();
                 break;
             case TUTORIAL_PAGE:
-
-                //Render the taskbar
-                for (int i = 0; i < TASKBAR_TEXTURES; i++)
-                    TASKBAR[i].render((dimensions.w * (1 + i) / 3) - (TASKBAR[i].getWidth() / 2), (TASKBAR[i].getHeight() / 2), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-                for (int i = 0; i < TUTORIAL_TEXTURES; i++){
-                    if (i == 0)
-                        textures[i].render((dimensions.w / 2) - textures[i].getWidth() / 2, (dimensions.h / 8) + height, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-                    else if (i % 2 == 1)
-                        textures[i].render((dimensions.w / 2) - textures[i].getWidth() / 2, (dimensions.h / 8) + height + 10 * i, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-                    else
-                        textures[i].render((dimensions.w / 2) - textures[i].getWidth() / 2, (dimensions.h / 8) + height + 10 * i, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-
-                    height += textures[i].getHeight();
-                }
-                height = 0;
+                taskBarRenderer();
+                tutorialRenderer();
                 break;
             case SURVEY_PAGE:
                 break;
             case GAME_PAGE_1:
-                //Render the taskbar
-                for (int i = 0; i < TASKBAR_TEXTURES; i++)
-                    TASKBAR[i].render((dimensions.w * (1 + i) / 3) - (TASKBAR[i].getWidth() / 2), (TASKBAR[i].getHeight() / 2), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-                //Render the page text
-                textures[0].render(dimensions.w / 2 - textures[0].getWidth() / 2, dimensions.h / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-                for (int i = 1; i < GAME_PAGE_1_TEXTURES; i++){
-                    textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + height + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-                    height += textures[i].getHeight();
-                }
-                height = 0;
+                taskBarRenderer();
+                playerBarRenderer();
+                quotationPageRenderer();
                 break;
             case GAME_PAGE_2:
-                //Render the taskbar
-                for (int i = 0; i < TASKBAR_TEXTURES; i++)
-                    TASKBAR[i].render((dimensions.w * (1 + i) / 3) - (TASKBAR[i].getWidth() / 2), (TASKBAR[i].getHeight() / 2), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-                //Render the page text
-                for (int i = 0; i < GAME_PAGE_2_TEXTURES; i++){
-                    textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + height + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-                    height += textures[i].getHeight();
-                }
-                height = 0;                
+                taskBarRenderer();
+                playerBarRenderer();
+                choicePageRenderer();
                 break;
 
 
@@ -456,9 +301,6 @@ bool init()
         return false;
     }
 
-    //Initialize the pages
-
-
 	return true;
 }
 
@@ -468,6 +310,8 @@ bool loadMedia()
     //SDL_TTF.SizeText(game.font, text_cstring, &text.rect.w, &text.rect.h)
     //Render the tasbar before getting into specific pages
     //Open the font
+
+    //Load the Taskbar textures
     for (int i = 0; i < TASKBAR_TEXTURES; i++){
         TASKBAR[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
         if (TASKBAR[i].gFont == NULL)
@@ -482,6 +326,7 @@ bool loadMedia()
             return false;
         }
     }
+    
     switch (newPage)
     {
         case START_PAGE:
@@ -575,6 +420,36 @@ bool loadMedia()
 	return true;
 }
 
+bool loadPlayerMedia(){
+    for (int i = 0; i < PLAYER_TEXTURES; i++)
+    {
+        PLAYER_STATS[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+        if (PLAYER_STATS[i].gFont == NULL)
+        {
+            printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+            return false;
+        }
+        switch (i){
+            case 0:
+                PLAYER_WORDS[i].replace(8, 9, to_string(gamer.getHealth()));
+                break;
+            case 1:
+                PLAYER_WORDS[i].replace(8, 9, to_string(gamer.getSanity()));
+                break;
+            case 2:
+                PLAYER_WORDS[i].replace(12, 13, to_string(gamer.getRep()));
+                break;
+        }
+        
+        if (!PLAYER_STATS[i].loadFromRenderedText(renderer, PLAYER_WORDS[i], WHITE))
+        {
+            printf( "Failed to render text texture!\n" );
+            return false;
+        }
+    }
+    return true;
+}
+
 int calcXSpacing(int word, int i, int tNum){
     int totalWordWidth;
     for (int j = 0; j < MAIN_MENU_TEXTURES; j++)
@@ -583,6 +458,13 @@ int calcXSpacing(int word, int i, int tNum){
     int spacing = dimensions.w / (tNum + 1);
     spacing *= (i + 1);
     return spacing;
+}
+
+int totalHeight(int tNum){
+    int height = 0;
+    for (int i = 0; i < tNum; i++)
+        height += textures[i].getHeight();
+    return height;
 }
 
 void close()
@@ -605,4 +487,172 @@ void close()
 	SDL_Quit();
 }
 
+void taskBarEvents(){
+    for (int i = 0; i < TASKBAR_TEXTURES; i++)
+    {
+        if (TASKBAR[i].isMouseOver(TASKBAR[i].getRect()))
+        {   textColor = RED;
+            {
+                if(e.type == SDL_MOUSEBUTTONDOWN)
+                {
+                    switch (i){
+                        case 0: 
+                            newPage = MAIN_MENU_PAGE;
+                            break;
+                        case 1:
+                            gaming = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+        else
+            textColor = GREY;
+        TASKBAR[i].loadFromRenderedText(renderer, TASKBAR_WORDS[i], textColor);
+    }
+}
+
+void mainMenuEvents()
+{
+    for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
+    {
+        if (textures[i].isMouseOver(textures[i].getRect()))
+        {   textColor = RED;
+            textures[i].loadFromRenderedText(renderer, MAIN_MENU_WORDS[i], textColor);
+            {
+                if(e.type == SDL_MOUSEBUTTONDOWN)
+                {
+                    switch (i){
+                        case 0: 
+                            newPage = GAME_PAGE_1;
+                            break;
+                        case 1:
+                            newPage = TUTORIAL_PAGE;
+                            break;
+                        case 2: 
+                            cout << "Here is the survey link: " << endl;
+                            break;
+                        case 3:
+                            gaming = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+        else
+            textColor = WHITE;
+            textures[i].loadFromRenderedText(renderer, MAIN_MENU_WORDS[i], textColor);
+    }
+}
+
+void quotationPageEvents(int currentPage, int nextPage) {
+    switch (currentPage){
+        case GAME_PAGE_1:
+            if (textures[2].isMouseOver(textures[2].getRect())){
+                textColor = GREY;
+                textures[2].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", QUOTATION + 2);                        
+                if(e.type == SDL_MOUSEBUTTONDOWN)
+                    newPage = nextPage;
+            }
+            else
+            {
+                textColor = WHITE;
+                textures[2].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", QUOTATION);
+            }
+            textures[2].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[2], textColor, dimensions.w/3);
+            break;
+        default:
+            break;
+    }
+}
+
+int choicePageEvents(int currentPage) {
+    switch (currentPage){
+        case GAME_PAGE_2:
+            for (int i = 1; i < GAME_PAGE_2_TEXTURES; i++)
+            {
+                if (textures[i].isMouseOver(textures[i].getRect())){
+                    textColor = GREY;
+                    textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
+                    textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], textColor, dimensions.w/1.3);
+                    if(e.type == SDL_MOUSEBUTTONDOWN)
+                    { 
+                        switch (i){
+                            //Heroic, minus 0 to 1 sanity
+                            case 1: 
+                                newPage = GAME_PAGE_3_1;
+                                //Run Games function here
+                                break;
+                            //Cowardly, minus 1 to 3 sanity
+                            case 2:
+                                newPage = GAME_PAGE_3_2;
+                                //Run Games function here
+                                break;
+                            //Average - 0 to 2 sanity
+                            case 3:
+                                newPage = GAME_PAGE_3_3;
+                                //Run Games function here
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    textColor = WHITE;
+                    textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                }
+                textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], textColor, dimensions.w/1.3);
+            }
+            return newPage;
+            break;
+        default:
+            return newPage;
+            break;
+    }
+    return newPage;
+}
+
+void mainMenuRenderer(){
+for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
+    textures[i].render(calcXSpacing(textures[i].getWidth(), i, MAIN_MENU_TEXTURES), ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+}
+
+void taskBarRenderer(){
+for (int i = 0; i < TASKBAR_TEXTURES; i++)
+    TASKBAR[i].render((dimensions.w * (1 + i) / 3) - (TASKBAR[i].getWidth() / 2), (TASKBAR[i].getHeight() / 2), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+}
+
+void tutorialRenderer(){
+    for (int i = 0; i < TUTORIAL_TEXTURES; i++){
+        if (i == 0)
+            textures[i].render((dimensions.w / 2) - textures[i].getWidth() / 2, (dimensions.h / 8) - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        else if (i % 2 == 1)
+            textures[i].render((dimensions.w / 2) - textures[i].getWidth() / 2, (dimensions.h / 8) + totalHeight(i) + 10 * i , NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        else
+            textures[i].render((dimensions.w / 2) - textures[i].getWidth() / 2, (dimensions.h / 8) + totalHeight(i) + 10 * i, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    }
+}
+
+void quotationPageRenderer(){
+    textures[0].render(dimensions.w / 2 - textures[0].getWidth() / 2, dimensions.h / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        for (int i = 1; i < GAME_PAGE_1_TEXTURES; i++){
+            textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        }
+}
+
+void choicePageRenderer(){
+    for (int i = 0; i < GAME_PAGE_2_TEXTURES; i++)
+        textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+}
+
+void playerBarRenderer(){
+    for (int i = 0; i < PLAYER_TEXTURES; i++)
+        PLAYER_STATS[i].render((dimensions.w * (1 + i) / 4 - PLAYER_STATS[i].getWidth() / 2), dimensions.h / 8 - PLAYER_STATS[i].getHeight() * 4, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+}
 

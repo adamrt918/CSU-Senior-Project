@@ -44,8 +44,6 @@ class LTexture
         //Checks if the mouse is over the text rectangle
         bool isMouseOver(SDL_Rect rect); 
         
-        // bool taskBarEvents();
-
         //Gets the rectangle
         SDL_Rect getRect();
 
