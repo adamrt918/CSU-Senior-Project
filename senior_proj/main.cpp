@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include <stdio.h>
 #include <string>
 #include <cmath>
@@ -206,6 +207,10 @@ int main( int argc, char* args[] )
                 case GAME_PAGE_3_3:
                     taskBarEvents();
                     textPageEvents(GAME_PAGE_4);
+                case GAME_PAGE_4:
+                    taskBarEvents();
+
+                    break;
                 default:
                     break;
             /*END EVENTS BASED ON PAGE SWITCH STATEMENT*/
@@ -336,6 +341,13 @@ bool init()
     if( TTF_Init() == -1 )
     {
         printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+        return false;
+    }
+
+    //Initialize SDL_mixer
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
         return false;
     }
 
