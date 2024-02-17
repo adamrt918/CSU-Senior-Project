@@ -78,7 +78,13 @@ const string GAME_PAGE_2_WORDS[CHOICE_PAGE_TEXTURES] = {"    \"What does it mean
     "\"I don\'t know.\""};
 const string GAME_PAGE_3_1_WORDS[TEXT_PAGE_TEXTURES] = { GAME_PAGE_2_WORDS[1], 
     "    I stated bluntly and confidently to my Dad\'s solemn face. No one could have understood how right I was, not even me. Dad signed his name on the dotted line while Mom sobbed into his shoulder and my little brother looked on from between the staircase balusters, eyes wide. No one in my immediate family had served - I would be the first of my known kindred to range this frontier. The recruiter and my father shook hands and made ceremonious eye contact. Then the recruiter turned to me. I excitedly grabbed the pen and signed my name on the other dotted line, being too young to sign for myself. The recruiter thanked me and my Dad, shaking hands with us one last time.",
-    "Next Page"};
+    NEXT_PAGE};
+const string GAME_PAGE_3_2_WORDS[TEXT_PAGE_TEXTURES] = {GAME_PAGE_2_WORDS[2], 
+    "    I stated rebelliously, spitting in the face of the Christian moral guidelines I had been raised with. I couldn\'t have understood how wrong I was. The recruiter looked at me questioningly, silently holding back his surprise. My father looked disappointingly upon me but signed the paper. The words cut my mother deeply, who could only sob harder. My brother took quiet notice from behind the staircase balusters. I brashly grabbed the pen and signed my name on the other dotted line, being too young to sign for myself.", 
+    NEXT_PAGE };
+const string GAME_PAGE_3_3_WORDS[TEXT_PAGE_TEXTURES] = {GAME_PAGE_2_WORDS[3], 
+    "    I stated timidly, unsure of what the future held for me. My father sighed deeply. My whole life he had attempted to impart to me the meaning of manhood - discipline, accountability, and love. It wasn\'t that he disproved of my decision. It was that he was ashamed of his own ability to impart this one important aspect of adulthood into the life of his young son. Now, I would embark upon this journey without his guidance. Dad reached out to hand the pen to me. I paused to reconsider my decision. \n    \"Sign here.\" The recruiter pointed. \n    I took the pen and signed my name, not because of my own strength, but because I did not want to upset my recruiter.",
+    NEXT_PAGE};
 
 //Background color black {r, g, b, alpha}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE};
@@ -194,6 +200,12 @@ int main( int argc, char* args[] )
                     taskBarEvents();
                     textPageEvents(GAME_PAGE_4);
                     break;
+                case GAME_PAGE_3_2:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_4);
+                case GAME_PAGE_3_3:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_4);
                 default:
                     break;
             /*END EVENTS BASED ON PAGE SWITCH STATEMENT*/
@@ -239,6 +251,16 @@ int main( int argc, char* args[] )
                 choicePageRenderer();
                 break;
             case GAME_PAGE_3_1:
+                taskBarRenderer();
+                playerBarRenderer();
+                textPageRenderer();
+                break;
+            case GAME_PAGE_3_2:
+                taskBarRenderer();
+                playerBarRenderer();
+                textPageRenderer();
+                break;
+            case GAME_PAGE_3_3:
                 taskBarRenderer();
                 playerBarRenderer();
                 textPageRenderer();
@@ -437,7 +459,7 @@ bool loadMedia()
                 return false;
             }
             //Load in the textures for rendering
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[0], GREY, dimensions.w / 3))
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[0], GREY, dimensions.w / 2.5))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -451,6 +473,62 @@ bool loadMedia()
                 }
                 //Load in the textures for rendering
                 if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[i], WHITE, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_3_2:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            //Load in the textures for rendering
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_2_WORDS[0], GREY, dimensions.w / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < TEXT_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_2_WORDS[i], WHITE, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_3_3:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            //Load in the textures for rendering
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_3_WORDS[0], GREY, dimensions.w / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < TEXT_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_3_WORDS[i], WHITE, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -704,6 +782,7 @@ void textPageRenderer(){
     textures[0].render(dimensions.w / 2 - textures[0].getWidth() / 2, dimensions.h / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
     for (int i = 1; i < TEXT_PAGE_TEXTURES; i++)
         textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-
 }
+
+
 
