@@ -46,14 +46,16 @@ const int PLAYER_TEXTURES = 3;
 const int START_PAGE_TEXTURES = 1;
 const int MAIN_MENU_TEXTURES = 4; // 1 texture for each clickable word
 const int TUTORIAL_TEXTURES = 12; // textures for individual highlights and going back to the main menu
-const int GAME_PAGE_1_TEXTURES = 3;
-const int GAME_PAGE_2_TEXTURES = 4;
+const int QUOTATION_PAGE_TEXTURES = 3;
+const int CHOICE_PAGE_TEXTURES = 4;
+const int TEXT_PAGE_TEXTURES = 3;
 
 
 //Words Per Page
-string TASKBAR_WORDS[TASKBAR_TEXTURES]{"Main Menu", "Exit to Desktop"};
+const string NEXT_PAGE = "Next Page";
+const string TASKBAR_WORDS[TASKBAR_TEXTURES]{"Main Menu", "Exit to Desktop"};
 string PLAYER_WORDS[PLAYER_TEXTURES]{"Health: ", "Sanity: ", "Reputation: "};
-string MAIN_MENU_WORDS[MAIN_MENU_TEXTURES] = {"Begin", "Tutorial", "Survey", "Exit"};
+const string MAIN_MENU_WORDS[MAIN_MENU_TEXTURES] = {"Begin", "Tutorial", "Survey", "Exit"};
 const string TUTORIAL_WORDS[TUTORIAL_TEXTURES] = {"Tutorial", 
     "    The novel will measure three metrics throughout the chapter, health and sanity which affect the individual player, and reputation, which affects the games ending. The metrics are affected through user-made decisions. The page of the visual novel is turned by clicking the interactive text. The novel is only advanced when a decision is made or when the timer runs out. Once the game ends, the player can choose to return to the main menu or exit the game. Progress is not saved, but the game should only take about 20 minutes to complete. Once complete, please fill out the survey.",  
     "Health", 
@@ -67,14 +69,16 @@ const string TUTORIAL_WORDS[TUTORIAL_TEXTURES] = {"Tutorial",
     "Decisions",
     "    At various points throughout the novel, the player will need to make decisions by clicking on them with their mouse. It is not always clear what the right choice is in these decisions, as it is not always clear in life what decisions one should make. Often, decisions which are competent and correct in one situation are deluded and ineffective in another. Sometimes, there is no correct decision. Other times, decisions need to be made quickly. The decisions in this game are no different. It is meant to display the futility of choice in certain situations and the need for a higher power. Decisions affect health and/or sanity, and reputation."
 };
-const string GAME_PAGE_1_WORDS[GAME_PAGE_1_TEXTURES] = {"Chapter 1", 
+const string GAME_PAGE_1_WORDS[QUOTATION_PAGE_TEXTURES] = {"Chapter 1", 
     "To each there comes in their lifetime a special moment when they are figuratively tapped on the shoulder and offered the chance to do a very special thing, unique to them and fitted to their talents. What a tragedy if that moment finds them unprepared or unqualified for that which could have been their finest hour.",  
     "- Winston Churchill"};
-const string GAME_PAGE_2_WORDS[GAME_PAGE_2_TEXTURES] = {"    \"What does it mean to be a man?\" My father asked me, a young 17-year-old boy preparing to embark upon the adventures only found on the precipice of manhood. ",
+const string GAME_PAGE_2_WORDS[CHOICE_PAGE_TEXTURES] = {"    \"What does it mean to be a man?\" My father asked me, a young 17-year-old boy preparing to embark upon the adventures only found on the precipice of manhood. ",
     "\"Military service.\"", 
     "\"There\'s no such thing.\"", 
     "\"I don\'t know.\""};
-
+const string GAME_PAGE_3_1_WORDS[TEXT_PAGE_TEXTURES] = { GAME_PAGE_2_WORDS[1], 
+    "    I stated bluntly and confidently to my Dad\'s solemn face. No one could have understood how right I was, not even me. Dad signed his name on the dotted line while Mom sobbed into his shoulder and my little brother looked on from between the staircase balusters, eyes wide. No one in my immediate family had served - I would be the first of my known kindred to range this frontier. The recruiter and my father shook hands and made ceremonious eye contact. Then the recruiter turned to me. I excitedly grabbed the pen and signed my name on the other dotted line, being too young to sign for myself. The recruiter thanked me and my Dad, shaking hands with us one last time.",
+    "Next Page"};
 
 //Background color black {r, g, b, alpha}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE};
@@ -139,6 +143,7 @@ void mainMenuEvents();
 void taskBarEvents();
 void quotationPageEvents(int currentPage, int nextPage);
 int choicePageEvents(int currentPage);
+void textPageEvents(int nextPage);
 
 //Rendering functions to determine what happens for different loaded text
 //depending on page
@@ -148,6 +153,7 @@ void playerBarRenderer();
 void tutorialRenderer();
 void quotationPageRenderer();
 void choicePageRenderer();
+void textPageRenderer();
 
 int main( int argc, char* args[] )
 {
@@ -186,6 +192,10 @@ int main( int argc, char* args[] )
                 case GAME_PAGE_2:
                     taskBarEvents();
                     choicePageEvents(currentPage);
+                    break;
+                case GAME_PAGE_3_1:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_4);
                     break;
                 default:
                     break;
@@ -231,7 +241,13 @@ int main( int argc, char* args[] )
                 playerBarRenderer();
                 choicePageRenderer();
                 break;
-
+            case GAME_PAGE_3_1:
+                taskBarRenderer();
+                playerBarRenderer();
+                textPageRenderer();
+                break;
+            default:
+                break;
 
         }
         /*End switch for rendering frames*/
@@ -385,7 +401,7 @@ bool loadMedia()
                 printf( "Failed to render text texture!\n" );
                 return false;
             }
-            for (int i = 1; i < GAME_PAGE_1_TEXTURES; i++){
+            for (int i = 1; i < QUOTATION_PAGE_TEXTURES; i++){
                 textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", QUOTATION);
                 if (textures[i].gFont == NULL)
                 {
@@ -401,7 +417,7 @@ bool loadMedia()
             }
             break;
         case GAME_PAGE_2:
-            for (int i = 0; i < GAME_PAGE_2_TEXTURES; i++){
+            for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++){
                 textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 if (textures[i].gFont == NULL)
                 {
@@ -410,6 +426,34 @@ bool loadMedia()
                 }
                 //Load in the textures for rendering
                 if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], WHITE, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_3_1:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            //Load in the textures for rendering
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[0], GREY, dimensions.w / 3))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < TEXT_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[i], WHITE, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -573,12 +617,11 @@ void quotationPageEvents(int currentPage, int nextPage) {
 int choicePageEvents(int currentPage) {
     switch (currentPage){
         case GAME_PAGE_2:
-            for (int i = 1; i < GAME_PAGE_2_TEXTURES; i++)
+            for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
             {
                 if (textures[i].isMouseOver(textures[i].getRect())){
                     textColor = GREY;
                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
-                    textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], textColor, dimensions.w/1.3);
                     if(e.type == SDL_MOUSEBUTTONDOWN)
                     { 
                         switch (i){
@@ -618,6 +661,20 @@ int choicePageEvents(int currentPage) {
     return newPage;
 }
 
+void textPageEvents(int nextPage){
+    if (textures[TEXT_PAGE_TEXTURES - 1].isMouseOver(textures[TEXT_PAGE_TEXTURES - 1].getRect())){
+        textColor = GREY;
+        textures[TEXT_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
+        if(e.type == SDL_MOUSEBUTTONDOWN)
+            newPage = nextPage;
+    }
+    else{
+        textColor = WHITE;
+        textures[TEXT_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+    }
+    textures[TEXT_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, NEXT_PAGE, textColor, dimensions.w/1.3);  
+}
+
 void mainMenuRenderer(){
 for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
     textures[i].render(calcXSpacing(textures[i].getWidth(), i, MAIN_MENU_TEXTURES), ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
@@ -641,18 +698,25 @@ void tutorialRenderer(){
 
 void quotationPageRenderer(){
     textures[0].render(dimensions.w / 2 - textures[0].getWidth() / 2, dimensions.h / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        for (int i = 1; i < GAME_PAGE_1_TEXTURES; i++){
+        for (int i = 1; i < QUOTATION_PAGE_TEXTURES; i++){
             textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
         }
 }
 
 void choicePageRenderer(){
-    for (int i = 0; i < GAME_PAGE_2_TEXTURES; i++)
+    for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++)
         textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 void playerBarRenderer(){
     for (int i = 0; i < PLAYER_TEXTURES; i++)
         PLAYER_STATS[i].render((dimensions.w * (1 + i) / 4 - PLAYER_STATS[i].getWidth() / 2), dimensions.h / 8 - PLAYER_STATS[i].getHeight() * 4, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+}
+
+void textPageRenderer(){
+    textures[0].render(dimensions.w / 2 - textures[0].getWidth() / 2, dimensions.h / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    for (int i = 1; i < TEXT_PAGE_TEXTURES; i++)
+        textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+
 }
 
