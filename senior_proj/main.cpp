@@ -215,9 +215,9 @@ int main( int argc, char* args[] )
         //are supposed to be on
         if (currentPage != newPage) 
         {
-            if( !loadMedia() )
+            if(!loadMedia())
                 cout << "Failed to load media on page " << newPage << "!\n";
-            if ( !loadPlayerMedia())
+            if (!loadPlayerMedia())
                 cout << "Failed to load player media on page " << newPage << "!\n";
             //Once the media is loaded, the player is on the new page.
             currentPage = newPage;
