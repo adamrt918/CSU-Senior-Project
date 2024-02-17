@@ -129,9 +129,6 @@ bool init();
 bool loadMedia();
 bool loadPlayerMedia(); //Load the player textures and fonts
 
-//Calculates what the X spacing should be between words that are rendered.
-int calcXSpacing(int word, int i, int tNum);
-
 //Calculates total height of all rendered words in a section
 int totalHeight(int tNum);
 
@@ -494,16 +491,6 @@ bool loadPlayerMedia(){
     return true;
 }
 
-int calcXSpacing(int word, int i, int tNum){
-    int totalWordWidth;
-    for (int j = 0; j < MAIN_MENU_TEXTURES; j++)
-        totalWordWidth += textures[j].getWidth();
-    int remainingWidth = dimensions.w - totalWordWidth;
-    int spacing = dimensions.w / (tNum + 1);
-    spacing *= (i + 1);
-    return spacing;
-}
-
 int totalHeight(int tNum){
     int height = 0;
     for (int i = 0; i < tNum; i++)
@@ -677,7 +664,7 @@ void textPageEvents(int nextPage){
 
 void mainMenuRenderer(){
 for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
-    textures[i].render(calcXSpacing(textures[i].getWidth(), i, MAIN_MENU_TEXTURES), ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    textures[i].render((dimensions.w * (i + .5) / MAIN_MENU_TEXTURES + 1) - textures[i].getWidth() / 2, ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 void taskBarRenderer(){
