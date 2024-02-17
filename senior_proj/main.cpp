@@ -86,8 +86,8 @@ const string GAME_PAGE_3_3_WORDS[TEXT_PAGE_TEXTURES] = {GAME_PAGE_2_WORDS[3],
     "    I stated timidly, unsure of what the future held for me. My father sighed deeply. My whole life he had attempted to impart to me the meaning of manhood - discipline, accountability, and love. It wasn\'t that he disproved of my decision. It was that he was ashamed of his own ability to impart this one important aspect of adulthood into the life of his young son. Now, I would embark upon this journey without his guidance. Dad reached out to hand the pen to me. I paused to reconsider my decision. \n    \"Sign here.\" The recruiter pointed. \n    I took the pen and signed my name, not because of my own strength, but because I did not want to upset my recruiter.",
     NEXT_PAGE};
 
-//Background color black {r, g, b, alpha}
-const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE};
+//Colors {r, g, b, alpha}
+const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
 const SDL_Color RED = {255, 0, 0, SDL_ALPHA_OPAQUE};
 const SDL_Color WHITE = {255, 255, 255, SDL_ALPHA_OPAQUE};
 const SDL_Color GREY = {128, 128, 128, SDL_ALPHA_OPAQUE};
