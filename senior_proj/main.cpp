@@ -156,7 +156,7 @@ void playerBarRenderer();
 void tutorialRenderer();
 void quotationPageRenderer();
 void choicePageRenderer();
-void textPageRenderer();
+void postChoicePageRenderer();
 
 int main( int argc, char* args[] )
 {
@@ -253,18 +253,21 @@ int main( int argc, char* args[] )
             case GAME_PAGE_3_1:
                 taskBarRenderer();
                 playerBarRenderer();
-                textPageRenderer();
+                postChoicePageRenderer();
                 break;
             case GAME_PAGE_3_2:
                 taskBarRenderer();
                 playerBarRenderer();
-                textPageRenderer();
+                postChoicePageRenderer();
                 break;
             case GAME_PAGE_3_3:
                 taskBarRenderer();
                 playerBarRenderer();
-                textPageRenderer();
+                postChoicePageRenderer();
                 break;
+            case GAME_PAGE_4:
+                taskBarRenderer();
+                playerBarRenderer();
             default:
                 break;
 
@@ -778,7 +781,7 @@ void playerBarRenderer(){
         PLAYER_STATS[i].render((dimensions.w * (1 + i) / 4 - PLAYER_STATS[i].getWidth() / 2), dimensions.h / 8 - PLAYER_STATS[i].getHeight() * 4, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
-void textPageRenderer(){
+void postChoicePageRenderer(){
     textures[0].render(dimensions.w / 2 - textures[0].getWidth() / 2, dimensions.h / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
     for (int i = 1; i < TEXT_PAGE_TEXTURES; i++)
         textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
