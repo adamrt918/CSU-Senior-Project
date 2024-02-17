@@ -1,13 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <stdio.h>
-#include <SDL2/SDL_ttf.h>
-#include <string>
 #include <iostream>
-#include <vector>
+#include <random>
 
 using namespace std;
 
@@ -19,19 +14,37 @@ class Player
     Player();
     ~Player();
     
+    int random(int lowerBound, int upperBound);
+    int chooseSanity(int lowerBound, int upperBound);
+    int chooseRep(int lowerBound, int upperBound);
+
+
+
     int getHealth();
-    void setHealth();
+    void setHealth(int num);
 
     int getSanity();
-    void setSanity();
+    void setSanity(int num);
 
     int getRep();
-    void setRep();
+    void setRep(int num);
+
+    random_device getRd();
+    random_device setRd();
 
     private:
         int health;
         int sanity;
         int reputation;
+
+        //Distribution variable
+        uniform_int_distribution<int> roll;
+
+        //Random device to use for the seed.
+        int rd;
+        
+        //Twister for random number seed
+        mt19937_64 seed;
 };
 
 #include "player.cpp"

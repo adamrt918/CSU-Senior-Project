@@ -163,7 +163,7 @@ int main( int argc, char* args[] )
 	//Start up SDL and create window
 	if( !init() )
 		printf( "Failed to initialize!\n" );
-    
+
     /*GAME LOOP*/
     while( gaming )
     {
@@ -610,6 +610,9 @@ void taskBarEvents(){
                     switch (i){
                         case 0: 
                             newPage = MAIN_MENU_PAGE;
+                            gamer.setHealth(10);
+                            gamer.setRep(10);
+                            gamer.setSanity(20);
                             break;
                         case 1:
                             gaming = false;
@@ -693,20 +696,22 @@ int choicePageEvents(int currentPage) {
                     if(e.type == SDL_MOUSEBUTTONDOWN)
                     { 
                         switch (i){
-                            //Heroic, minus 0 to 1 sanity
+                            //Heroic, minus 0 to 1 sanity -- No change in rep or health
                             case 1: 
                                 newPage = GAME_PAGE_3_1;
-                                //Run Games function here
+                                gamer.setSanity(gamer.getSanity() - gamer.random(0, 1));
                                 break;
-                            //Cowardly, minus 1 to 3 sanity
+                            //Cowardly, minus 1 to 3 sanity -- minus 0 to 2 reputation
                             case 2:
                                 newPage = GAME_PAGE_3_2;
-                                //Run Games function here
+                                gamer.setSanity(gamer.getSanity() - gamer.random(1, 3));
+                                gamer.setRep(gamer.getRep() - gamer.random(0,2));
                                 break;
-                            //Average - 0 to 2 sanity
+                            //Average - 0 to 2 sanity -- minus 0 to 1 reputation
                             case 3:
                                 newPage = GAME_PAGE_3_3;
-                                //Run Games function here
+                                gamer.setSanity(gamer.getSanity() - gamer.random(0, 2));
+                                gamer.setRep(gamer.getRep() - gamer.random(0,1));
                                 break;
                             default:
                                 break;
