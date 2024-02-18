@@ -39,7 +39,8 @@ const int GAME_PAGE_2 = 200;
 const int GAME_PAGE_3_1 = 301;
 const int GAME_PAGE_3_2 = 302;
 const int GAME_PAGE_3_3 = 303;
-const int GAME_PAGE_4 = 400;
+const int GAME_PAGE_4 = 4;
+const int GAME_PAGE_5 = 5;
 
 //Textures Per Page
 const int TASKBAR_TEXTURES = 2;
@@ -49,7 +50,8 @@ const int MAIN_MENU_TEXTURES = 4; // 1 texture for each clickable word
 const int TUTORIAL_TEXTURES = 12; // textures for individual highlights and going back to the main menu
 const int QUOTATION_PAGE_TEXTURES = 3;
 const int CHOICE_PAGE_TEXTURES = 4;
-const int TEXT_PAGE_TEXTURES = 3;
+const int POST_CHOICE_PAGE_TEXTURES = 3;
+const int TEXT_PAGE_TEXTURES = 2;
 
 
 //Words Per Page
@@ -77,15 +79,19 @@ const string GAME_PAGE_2_WORDS[CHOICE_PAGE_TEXTURES] = {"    \"What does it mean
     "\"Military service.\"", 
     "\"There\'s no such thing.\"", 
     "\"I don\'t know.\""};
-const string GAME_PAGE_3_1_WORDS[TEXT_PAGE_TEXTURES] = { GAME_PAGE_2_WORDS[1], 
+const string GAME_PAGE_3_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = { GAME_PAGE_2_WORDS[1], 
     "    I stated bluntly and confidently to my Dad\'s solemn face. No one could have understood how right I was, not even me. Dad signed his name on the dotted line while Mom sobbed into his shoulder and my little brother looked on from between the staircase balusters, eyes wide. No one in my immediate family had served - I would be the first of my known kindred to range this frontier. The recruiter and my father shook hands and made ceremonious eye contact. Then the recruiter turned to me. I excitedly grabbed the pen and signed my name on the other dotted line, being too young to sign for myself. The recruiter thanked me and my Dad, shaking hands with us one last time.",
     NEXT_PAGE};
-const string GAME_PAGE_3_2_WORDS[TEXT_PAGE_TEXTURES] = {GAME_PAGE_2_WORDS[2], 
+const string GAME_PAGE_3_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_2_WORDS[2], 
     "    I stated rebelliously, spitting in the face of the Christian moral guidelines I had been raised with. I couldn\'t have understood how wrong I was. The recruiter looked at me questioningly, silently holding back his surprise. My father looked disappointingly upon me but signed the paper. The words cut my mother deeply, who could only sob harder. My brother took quiet notice from behind the staircase balusters. I brashly grabbed the pen and signed my name on the other dotted line, being too young to sign for myself.", 
     NEXT_PAGE };
-const string GAME_PAGE_3_3_WORDS[TEXT_PAGE_TEXTURES] = {GAME_PAGE_2_WORDS[3], 
+const string GAME_PAGE_3_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_2_WORDS[3], 
     "    I stated timidly, unsure of what the future held for me. My father sighed deeply. My whole life he had attempted to impart to me the meaning of manhood - discipline, accountability, and love. It wasn\'t that he disproved of my decision. It was that he was ashamed of his own ability to impart this one important aspect of adulthood into the life of his young son. Now, I would embark upon this journey without his guidance. Dad reached out to hand the pen to me. I paused to reconsider my decision. \n    \"Sign here.\" The recruiter pointed. \n    I took the pen and signed my name, not because of my own strength, but because I did not want to upset my recruiter.",
     NEXT_PAGE};
+const string GAME_PAGE_4_WORDS[TEXT_PAGE_TEXTURES] = {"    The recruiter thanked me and my Dad, shaking hands with us one last time. He futilely attempted to console my mother and walked out the front door, nodding towards my brother as he passed the staircase. Unbeknownst to me, I had entered my journey into manhood with the scribble of a pen.\n    As I drove through my neighborhood on the way to basic training, the families in my neighborhood lined up with signs and American flags in what I thought was support for my decision. Really, it was a small consolation to my family for whatever befell me during my time in service. Both of my parents shed tears, and with some hugging and vigorous handshaking, I left my family and journeyed into manhood. I belonged to my comrades now.\n    I had 3 weeks after graduating from basic training and airborne school to prepare for Ranger Selection. Fortunately, my good friend from high school was there, Ethan, so I was not completely alone. There was another guy which I had befriended during basic training, Cameron Meddock. We spent our evenings in pre-Ranger at the gym doing Ethan\'s torturous workout creations, reading, jamming \"Peanut Butter Jelly\" by Galantis on the way to the chow hall to crush our seventeenth piece of cornbread for the day, or sleeping 10 hours straight. Meddock and I used to butt heads over different army protocols. I tended to be on the rebellious side, while Meddock was a by-the-book straight edge. Ethan was just a chill surfer/snowboarder type from California, who could keep the peace. The three of us were inseparable. We graduated from Ranger Selection together. It was the last time I would ever see Meddock. Ethan and Meddock headed to Second Ranger Battalion out of Washington State. Then I headed to Hunter Army Airfield (HAAF) located in Savannah, Georgia, the home of First Ranger Battalion.",
+    NEXT_PAGE};
+const string GAME_PAGE_5_WORDS[TEXT_PAGE_TEXTURES];
+
 
 //Colors {r, g, b, alpha}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
@@ -101,7 +107,12 @@ const int HEADING_3 = 36;
 const int QUOTATION = 18;
 const int WRITING = 24;
 
-
+//Textures and pages
+const int MAX_TEXTURES = 20;
+LTexture textures[MAX_TEXTURES];
+LTexture TASKBAR[TASKBAR_TEXTURES];
+LTexture PLAYER_STATS[PLAYER_TEXTURES];
+Player gamer;
 
 //Monitor data
 SDL_DisplayMode dimensions;
@@ -112,22 +123,18 @@ SDL_Window* gWindow = NULL;
 //Renderer
 SDL_Renderer* renderer;
 
-//Textures and pages
-const int MAX_TEXTURES = 20;
-LTexture textures[MAX_TEXTURES];
-LTexture TASKBAR[TASKBAR_TEXTURES];
-LTexture PLAYER_STATS[PLAYER_TEXTURES];
-Player gamer;
+//Music for background
+Mix_Music *gMusic = NULL;
 
-//The current page variable so the game knows what to load.
-int currentPage = -1;
-int newPage = 1;
+//Event handler
+SDL_Event e;
 
 //Main loop flag
 bool gaming = true;
 
-//Event handler
-SDL_Event e;
+//The current page variable so the game knows what to load.
+int currentPage = -1;
+int newPage = 1;
 
 //Starts up SDL and creates window
 bool init();
@@ -148,6 +155,7 @@ void taskBarEvents();
 void quotationPageEvents(int currentPage, int nextPage);
 int choicePageEvents(int currentPage);
 void textPageEvents(int nextPage);
+void postChoicePageEvents(int nextPage);
 
 //Rendering functions to determine what happens for different loaded text
 //depending on page
@@ -158,12 +166,25 @@ void tutorialRenderer();
 void quotationPageRenderer();
 void choicePageRenderer();
 void postChoicePageRenderer();
+void textPageRenderer();
 
 int main( int argc, char* args[] )
 {
 	//Start up SDL and create window
 	if( !init() )
 		printf( "Failed to initialize!\n" );
+    
+    if (!loadMedia())
+        cout << "Failed to load media!" << endl;
+
+    // Play the MP3 file
+    if (Mix_PlayMusic(gMusic, -1) == -1) {
+        std::cerr << "Mix_PlayMusic Error: " << Mix_GetError() << std::endl;
+        Mix_FreeMusic(gMusic);
+        Mix_CloseAudio();
+        SDL_Quit();
+        return 1;
+    }
 
     /*GAME LOOP*/
     while( gaming )
@@ -199,17 +220,19 @@ int main( int argc, char* args[] )
                     break;
                 case GAME_PAGE_3_1:
                     taskBarEvents();
-                    textPageEvents(GAME_PAGE_4);
+                    postChoicePageEvents(GAME_PAGE_4);
                     break;
                 case GAME_PAGE_3_2:
                     taskBarEvents();
-                    textPageEvents(GAME_PAGE_4);
+                    postChoicePageEvents(GAME_PAGE_4);
+                    break;
                 case GAME_PAGE_3_3:
                     taskBarEvents();
-                    textPageEvents(GAME_PAGE_4);
+                    postChoicePageEvents(GAME_PAGE_4);
+                    break;
                 case GAME_PAGE_4:
                     taskBarEvents();
-
+                    textPageEvents(GAME_PAGE_5);
                     break;
                 default:
                     break;
@@ -220,6 +243,8 @@ int main( int argc, char* args[] )
         //are supposed to be on
         if (currentPage != newPage) 
         {
+            cout << "current page: " << currentPage << endl;
+            cout << "new page: " << newPage << endl;
             if(!loadMedia())
                 cout << "Failed to load media on page " << newPage << "!\n";
             if (!loadPlayerMedia())
@@ -273,6 +298,8 @@ int main( int argc, char* args[] )
             case GAME_PAGE_4:
                 taskBarRenderer();
                 playerBarRenderer();
+                textPageRenderer();
+                break;
             default:
                 break;
 
@@ -280,7 +307,7 @@ int main( int argc, char* args[] )
         /*End switch for rendering frames*/
 
         //Update screen
-        SDL_RenderPresent( renderer);
+        SDL_RenderPresent(renderer);
     }
 	/*END GAME LOOP*/
 	close();
@@ -290,7 +317,7 @@ int main( int argc, char* args[] )
 bool init()
 {
 	//Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+	if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 )
 	{
 		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
 		return false;
@@ -336,7 +363,7 @@ bool init()
         printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
         return false;
     }
-
+    
     //Initialize SDL_ttf
     if( TTF_Init() == -1 )
     {
@@ -345,8 +372,11 @@ bool init()
     }
 
     //Initialize SDL_mixer
-    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
-    {
+    if (!Mix_Init(MIX_INIT_MP3)){
+        cerr << "Mix_Init Error: " << SDL_GetError() << endl;
+        return false;
+    }
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ){
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
         return false;
     }
@@ -376,7 +406,16 @@ bool loadMedia()
             return false;
         }
     }
+
+    //Load music
+	gMusic = Mix_LoadMUS( "resources/back_music.mp3" );
+	if( gMusic == NULL )
+	{
+		printf( "Failed to load music! SDL_mixer Error: %s\n", Mix_GetError() );
+		return false;
+	}
     
+    //This is for loading the different page textures
     switch (newPage)
     {
         case START_PAGE:
@@ -429,7 +468,6 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            //Load in the textures for rendering
             if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[0], WHITE, dimensions.w / 3))
             {
                 printf( "Failed to render text texture!\n" );
@@ -473,13 +511,12 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            //Load in the textures for rendering
             if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[0], GREY, dimensions.w / 2.5))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
             }
-            for (int i = 1; i < TEXT_PAGE_TEXTURES; i++){
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
                 textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 if (textures[i].gFont == NULL)
                 {
@@ -501,13 +538,12 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            //Load in the textures for rendering
             if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_2_WORDS[0], GREY, dimensions.w / 2.5))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
             }
-            for (int i = 1; i < TEXT_PAGE_TEXTURES; i++){
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
                 textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 if (textures[i].gFont == NULL)
                 {
@@ -529,13 +565,28 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            //Load in the textures for rendering
             if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_3_WORDS[0], GREY, dimensions.w / 2.5))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
             }
-            for (int i = 1; i < TEXT_PAGE_TEXTURES; i++){
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_3_WORDS[i], WHITE, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_4:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
                 textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 if (textures[i].gFont == NULL)
                 {
@@ -543,12 +594,14 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_3_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_4_WORDS[i], WHITE, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
                 }
             }
+            break;
+        case GAME_PAGE_5:
             break;
     }
 	return true;
@@ -594,10 +647,20 @@ int totalHeight(int tNum){
 void close()
 {
 	//Free loaded textures, images, and font
-    for (int i = 0; i < 10; i++){
+    for (int i = 0; i < 20; i++){
         textures[i].free();
         TTF_CloseFont( textures[i].gFont );
+        if (i < TASKBAR_TEXTURES)
+            TASKBAR[i].free();
+        if (i < PLAYER_TEXTURES)
+            PLAYER_STATS[i].free();
     }
+
+    //Free the music
+	Mix_FreeMusic( gMusic );
+	gMusic = NULL;
+
+
 
 	//Destroy window	
 	SDL_DestroyRenderer( renderer );
@@ -606,6 +669,7 @@ void close()
 	renderer = NULL;
 
 	//Quit SDL subsystems
+    Mix_Quit();
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
@@ -760,6 +824,20 @@ void textPageEvents(int nextPage){
     textures[TEXT_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, NEXT_PAGE, textColor, dimensions.w/1.3);  
 }
 
+void postChoicePageEvents(int nextPage){
+    if (textures[POST_CHOICE_PAGE_TEXTURES - 1].isMouseOver(textures[POST_CHOICE_PAGE_TEXTURES - 1].getRect())){
+        textColor = GREY;
+        textures[POST_CHOICE_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
+        if(e.type == SDL_MOUSEBUTTONDOWN)
+            newPage = nextPage;
+    }
+    else{
+        textColor = WHITE;
+        textures[POST_CHOICE_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+    }
+    textures[POST_CHOICE_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, NEXT_PAGE, textColor, dimensions.w/1.3);  
+}
+
 void mainMenuRenderer(){
 for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
     textures[i].render((dimensions.w * (i + .5) / MAIN_MENU_TEXTURES + 1) - textures[i].getWidth() / 2, ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
@@ -800,9 +878,12 @@ void playerBarRenderer(){
 
 void postChoicePageRenderer(){
     textures[0].render(dimensions.w / 2 - textures[0].getWidth() / 2, dimensions.h / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-    for (int i = 1; i < TEXT_PAGE_TEXTURES; i++)
+    for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
         textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    }
 }
 
-
-
+void textPageRenderer(){
+    for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+        textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+}
