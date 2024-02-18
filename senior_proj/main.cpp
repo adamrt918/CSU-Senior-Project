@@ -34,13 +34,18 @@ const int START_PAGE = 0;
 const int MAIN_MENU_PAGE = 1;
 const int TUTORIAL_PAGE = 2;
 const int SURVEY_PAGE = 3;
-const int GAME_PAGE_1 = 100;
-const int GAME_PAGE_2 = 200;
-const int GAME_PAGE_3_1 = 301;
-const int GAME_PAGE_3_2 = 302;
-const int GAME_PAGE_3_3 = 303;
+const int GAME_PAGE_1 = 10;
+const int GAME_PAGE_2 = 20;
+const int GAME_PAGE_3_1 = 31;
+const int GAME_PAGE_3_2 = 32;
+const int GAME_PAGE_3_3 = 33;
 const int GAME_PAGE_4 = 4;
 const int GAME_PAGE_5 = 5;
+const int GAME_PAGE_6 = 6;
+const int GAME_PAGE_7_1 = 71;
+const int GAME_PAGE_7_2 = 72;
+const int GAME_PAGE_7_3 = 73;
+const int GAME_PAGE_8 = 8;
 
 //Textures Per Page
 const int TASKBAR_TEXTURES = 2;
@@ -90,7 +95,21 @@ const string GAME_PAGE_3_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_2_WORDS
     NEXT_PAGE};
 const string GAME_PAGE_4_WORDS[TEXT_PAGE_TEXTURES] = {"    The recruiter thanked me and my Dad, shaking hands with us one last time. He futilely attempted to console my mother and walked out the front door, nodding towards my brother as he passed the staircase. Unbeknownst to me, I had entered my journey into manhood with the scribble of a pen.\n    As I drove through my neighborhood on the way to basic training, the families in my neighborhood lined up with signs and American flags in what I thought was support for my decision. Really, it was a small consolation to my family for whatever befell me during my time in service. Both of my parents shed tears, and with some hugging and vigorous handshaking, I left my family and journeyed into manhood. I belonged to my comrades now.\n    I had 3 weeks after graduating from basic training and airborne school to prepare for Ranger Selection. Fortunately, my good friend from high school was there, Ethan, so I was not completely alone. There was another guy which I had befriended during basic training, Cameron Meddock. We spent our evenings in pre-Ranger at the gym doing Ethan\'s torturous workout creations, reading, jamming \"Peanut Butter Jelly\" by Galantis on the way to the chow hall to crush our seventeenth piece of cornbread for the day, or sleeping 10 hours straight. Meddock and I used to butt heads over different army protocols. I tended to be on the rebellious side, while Meddock was a by-the-book straight edge. Ethan was just a chill surfer/snowboarder type from California, who could keep the peace. The three of us were inseparable. We graduated from Ranger Selection together. It was the last time I would ever see Meddock. Ethan and Meddock headed to Second Ranger Battalion out of Washington State. Then I headed to Hunter Army Airfield (HAAF) located in Savannah, Georgia, the home of First Ranger Battalion.",
     NEXT_PAGE};
-const string GAME_PAGE_5_WORDS[TEXT_PAGE_TEXTURES];
+const string GAME_PAGE_5_WORDS[TEXT_PAGE_TEXTURES] = {"    My phone rings and I am lifted out of a deep nap. I see the caller ID, Marsden. He\'s the senior private in my squad \- That is, a private who has been on deployment, but still hasn\'t graduated Ranger School.\n    \"Where are you?!\" he half yells at me, half spits into his phone between labored panting.\n    I check the time, 0910. I was supposed to be at the company operations facility (COF) in my duty uniform by 0845. Uh oh, shouldn\'t have slept so long.\n    \"It doesn\'t matter. Just get here, NOW!!!\" He yells frantically into the phone before hanging up.\n    I throw on my uniform so fast that I forget my belt. I show up to the cage, all the privates in the squad are already dumping sweat. Puddles of it are slowly spreading out on the ground. A sadistic, smiling, team leader looks at me and says, \"Nice of you to join us. Drop. Now.\"\n    I rapidly find a place to elevate my feet. Privates in Ranger Regiment aren\'t even allowed to do normal pushups. We must elevate our feet off the ground by placing them on some object. I start banging out decline pushups.",
+    NEXT_PAGE};
+const string GAME_PAGE_6_WORDS[CHOICE_PAGE_TEXTURES] = {"\"Where were you?\" the sergeant asks. ",
+    "\"I couldn''t find my belt, sergeant.\"",
+    "\"I was sleeping and didn't set an alarm.\"",
+    "\"I don't want to be a ranger anymore. I quit."};
+const string GAME_PAGE_7_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_6_WORDS[1],
+    "I half lie between repetitions.\n    I was dead asleep when Marsden's repeated calls broke through my phone's do not disturb rule.\n    \"So, you just didn't tell anyone and didn't answer your phone. Not only are you late, you're also out of uniform. Everyone, hang from the cage.\" I'm sure he knew I had been dead asleep.",
+     NEXT_PAGE};
+const string GAME_PAGE_7_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_6_WORDS[2],
+    "    You say with utmost honesty, not mentioning your missing belt.\n    \"Well, at least you're honest.\" The sergeant said. \"Everyone else get up. <LAST NAME>, what is your least favorite exercise?\" he asks, smiling.\n    \"Burpees.\" You gasp, winded from the set of decline pushups.\n    \"Maybe too honest. Do burpees,\" He orders, not cutting you a break for your honesty, \"and then after that, hang from the cage.\"\n    You knock out your 25 burpees and jump up to begin your hang.",
+    NEXT_PAGE};
+const string GAME_PAGE_7_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_6_WORDS[3],
+    "    I state, wanting to get out of the impending physical destruction which awaits me. The anxiety of watching my comrades suffer because of my actions has broken me. \"Well you should have done it before you ran here. Hang from the cage.\" the sadist smiled, knowing there was no one to save you from his wrath.",
+    NEXT_PAGE};
 
 
 //Colors {r, g, b, alpha}
@@ -234,6 +253,26 @@ int main( int argc, char* args[] )
                     taskBarEvents();
                     textPageEvents(GAME_PAGE_5);
                     break;
+                case GAME_PAGE_5:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_6);
+                    break;
+                case GAME_PAGE_6:
+                    taskBarEvents();
+                    choicePageEvents(currentPage);
+                    break;
+                case GAME_PAGE_7_1:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_8);
+                    break;
+                case GAME_PAGE_7_2:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_8);
+                    break;                
+                case GAME_PAGE_7_3:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_8);
+                    break;                
                 default:
                     break;
             /*END EVENTS BASED ON PAGE SWITCH STATEMENT*/
@@ -243,8 +282,6 @@ int main( int argc, char* args[] )
         //are supposed to be on
         if (currentPage != newPage) 
         {
-            cout << "current page: " << currentPage << endl;
-            cout << "new page: " << newPage << endl;
             if(!loadMedia())
                 cout << "Failed to load media on page " << newPage << "!\n";
             if (!loadPlayerMedia())
@@ -295,12 +332,30 @@ int main( int argc, char* args[] )
                 playerBarRenderer();
                 postChoicePageRenderer();
                 break;
-            case GAME_PAGE_4:
+            case GAME_PAGE_6:
+                taskBarRenderer();
+                playerBarRenderer();
+                choicePageRenderer();
+                break;
+            case GAME_PAGE_7_1:
+                taskBarRenderer();
+                playerBarRenderer();
+                postChoicePageRenderer();
+                break;
+            case GAME_PAGE_7_2:
+                taskBarRenderer();
+                playerBarRenderer();
+                postChoicePageRenderer();
+                break;
+            case GAME_PAGE_7_3:
+                taskBarRenderer();
+                playerBarRenderer();
+                postChoicePageRenderer();
+                break;
+            default:
                 taskBarRenderer();
                 playerBarRenderer();
                 textPageRenderer();
-                break;
-            default:
                 break;
 
         }
@@ -489,7 +544,18 @@ bool loadMedia()
             }
             break;
         case GAME_PAGE_2:
-            for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++){
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }  
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[0], GREY, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }          
+            for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++){
                 textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 if (textures[i].gFont == NULL)
                 {
@@ -602,6 +668,126 @@ bool loadMedia()
             }
             break;
         case GAME_PAGE_5:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_5_WORDS[i], WHITE, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_6:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }  
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[0], GREY, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }          
+            for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], WHITE, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_7_1:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_7_1_WORDS[0], GREY, dimensions.w / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_1_WORDS[i], WHITE, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_7_2:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_7_2_WORDS[0], GREY, dimensions.w / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_2_WORDS[i], WHITE, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_7_3:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_7_3_WORDS[0], GREY, dimensions.w / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_3_WORDS[i], WHITE, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }        
             break;
     }
 	return true;
@@ -803,6 +989,48 @@ int choicePageEvents(int currentPage) {
             }
             return newPage;
             break;
+        case GAME_PAGE_6:
+            for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
+            {
+                if (textures[i].isMouseOver(textures[i].getRect())){
+                    textColor = GREY;
+                    textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
+                    if(e.type == SDL_MOUSEBUTTONDOWN)
+                    { 
+                        switch (i){
+                            //Average, minus 1 to 2 sanity -- minus 0 to 1 health -- minus 0 2 reputations
+                            case 1: 
+                                newPage = GAME_PAGE_7_1;
+                                gamer.setSanity(gamer.getSanity() - gamer.random(1, 2));
+                                gamer.setRep(gamer.getRep() - gamer.random(0, 2));
+                                gamer.setHealth(gamer.getHealth() - gamer.random(0, 1));
+                                break;
+                            //Heroic, minus 0 to 1 sanity -- reputation no change-- Health minus 1 to 2
+                            case 2:
+                                newPage = GAME_PAGE_7_2;
+                                gamer.setSanity(gamer.getSanity() - gamer.random(0, 1));
+                                break;
+                            //Cowardly Health - 0 1 -- Sanity - 2 4 -- Reputation - 2 4
+                            case 3:
+                                newPage = GAME_PAGE_7_3;
+                                gamer.setSanity(gamer.getSanity() - gamer.random(2, 4));
+                                gamer.setRep(gamer.getRep() - gamer.random(2, 4));
+                                gamer.setHealth(gamer.getHealth() - gamer.random(0,1));
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    textColor = WHITE;
+                    textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                }
+                textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], textColor, dimensions.w/1.3);
+            }
+            return newPage;            
+            break;
         default:
             return newPage;
             break;
@@ -887,3 +1115,5 @@ void textPageRenderer(){
     for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
         textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
+
+
