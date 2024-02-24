@@ -23,7 +23,7 @@
     - I have the pages class, but now I need to load in all of the pages. I also
       have to decide how I will hold the textures whether that be in main or in
       the pages class. Pages class would make sense because then each page can
-      hold its' own texture
+      hold its' own texture.
     - A function to calculate where text should go on a page and ensure that I
       can break up text if it is on a screen that is too small.
 */
@@ -36,18 +36,19 @@ const int START_PAGE = 0;
 const int MAIN_MENU_PAGE = 1;
 const int TUTORIAL_PAGE = 2;
 const int SURVEY_PAGE = 3;
+const int OUTCOME_PAGE = 4;
 const int GAME_PAGE_1 = 10;
 const int GAME_PAGE_2 = 20;
 const int GAME_PAGE_3_1 = 31;
 const int GAME_PAGE_3_2 = 32;
 const int GAME_PAGE_3_3 = 33;
-const int GAME_PAGE_4 = 4;
-const int GAME_PAGE_5 = 5;
-const int GAME_PAGE_6 = 6;
+const int GAME_PAGE_4 = 40;
+const int GAME_PAGE_5 = 50;
+const int GAME_PAGE_6 = 60;
 const int GAME_PAGE_7_1 = 71;
 const int GAME_PAGE_7_2 = 72;
 const int GAME_PAGE_7_3 = 73;
-const int GAME_PAGE_8 = 8;
+const int GAME_PAGE_8 = 80;
 
 //Textures Per Page
 const int TASKBAR_TEXTURES = 2;
@@ -59,6 +60,7 @@ const int QUOTATION_PAGE_TEXTURES = 3;
 const int CHOICE_PAGE_TEXTURES = 4;
 const int POST_CHOICE_PAGE_TEXTURES = 3;
 const int TEXT_PAGE_TEXTURES = 2;
+const int OUTCOME_PAGE_TEXTURES = 2;
 
 
 //Words Per Page
@@ -77,8 +79,7 @@ const string TUTORIAL_WORDS[TUTORIAL_TEXTURES] = {"Tutorial",
     "Ending", 
     "    There are 3 endings. Play the game as a hero, as a human, or as a coward to see each ending." ,
     "Decisions",
-    "    At various points throughout the novel, the player will need to make decisions by clicking on them with their mouse. It is not always clear what the right choice is in these decisions, as it is not always clear in life what decisions one should make. Often, decisions which are competent and correct in one situation are deluded and ineffective in another. Sometimes, there is no correct decision. Other times, decisions need to be made quickly. The decisions in this game are no different. It is meant to display the futility of choice in certain situations and the need for a higher power. Decisions affect health and/or sanity, and reputation."
-};
+    "    At various points throughout the novel, the player will need to make decisions by clicking on them with their mouse. It is not always clear what the right choice is in these decisions, as it is not always clear in life what decisions one should make. Often, decisions which are competent and correct in one situation are deluded and ineffective in another. Sometimes, there is no correct decision. Other times, decisions need to be made quickly. The decisions in this game are no different. It is meant to display the futility of choice in certain situations and the need for a higher power. Decisions affect health and/or sanity, and reputation."};
 const string GAME_PAGE_1_WORDS[QUOTATION_PAGE_TEXTURES] = {"Chapter 1", 
     "To each there comes in their lifetime a special moment when they are figuratively tapped on the shoulder and offered the chance to do a very special thing, unique to them and fitted to their talents. What a tragedy if that moment finds them unprepared or unqualified for that which could have been their finest hour.",  
     "- Winston Churchill"};
@@ -86,6 +87,7 @@ const string GAME_PAGE_2_WORDS[CHOICE_PAGE_TEXTURES] = {"    \"What does it mean
     "\"Military service.\"", 
     "\"There\'s no such thing.\"", 
     "\"I don\'t know.\""};
+string OUTCOME_PAGE_WORDS = "";
 const string GAME_PAGE_3_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = { GAME_PAGE_2_WORDS[1], 
     "    I stated bluntly and confidently to my Dad\'s solemn face. No one could have understood how right I was, not even me. Dad signed his name on the dotted line while Mom sobbed into his shoulder and my little brother looked on from between the staircase balusters, eyes wide. No one in my immediate family had served - I would be the first of my known kindred to range this frontier. The recruiter and my father shook hands and made ceremonious eye contact. Then the recruiter turned to me. I excitedly grabbed the pen and signed my name on the other dotted line, being too young to sign for myself. The recruiter thanked me and my Dad, shaking hands with us one last time.",
     NEXT_PAGE};
@@ -143,8 +145,12 @@ const int WRITING = 24;
 const int MAX_TEXTURES = 20;
 LTexture textures[MAX_TEXTURES];
 LTexture TASKBAR[TASKBAR_TEXTURES];
+
+//Player variables
 LTexture PLAYER_STATS[PLAYER_TEXTURES];
 Player gamer;
+int gamerStatChange[3]; //Holds Health/Sanity/Rep changes
+const string GAMER_STAT[3] = {"health", "sanity", "reputation"};
 
 //Mute button variables
 LTexture MUTE_BUTTON;
@@ -170,6 +176,7 @@ bool gaming = true;
 //The current page variable so the game knows what to load.
 int currentPage = -1;
 int newPage = 1;
+int storePage = -1;
 
 //Starts up SDL and creates window
 bool init();
@@ -192,6 +199,7 @@ int choicePageEvents(int currentPage);
 void textPageEvents(int nextPage);
 void postChoicePageEvents(int nextPage);
 void muteButtonEvents();
+void outcomeEvents(int nextPage);
 
 //Rendering functions to determine what happens for different loaded text
 //depending on page
@@ -204,6 +212,7 @@ void choicePageRenderer();
 void postChoicePageRenderer();
 void textPageRenderer();
 void muteButtonRenderer(bool unMute);
+void outcomePageRenderer();
 
 int main( int argc, char* args[] )
 {
@@ -270,6 +279,9 @@ int main( int argc, char* args[] )
                     taskBarEvents();
                     postChoicePageEvents(GAME_PAGE_4);
                     break;
+                case OUTCOME_PAGE:
+                    taskBarEvents();
+                    outcomeEvents(storePage);
                 case GAME_PAGE_4:
                     taskBarEvents();
                     textPageEvents(GAME_PAGE_5);
@@ -354,6 +366,11 @@ int main( int argc, char* args[] )
                 playerBarRenderer();
                 postChoicePageRenderer();
                 break;
+            case OUTCOME_PAGE:
+                taskBarRenderer();
+                playerBarRenderer();
+                outcomePageRenderer();
+                break;
             case GAME_PAGE_6:
                 taskBarRenderer();
                 playerBarRenderer();
@@ -374,7 +391,7 @@ int main( int argc, char* args[] )
                 playerBarRenderer();
                 postChoicePageRenderer();
                 break;
-            default:
+            default: //Default is for regular text pages
                 taskBarRenderer();
                 playerBarRenderer();
                 textPageRenderer();
@@ -691,6 +708,39 @@ bool loadMedia()
                     printf( "Failed to render text texture!\n" );
                     return false;
                 }
+            }
+            break;
+        case OUTCOME_PAGE:
+            OUTCOME_PAGE_WORDS = "";
+            for (int i = 0; i < 3; i++) {
+                if (gamerStatChange[i] > 0){
+                    OUTCOME_PAGE_WORDS.append("You gained " + to_string(gamerStatChange[i]) + ' ' + GAMER_STAT[i] + ".\n");
+                }
+                else if (gamerStatChange[i] < 0)
+                    OUTCOME_PAGE_WORDS.append("You lost " + to_string(gamerStatChange[i]) + ' ' + GAMER_STAT[i] + ".\n");
+            }
+            cout << OUTCOME_PAGE_WORDS << endl;
+            textures[OUTCOME_PAGE_TEXTURES - 2].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+            if (textures[OUTCOME_PAGE_TEXTURES - 2].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[OUTCOME_PAGE_TEXTURES - 2].loadFromRenderedText(renderer, OUTCOME_PAGE_WORDS, TAN, dimensions.w / 1.3))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            textures[OUTCOME_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+            if (textures[OUTCOME_PAGE_TEXTURES - 1].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, "Continue", TAN, dimensions.w / 1.3))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
             }
             break;
         case GAME_PAGE_4:
@@ -1018,22 +1068,35 @@ int choicePageEvents(int currentPage) {
                     if(e.type == SDL_MOUSEBUTTONDOWN)
                     { 
                         switch (i){
-                            //Heroic, minus 0 to 1 sanity -- No change in rep or health
+                            //Heroic, minus 0 to 1 sanity -- increase 0 to 2 rep, No change in health
                             case 1: 
-                                newPage = GAME_PAGE_3_1;
-                                gamer.setSanity(gamer.getSanity() - gamer.random(0, 1));
+                                newPage = OUTCOME_PAGE;
+                                storePage = GAME_PAGE_3_1;
+                                gamerStatChange[0] = 0;
+                                gamerStatChange[1] = gamer.random(-1, 0);
+                                gamerStatChange[2] = gamer.random(0, 2);
+                                gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
+                                gamer.setRep(gamer.getRep() + gamerStatChange[2]);
                                 break;
                             //Cowardly, minus 1 to 3 sanity -- minus 0 to 2 reputation
                             case 2:
-                                newPage = GAME_PAGE_3_2;
-                                gamer.setSanity(gamer.getSanity() - gamer.random(1, 3));
-                                gamer.setRep(gamer.getRep() - gamer.random(0,2));
+                                newPage = OUTCOME_PAGE;
+                                storePage = GAME_PAGE_3_2;
+                                gamerStatChange[0] = 0;
+                                gamerStatChange[1] = gamer.random(-3, -1);
+                                gamerStatChange[2] = gamer.random(-2, 0);
+                                gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
+                                gamer.setRep(gamer.getRep() + gamerStatChange[2]);
                                 break;
                             //Average - 0 to 2 sanity -- minus 0 to 1 reputation
                             case 3:
-                                newPage = GAME_PAGE_3_3;
-                                gamer.setSanity(gamer.getSanity() - gamer.random(0, 2));
-                                gamer.setRep(gamer.getRep() - gamer.random(0,1));
+                                newPage = OUTCOME_PAGE;
+                                storePage = GAME_PAGE_3_3;
+                                gamerStatChange[0] = 0;
+                                gamerStatChange[1] = gamer.random(-2, 0);
+                                gamerStatChange[2] = gamer.random(-1, 0);
+                                gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
+                                gamer.setRep(gamer.getRep() + gamerStatChange[2]);                             
                                 break;
                             default:
                                 break;
@@ -1146,6 +1209,26 @@ void muteButtonEvents(){
 
 }
 
+void outcomeEvents(int nextPage){
+    if (textures[OUTCOME_PAGE_TEXTURES - 1].isMouseOver(textures[OUTCOME_PAGE_TEXTURES - 1].getRect())){
+        textColor = GREY;
+        textures[OUTCOME_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+        if(e.type == SDL_MOUSEBUTTONDOWN){
+            newPage = nextPage;
+            storePage = -1;
+        }
+    }
+    else{
+        textColor = WHITE;
+        textures[OUTCOME_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+    }
+    //Ensure that there is a non-null value in the texture being rendered.
+    //Return NEXT PAGE if not
+    if (textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, textures[OUTCOME_PAGE_TEXTURES - 1].getWord(), textColor, dimensions.w/1.3))
+        return;
+    textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, "Continue", textColor, dimensions.w/1.3);  
+}
+
 void mainMenuRenderer(){
 for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
     textures[i].render((dimensions.w * (i + .5) / MAIN_MENU_TEXTURES + 1) - textures[i].getWidth() / 2, ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
@@ -1198,6 +1281,11 @@ void textPageRenderer(){
 
 void muteButtonRenderer(bool unMute){
     MUTE_BUTTON.render(0,0, &MUTE_BUTTON_SPRITES[unMute], 0, NULL, SDL_FLIP_NONE, renderer);
+}
+
+void outcomePageRenderer(){
+    for (int i = 0; i < OUTCOME_PAGE_TEXTURES; i++)
+        textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() / 2 + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);    
 }
 
 
