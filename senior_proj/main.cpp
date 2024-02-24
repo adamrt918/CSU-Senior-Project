@@ -24,6 +24,8 @@
       have to decide how I will hold the textures whether that be in main or in
       the pages class. Pages class would make sense because then each page can
       hold its' own texture
+    - A function to calculate where text should go on a page and ensure that I
+      can break up text if it is on a screen that is too small.
 */
 
 using namespace std;
@@ -93,9 +95,15 @@ const string GAME_PAGE_3_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_2_WORDS
 const string GAME_PAGE_3_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_2_WORDS[3], 
     "    I stated timidly, unsure of what the future held for me. My father sighed deeply. My whole life he had attempted to impart to me the meaning of manhood - discipline, accountability, and love. It wasn\'t that he disproved of my decision. It was that he was ashamed of his own ability to impart this one important aspect of adulthood into the life of his young son. Now, I would embark upon this journey without his guidance. Dad reached out to hand the pen to me. I paused to reconsider my decision. \n    \"Sign here.\" The recruiter pointed. \n    I took the pen and signed my name, not because of my own strength, but because I did not want to upset my recruiter.",
     NEXT_PAGE};
-const string GAME_PAGE_4_WORDS[TEXT_PAGE_TEXTURES] = {"    The recruiter thanked me and my Dad, shaking hands with us one last time. He futilely attempted to console my mother and walked out the front door, nodding towards my brother as he passed the staircase. Unbeknownst to me, I had entered my journey into manhood with the scribble of a pen.\n    As I drove through my neighborhood on the way to basic training, the families in my neighborhood lined up with signs and American flags in what I thought was support for my decision. Really, it was a small consolation to my family for whatever befell me during my time in service. Both of my parents shed tears, and with some hugging and vigorous handshaking, I left my family and journeyed into manhood. I belonged to my comrades now.\n    I had 3 weeks after graduating from basic training and airborne school to prepare for Ranger Selection. Fortunately, my good friend from high school was there, Ethan, so I was not completely alone. There was another guy which I had befriended during basic training, Cameron Meddock. We spent our evenings in pre-Ranger at the gym doing Ethan\'s torturous workout creations, reading, jamming \"Peanut Butter Jelly\" by Galantis on the way to the chow hall to crush our seventeenth piece of cornbread for the day, or sleeping 10 hours straight. Meddock and I used to butt heads over different army protocols. I tended to be on the rebellious side, while Meddock was a by-the-book straight edge. Ethan was just a chill surfer/snowboarder type from California, who could keep the peace. The three of us were inseparable. We graduated from Ranger Selection together. It was the last time I would ever see Meddock. Ethan and Meddock headed to Second Ranger Battalion out of Washington State. Then I headed to Hunter Army Airfield (HAAF) located in Savannah, Georgia, the home of First Ranger Battalion.",
-    NEXT_PAGE};
-const string GAME_PAGE_5_WORDS[TEXT_PAGE_TEXTURES] = {"    My phone rings and I am lifted out of a deep nap. I see the caller ID, Marsden. He\'s the senior private in my squad \- That is, a private who has been on deployment, but still hasn\'t graduated Ranger School.\n    \"Where are you?!\" he half yells at me, half spits into his phone between labored panting.\n    I check the time, 0910. I was supposed to be at the company operations facility (COF) in my duty uniform by 0845. Uh oh, shouldn\'t have slept so long.\n    \"It doesn\'t matter. Just get here, NOW!!!\" He yells frantically into the phone before hanging up.\n    I throw on my uniform so fast that I forget my belt. I show up to the cage, all the privates in the squad are already dumping sweat. Puddles of it are slowly spreading out on the ground. A sadistic, smiling, team leader looks at me and says, \"Nice of you to join us. Drop. Now.\"\n    I rapidly find a place to elevate my feet. Privates in Ranger Regiment aren\'t even allowed to do normal pushups. We must elevate our feet off the ground by placing them on some object. I start banging out decline pushups.",
+const string GAME_PAGE_4_WORDS[TEXT_PAGE_TEXTURES] = {"    The recruiter futilely attempted to console my mother and walked out the front door, nodding towards my brother as he passed the staircase. Unbeknownst to me, I had entered my journey into manhood with the scribble of a pen.\n    As I drove through my neighborhood on the way to basic training, the families in my neighborhood lined up with signs and American flags in what I thought was support for my decision. Really, it was a small consolation to my family for whatever befell me during my time in service. Both of my parents shed tears, and with some hugging and vigorous handshaking, I left my family and journeyed into manhood. I belonged to my comrades now.\n    I had 3 weeks after graduating from basic training and airborne school to prepare for Ranger Selection. Fortunately, my good friend from high school was there, Ethan, so I was not completely alone. There was another guy which I had befriended during basic training, Cameron Meddock. We spent our evenings in pre-Ranger at the gym doing Ethan\'s torturous workout creations, reading, jamming \"Peanut Butter Jelly\" by Galantis on the way to the chow hall to crush our seventeenth piece of cornbread for the day, or sleeping 10 hours straight. Meddock and I used to butt heads over different army protocols. I tended to be on the rebellious side, while Meddock was a by-the-book straight edge. Ethan was just a chill surfer/snowboarder type from California, who could keep the peace. The three of us were inseparable. We graduated from Ranger Selection together. It was the last time I would ever see Meddock. Ethan and Meddock headed to Second Ranger Battalion out of Washington State. Then I headed to Hunter Army Airfield (HAAF) located in Savannah, Georgia, the home of First Ranger Battalion.",
+    "How is Regiment?"};
+const string GAME_PAGE_5_WORDS[TEXT_PAGE_TEXTURES] = {"    My phone rings and I am lifted out of a deep nap. I see the caller ID, Marsden. He\'s the senior private in my squad - That is, a private who has been on deployment, but still hasn\'t graduated Ranger School.\n"
+    "    \"Where are you?!\" he half yells at me, half spits into his phone between labored panting.\n"
+    "    I check the time, 0910. I was supposed to be at the company operations facility (COF) in my duty uniform by 0845. Uh oh, shouldn\'t have slept so long.\n"
+    "    \"It doesn\'t matter. Just get here, NOW!!!\" He yells frantically into the phone before hanging up.\n"
+    "    I throw on my uniform so fast that I forget my belt. I show up to the cage, all the privates in the squad are already dumping sweat. Puddles of it are slowly spreading out on the ground.\n"
+    "    A sadistic, smiling, team leader looks at me and says, \"Nice of you to join us. Drop. Now.\"\n"
+    "    I rapidly find a place to elevate my feet. Privates in Ranger Regiment aren\'t even allowed to do normal pushups. We must elevate our feet off the ground by placing them on some object. I start banging out decline pushups.",
     NEXT_PAGE};
 const string GAME_PAGE_6_WORDS[CHOICE_PAGE_TEXTURES] = {"\"Where were you?\" the sergeant asks. ",
     "\"I couldn''t find my belt, sergeant.\"",
@@ -110,7 +118,11 @@ const string GAME_PAGE_7_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_6_WORDS
 const string GAME_PAGE_7_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_6_WORDS[3],
     "    I state, wanting to get out of the impending physical destruction which awaits me. The anxiety of watching my comrades suffer because of my actions has broken me. \"Well you should have done it before you ran here. Hang from the cage.\" the sadist smiled, knowing there was no one to save you from his wrath.",
     NEXT_PAGE};
-
+const string GAME_PAGE_8_WORDS[TEXT_PAGE_TEXTURES] = {"    Ranger squads reside in the COF which is something resembling a WWE cage match. Lord knows that as a private, every day felt like it. When I went to work in the morning, I would enter Delta Company\'s COF, then enter my squad\'s cage. There was chain link surrounding the entire squad cage with all our gear, to include chain link on the ceiling. The only entrance is through the chain link door between the lockers. The cage is a literal prison when one is a private.\n"    
+    "    When my team leader told me to hang from the cage, I jumped to grab the chain link ceiling surrounding me. It was a barbaric practice. The space between intersections of the chain link was not big enough to fit two fingers comfortably; however, one\'s hand would be too stretched out to fit every finger in its own space. One could painfully jam their pinky into the space with their ring finger, tearing skin and cutting off blood flow to both, or leave one finger\'s worth of strength out of the equation, lessening one\'s ability to hang on for long periods of time. With the sadist breathing fire down my neck, I wanted to hang on for as long as possible.\n"
+    "    The protective paint on the chain link had worn off from the privates who had to hang on the cage before me, and the privates who had to hang on the cage before them, and so on. The bodyweight of the individual caused the raw metal chain link to tear skin like a sandpaper blade directly to the joints of one\'s fingers. Eventually, the chain link would saw deep enough to draw blood. One could not hold on much longer than a minute or so, but with a team leader breathing fire down my neck, I must have held onto the chain link for about fifteen minutes - an eternity in such a situation. Hazing cuts deeper than the skin, but not as deep as artillery shrapnel or a bullet.\n"
+    "    I did not consider these incidents hazing, but training, and they occurred often during my years as a private. These incidents taught me valuable lessons. There was a shoot house on HAAF named after Bradley Crose, a fallen Ranger. For physical exercise in the morning, the squad would sometimes run about two miles to the shoot house with full kit, weapons, and night vision to practice close quarters battle (CQB). Unfortunately, this was 2015. I was new to Ranger Regiment, so the entire trip to Bradley Crose consisted of my team leader crushing the new guys of the squad.", 
+    NEXT_PAGE};
 
 //Colors {r, g, b, alpha}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
@@ -133,6 +145,12 @@ LTexture TASKBAR[TASKBAR_TEXTURES];
 LTexture PLAYER_STATS[PLAYER_TEXTURES];
 Player gamer;
 
+//Mute button variables
+LTexture MUTE_BUTTON;
+SDL_Rect MUTE_BUTTON_SPRITES[2];
+bool playMusic = true;
+Mix_Music *gMusic = NULL; //Music for background
+
 //Monitor data
 SDL_DisplayMode dimensions;
 
@@ -141,9 +159,6 @@ SDL_Window* gWindow = NULL;
 
 //Renderer
 SDL_Renderer* renderer;
-
-//Music for background
-Mix_Music *gMusic = NULL;
 
 //Event handler
 SDL_Event e;
@@ -175,6 +190,7 @@ void quotationPageEvents(int currentPage, int nextPage);
 int choicePageEvents(int currentPage);
 void textPageEvents(int nextPage);
 void postChoicePageEvents(int nextPage);
+void muteButtonEvents();
 
 //Rendering functions to determine what happens for different loaded text
 //depending on page
@@ -186,6 +202,7 @@ void quotationPageRenderer();
 void choicePageRenderer();
 void postChoicePageRenderer();
 void textPageRenderer();
+void muteButtonRenderer(bool unMute);
 
 int main( int argc, char* args[] )
 {
@@ -214,6 +231,9 @@ int main( int argc, char* args[] )
             //User requests quit
             if( e.type == SDL_QUIT )
                 gaming = false;
+            
+            //User wants to mute/unmute the music
+            muteButtonEvents();
 
             //Handle events based on the page
             /*START SWITCH STATEMENT FOR EVENTS BASED ON PAGE*/
@@ -274,6 +294,7 @@ int main( int argc, char* args[] )
                     postChoicePageEvents(GAME_PAGE_8);
                     break;                
                 default:
+                    taskBarEvents();
                     break;
             /*END EVENTS BASED ON PAGE SWITCH STATEMENT*/
             }
@@ -360,6 +381,9 @@ int main( int argc, char* args[] )
 
         }
         /*End switch for rendering frames*/
+
+        //Render the mute button on top of every frame
+        muteButtonRenderer(playMusic);
 
         //Update screen
         SDL_RenderPresent(renderer);
@@ -470,6 +494,24 @@ bool loadMedia()
 		return false;
 	}
     
+    //Load the mute/unmute button
+    if (!MUTE_BUTTON.loadFromFile("resources/mute_buttons.png", renderer)){
+        cout << "Failed to load mute button texture!" << endl;
+        return false;
+    }
+    //Clip the picture of the mute buttons I want to use
+    else {
+        MUTE_BUTTON_SPRITES[0].x = 0;
+        MUTE_BUTTON_SPRITES[0].y = 0;
+        MUTE_BUTTON_SPRITES[0].w = MUTE_BUTTON.getWidth() / 4;
+        MUTE_BUTTON_SPRITES[0].h = MUTE_BUTTON.getHeight();
+        MUTE_BUTTON_SPRITES[1].x = (MUTE_BUTTON.getWidth() / 4) * 3;
+        MUTE_BUTTON_SPRITES[1].y = 0;
+        MUTE_BUTTON_SPRITES[1].w = MUTE_BUTTON.getWidth() / 4;
+        MUTE_BUTTON_SPRITES[1].h = MUTE_BUTTON.getHeight();
+    }
+
+
     //This is for loading the different page textures
     switch (newPage)
     {
@@ -789,6 +831,23 @@ bool loadMedia()
                 }
             }        
             break;
+        case GAME_PAGE_8:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_8_WORDS[i], WHITE, dimensions.w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
     }
 	return true;
 }
@@ -1049,7 +1108,12 @@ void textPageEvents(int nextPage){
         textColor = WHITE;
         textures[TEXT_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
     }
-    textures[TEXT_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, NEXT_PAGE, textColor, dimensions.w/1.3);  
+    //Ensure that there is a non-null value in the texture being rendered.
+    //Return NEXT PAGE if not
+    if (textures[TEXT_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, textures[TEXT_PAGE_TEXTURES - 1].getWord(), textColor, dimensions.w/1.3))
+        return;
+    else 
+        textures[TEXT_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, NEXT_PAGE, textColor, dimensions.w/1.3);  
 }
 
 void postChoicePageEvents(int nextPage){
@@ -1064,6 +1128,21 @@ void postChoicePageEvents(int nextPage){
         textures[POST_CHOICE_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
     }
     textures[POST_CHOICE_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, NEXT_PAGE, textColor, dimensions.w/1.3);  
+}
+
+void muteButtonEvents(){
+    if (MUTE_BUTTON.isMouseOver(MUTE_BUTTON.getRect()))
+        if (e.type == SDL_MOUSEBUTTONDOWN)
+            if (!playMusic){
+                playMusic = true;
+                Mix_VolumeMusic(128);
+            }
+            else {
+                playMusic = false;
+                Mix_VolumeMusic(0);
+            }
+    
+
 }
 
 void mainMenuRenderer(){
@@ -1113,7 +1192,11 @@ void postChoicePageRenderer(){
 
 void textPageRenderer(){
     for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
-        textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() / 2 + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+}
+
+void muteButtonRenderer(bool unMute){
+    MUTE_BUTTON.render(0,0, &MUTE_BUTTON_SPRITES[unMute], 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 

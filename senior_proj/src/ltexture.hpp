@@ -51,6 +51,9 @@ class LTexture
         int getWidth();
         int getHeight();
 
+        //Gets the word
+        string getWord();
+
     private:
         //The actual hardware texture
         SDL_Texture* mTexture;
@@ -61,6 +64,9 @@ class LTexture
         //Image dimensions
         int mWidth;
         int mHeight;
+
+        //Word of the texture being displayed.
+        string word;
 };
 
 #include "ltexture.cpp"

@@ -6,6 +6,7 @@ LTexture::LTexture()
     mTexture = NULL;
     mWidth = 0;
     mHeight = 0;
+    word = "";
 }
 
 LTexture::~LTexture()
@@ -56,6 +57,9 @@ bool LTexture::loadFromRenderedText(SDL_Renderer* gRenderer, std::string texture
     //Get rid of preexisting texture
     free();
 
+    //Add the text to the word variable.
+    word = textureText;
+
     //Render text surface
     SDL_Surface* textSurface = TTF_RenderText_Solid( gFont, textureText.c_str(), textColor );
     if( textSurface == NULL )
@@ -86,6 +90,9 @@ bool LTexture::loadFromRenderedText(SDL_Renderer* gRenderer, std::string texture
 {
      //Get rid of preexisting texture
     free();
+
+    //Add the text to the word variable.
+    word = textureText;
 
     //Render text surface
     SDL_Surface* textSurface = TTF_RenderText_Blended_Wrapped( gFont, textureText.c_str(), textColor, wrapLength );
@@ -162,5 +169,7 @@ int LTexture::getHeight()
 {
     return mHeight;
 }
+
+string LTexture::getWord(){return word;}
 
 #endif
