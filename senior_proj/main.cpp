@@ -127,9 +127,10 @@ const string GAME_PAGE_8_WORDS[TEXT_PAGE_TEXTURES] = {"    Ranger squads reside 
 //Colors {r, g, b, alpha}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
 const SDL_Color RED = {255, 0, 0, SDL_ALPHA_OPAQUE};
-const SDL_Color WHITE = {255, 255, 255, SDL_ALPHA_OPAQUE};
+const SDL_Color TAN = {210, 180, 140, SDL_ALPHA_OPAQUE};
 const SDL_Color GREY = {128, 128, 128, SDL_ALPHA_OPAQUE};
-SDL_Color textColor = {255, 255, 255, SDL_ALPHA_OPAQUE}; //Text color white for use in the main loop.
+const SDL_Color WHITE = {255, 255, 255, SDL_ALPHA_OPAQUE};
+SDL_Color textColor = WHITE; //Text color white for initial use in the main loop.
 
 //Text sizes
 const int HEADING_1 = 72;
@@ -565,7 +566,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[0], WHITE, dimensions.w / 3))
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[0], TAN, dimensions.w / 3))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -578,7 +579,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[i], WHITE, dimensions.w / 3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[i], TAN, dimensions.w / 3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -605,7 +606,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], TAN, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -632,7 +633,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[i], TAN, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -659,7 +660,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_2_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_2_WORDS[i], TAN, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -685,7 +686,7 @@ bool loadMedia()
                     printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                     return false;
                 }
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_3_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_3_WORDS[i], TAN, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -702,7 +703,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_4_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_4_WORDS[i], TAN, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -719,7 +720,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_5_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_5_WORDS[i], TAN, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -746,7 +747,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], TAN, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -772,7 +773,7 @@ bool loadMedia()
                     printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                     return false;
                 }
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_1_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_1_WORDS[i], TAN, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -798,7 +799,7 @@ bool loadMedia()
                     printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                     return false;
                 }
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_2_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_2_WORDS[i], TAN, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -824,7 +825,7 @@ bool loadMedia()
                     printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                     return false;
                 }
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_3_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_3_WORDS[i], TAN, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -841,7 +842,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_8_WORDS[i], WHITE, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_8_WORDS[i], TAN, dimensions.w / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -996,7 +997,7 @@ void quotationPageEvents(int currentPage, int nextPage) {
             }
             else
             {
-                textColor = WHITE;
+                textColor = TAN;
                 textures[2].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", QUOTATION);
             }
             textures[2].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[2], textColor, dimensions.w/3);
@@ -1041,7 +1042,7 @@ int choicePageEvents(int currentPage) {
                 }
                 else
                 {
-                    textColor = WHITE;
+                    textColor = TAN;
                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 }
                 textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], textColor, dimensions.w/1.3);
@@ -1083,7 +1084,7 @@ int choicePageEvents(int currentPage) {
                 }
                 else
                 {
-                    textColor = WHITE;
+                    textColor = TAN;
                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 }
                 textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], textColor, dimensions.w/1.3);
@@ -1105,7 +1106,7 @@ void textPageEvents(int nextPage){
             newPage = nextPage;
     }
     else{
-        textColor = WHITE;
+        textColor = TAN;
         textures[TEXT_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
     }
     //Ensure that there is a non-null value in the texture being rendered.
@@ -1124,7 +1125,7 @@ void postChoicePageEvents(int nextPage){
             newPage = nextPage;
     }
     else{
-        textColor = WHITE;
+        textColor = TAN;
         textures[POST_CHOICE_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
     }
     textures[POST_CHOICE_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, NEXT_PAGE, textColor, dimensions.w/1.3);  
