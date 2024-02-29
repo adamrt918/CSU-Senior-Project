@@ -17,6 +17,12 @@ class LTexture
 {
 
     public:
+        const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
+        const SDL_Color RED = {255, 0, 0, SDL_ALPHA_OPAQUE};
+        const SDL_Color TAN = {210, 180, 140, SDL_ALPHA_OPAQUE};
+        const SDL_Color GREY = {128, 128, 128, SDL_ALPHA_OPAQUE};
+        const SDL_Color WHITE = {255, 255, 255, SDL_ALPHA_OPAQUE};
+        
         //Globally used font
         TTF_Font* gFont = NULL;
 

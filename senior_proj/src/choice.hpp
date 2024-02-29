@@ -10,22 +10,31 @@
 
 using namespace std;
 
-//Choice class for the type of choice and games functions used.
+//Choice class for the type of choice, the text, and the games functions used.
 class Choice
 {
     public:
-        const int HERO = 0;
-        const int NORMAL = 1;
-        const int COWARD = 2;
 
         Choice();
         ~Choice();
 
+
+        // Getters and setters
+        int getChoiceType();
+        void setChoiceType(int type);
+
+        string getChoiceText();
+        void setChoiceText(string response);
+
+        int* getChoiceFactor();
+        void setChoiceFactor(int lower, int upper);
         
-    private:
-        
-        //Choice type
-        int choiceType;
+    private:        
+        int choiceType; //Choice type 0 is hero, 1 is average, 2 is cowardly
+        string choiceText; //Holds the actual text to be rendered
+        int choiceFactor[2]; // Holds the upper and lower bounds for random number selection
+
+
 
 };
 

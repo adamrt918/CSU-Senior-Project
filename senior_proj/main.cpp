@@ -8,6 +8,7 @@
 #include <cmath>
 #include <../ltexture.hpp>
 #include <../player.hpp>
+#include <../choicePage.hpp>
 #include <vector>
 
 /*Notes
@@ -158,8 +159,12 @@ SDL_Rect MUTE_BUTTON_SPRITES[2];
 bool playMusic = true;
 Mix_Music *gMusic = NULL; //Music for background
 
+//Choice Variables
+ChoicePage choicePage;
+
 //Monitor data
 SDL_DisplayMode dimensions;
+Window dms;
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -427,15 +432,11 @@ bool init()
         return false;
     }
 
-    //Get monitor dimensions
-    if (SDL_GetCurrentDisplayMode(0, &dimensions) != 0)
-    {
-        printf("Unable to get display mode: %s", SDL_GetError());
-        return false;
-    }
+    //Get Monitor dimension
+    dms.initWindow();
 
     //Create window
-    gWindow = SDL_CreateWindow( "A Solemn Evolution", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, dimensions.w, dimensions.h, SDL_WINDOW_SHOWN );
+    gWindow = SDL_CreateWindow( "A Solemn Evolution", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, dms.w(), dms.h(), SDL_WINDOW_SHOWN );
     if( gWindow == NULL )
     {
         printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -567,7 +568,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, TUTORIAL_WORDS[i], textColor, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, TUTORIAL_WORDS[i], textColor, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -583,7 +584,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[0], TAN, dimensions.w / 3))
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[0], TAN, dms.w() / 3))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -596,7 +597,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[i], TAN, dimensions.w / 3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[i], TAN, dms.w() / 3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -604,31 +605,7 @@ bool loadMedia()
             }
             break;
         case GAME_PAGE_2:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-            if (textures[0].gFont == NULL)
-            {
-                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
-                return false;
-            }  
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[0], GREY, dimensions.w / 1.3))
-                {
-                    printf( "Failed to render text texture!\n" );
-                    return false;
-                }          
-            for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++){
-                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-                if (textures[i].gFont == NULL)
-                {
-                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
-                    return false;
-                }
-                //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], TAN, dimensions.w / 1.3))
-                {
-                    printf( "Failed to render text texture!\n" );
-                    return false;
-                }
-            }
+            // choicePage.loadMedia(textures);
             break;
         case GAME_PAGE_3_1:
             textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
@@ -637,7 +614,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[0], GREY, dimensions.w / 2.5))
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[0], GREY, dms.w() / 2.5))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -650,7 +627,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[i], TAN, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_1_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -664,7 +641,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_2_WORDS[0], GREY, dimensions.w / 2.5))
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_2_WORDS[0], GREY, dms.w() / 2.5))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -677,7 +654,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_2_WORDS[i], TAN, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_2_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -691,7 +668,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_3_WORDS[0], GREY, dimensions.w / 2.5))
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_3_3_WORDS[0], GREY, dms.w() / 2.5))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -703,7 +680,7 @@ bool loadMedia()
                     printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                     return false;
                 }
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_3_WORDS[i], TAN, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_3_3_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -726,7 +703,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[OUTCOME_PAGE_TEXTURES - 2].loadFromRenderedText(renderer, OUTCOME_PAGE_WORDS, TAN, dimensions.w / 1.3))
+            if (!textures[OUTCOME_PAGE_TEXTURES - 2].loadFromRenderedText(renderer, OUTCOME_PAGE_WORDS, TAN, dms.w() / 1.3))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -737,7 +714,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, "Continue", TAN, dimensions.w / 1.3))
+            if (!textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, "Continue", TAN, dms.w() / 1.3))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -753,7 +730,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_4_WORDS[i], TAN, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_4_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -770,7 +747,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_5_WORDS[i], TAN, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_5_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -784,7 +761,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }  
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[0], GREY, dimensions.w / 1.3))
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[0], GREY, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -797,7 +774,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], TAN, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -811,7 +788,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_7_1_WORDS[0], GREY, dimensions.w / 2.5))
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_7_1_WORDS[0], GREY, dms.w() / 2.5))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -823,7 +800,7 @@ bool loadMedia()
                     printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                     return false;
                 }
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_1_WORDS[i], TAN, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_1_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -837,7 +814,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_7_2_WORDS[0], GREY, dimensions.w / 2.5))
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_7_2_WORDS[0], GREY, dms.w() / 2.5))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -849,7 +826,7 @@ bool loadMedia()
                     printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                     return false;
                 }
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_2_WORDS[i], TAN, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_2_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -863,7 +840,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_7_3_WORDS[0], GREY, dimensions.w / 2.5))
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_7_3_WORDS[0], GREY, dms.w() / 2.5))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -875,7 +852,7 @@ bool loadMedia()
                     printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                     return false;
                 }
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_3_WORDS[i], TAN, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_7_3_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -892,7 +869,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_8_WORDS[i], TAN, dimensions.w / 1.3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_8_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -1050,7 +1027,7 @@ void quotationPageEvents(int currentPage, int nextPage) {
                 textColor = TAN;
                 textures[2].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", QUOTATION);
             }
-            textures[2].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[2], textColor, dimensions.w/3);
+            textures[2].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[2], textColor, dms.w()/3);
             break;
         default:
             break;
@@ -1108,7 +1085,7 @@ int choicePageEvents(int currentPage) {
                     textColor = TAN;
                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 }
-                textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], textColor, dimensions.w/1.3);
+                textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], textColor, dms.w()/1.3);
             }
             return newPage;
             break;
@@ -1150,7 +1127,7 @@ int choicePageEvents(int currentPage) {
                     textColor = TAN;
                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 }
-                textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], textColor, dimensions.w/1.3);
+                textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], textColor, dms.w()/1.3);
             }
             return newPage;            
             break;
@@ -1174,10 +1151,10 @@ void textPageEvents(int nextPage){
     }
     //Ensure that there is a non-null value in the texture being rendered.
     //Return NEXT PAGE if not
-    if (textures[TEXT_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, textures[TEXT_PAGE_TEXTURES - 1].getWord(), textColor, dimensions.w/1.3))
+    if (textures[TEXT_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, textures[TEXT_PAGE_TEXTURES - 1].getWord(), textColor, dms.w()/1.3))
         return;
     else 
-        textures[TEXT_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, NEXT_PAGE, textColor, dimensions.w/1.3);  
+        textures[TEXT_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, NEXT_PAGE, textColor, dms.w()/1.3);  
 }
 
 void postChoicePageEvents(int nextPage){
@@ -1191,7 +1168,7 @@ void postChoicePageEvents(int nextPage){
         textColor = TAN;
         textures[POST_CHOICE_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
     }
-    textures[POST_CHOICE_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, NEXT_PAGE, textColor, dimensions.w/1.3);  
+    textures[POST_CHOICE_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, NEXT_PAGE, textColor, dms.w()/1.3);  
 }
 
 void muteButtonEvents(){
@@ -1224,59 +1201,59 @@ void outcomeEvents(int nextPage){
     }
     //Ensure that there is a non-null value in the texture being rendered.
     //Return NEXT PAGE if not
-    if (textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, textures[OUTCOME_PAGE_TEXTURES - 1].getWord(), textColor, dimensions.w/1.3))
+    if (textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, textures[OUTCOME_PAGE_TEXTURES - 1].getWord(), textColor, dms.w()/1.3))
         return;
-    textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, "Continue", textColor, dimensions.w/1.3);  
+    textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, "Continue", textColor, dms.w()/1.3);  
 }
 
 void mainMenuRenderer(){
 for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
-    textures[i].render((dimensions.w * (i + .5) / MAIN_MENU_TEXTURES + 1) - textures[i].getWidth() / 2, ( dimensions.h - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    textures[i].render((dms.w() * (i + .5) / MAIN_MENU_TEXTURES + 1) - textures[i].getWidth() / 2, ( dms.h() - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 void taskBarRenderer(){
 for (int i = 0; i < TASKBAR_TEXTURES; i++)
-    TASKBAR[i].render((dimensions.w * (1 + i) / 3) - (TASKBAR[i].getWidth() / 2), (TASKBAR[i].getHeight() / 2), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    TASKBAR[i].render((dms.w() * (1 + i) / 3) - (TASKBAR[i].getWidth() / 2), (TASKBAR[i].getHeight() / 2), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 void tutorialRenderer(){
     for (int i = 0; i < TUTORIAL_TEXTURES; i++){
         if (i == 0)
-            textures[i].render((dimensions.w / 2) - textures[i].getWidth() / 2, (dimensions.h / 8) - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+            textures[i].render((dms.w() / 2) - textures[i].getWidth() / 2, (dms.h() / 8) - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
         else if (i % 2 == 1)
-            textures[i].render((dimensions.w / 2) - textures[i].getWidth() / 2, (dimensions.h / 8) + totalHeight(i) + 10 * i , NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+            textures[i].render((dms.w() / 2) - textures[i].getWidth() / 2, (dms.h() / 8) + totalHeight(i) + 10 * i , NULL, 0, NULL, SDL_FLIP_NONE, renderer);
         else
-            textures[i].render((dimensions.w / 2) - textures[i].getWidth() / 2, (dimensions.h / 8) + totalHeight(i) + 10 * i, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+            textures[i].render((dms.w() / 2) - textures[i].getWidth() / 2, (dms.h() / 8) + totalHeight(i) + 10 * i, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
     }
 }
 
 void quotationPageRenderer(){
-    textures[0].render(dimensions.w / 2 - textures[0].getWidth() / 2, dimensions.h / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    textures[0].render(dms.w() / 2 - textures[0].getWidth() / 2, dms.h() / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
         for (int i = 1; i < QUOTATION_PAGE_TEXTURES; i++){
-            textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+            textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
         }
 }
 
 void choicePageRenderer(){
     for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++)
-        textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 void playerBarRenderer(){
     for (int i = 0; i < PLAYER_TEXTURES; i++)
-        PLAYER_STATS[i].render((dimensions.w * (1 + i) / 4 - PLAYER_STATS[i].getWidth() / 2), dimensions.h / 8 - PLAYER_STATS[i].getHeight() * 4, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        PLAYER_STATS[i].render((dms.w() * (1 + i) / 4 - PLAYER_STATS[i].getWidth() / 2), dms.h() / 8 - PLAYER_STATS[i].getHeight() * 4, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 void postChoicePageRenderer(){
-    textures[0].render(dimensions.w / 2 - textures[0].getWidth() / 2, dimensions.h / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    textures[0].render(dms.w() / 2 - textures[0].getWidth() / 2, dms.h() / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
     for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
-        textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
     }
 }
 
 void textPageRenderer(){
     for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
-        textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() / 2 + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() / 2 + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 void muteButtonRenderer(bool unMute){
@@ -1285,7 +1262,7 @@ void muteButtonRenderer(bool unMute){
 
 void outcomePageRenderer(){
     for (int i = 0; i < OUTCOME_PAGE_TEXTURES; i++)
-        textures[i].render(dimensions.w / 2 - textures[i].getWidth() / 2, dimensions.h / 2 - textures[i].getHeight() / 2 + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);    
+        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() / 2 + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);    
 }
 
 
