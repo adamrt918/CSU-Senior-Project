@@ -46,20 +46,27 @@ class ChoicePage
 
         ChoicePage();
         ChoicePage(int txtrNum, Player* player);
-        ChoicePage(Player* player);
+        ChoicePage(Player* player, LTexture* textures);
         ~ChoicePage();
 
         //Loads the page media
-        bool loadMedia(LTexture* textures, SDL_Renderer* gRenderer, int pgNum);
+        bool loadMedia(SDL_Renderer* gRenderer, int pgNum);
 
-        int choicePageEvents(int pgNum, SDL_Color* textColor, LTexture* textures, SDL_Event e, SDL_Renderer* renderer);
+        //Chooses what to do based on the choice page
+        int choicePageEvents(int pgNum, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer);
+
+        //Chooses which media should be rendered in case of insanity.
+        int chooser();
+
+        //Chooses what to render based on sanity
+        void choicePageRenderer();
 
     private:
         int texture; // the number of textures to be loaded.
         Player* gamer; //Holds the gamer's stats
-        SDL_DisplayMode dms; //Holds the monitor dimensions
         int coward = -1; //Holds the most cowardly choice
         Window dimensions;
+        LTexture* textures;
         struct Choices{
             string text;
             int bounds[3][2];
@@ -69,10 +76,6 @@ class ChoicePage
         };
         //A max of 3 choices per page
         Choices choice[3];
-
-        //Chooses which media should be loaded.
-        int chooser();
-
 };
 
 #include "choicePage.cpp"

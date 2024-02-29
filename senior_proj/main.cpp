@@ -9,6 +9,7 @@
 #include <../ltexture.hpp>
 #include <../player.hpp>
 #include <../choicePage.hpp>
+#include <../render.hpp>
 #include <vector>
 
 /*Notes
@@ -161,8 +162,9 @@ SDL_Rect MUTE_BUTTON_SPRITES[2];
 bool playMusic = true;
 Mix_Music *gMusic = NULL; //Music for background
 
-//Choice Variables
-ChoicePage choicePage(player);
+//Pages and Rendering
+ChoicePage choicePage(player, textures);
+Render render(textures);
 
 //Monitor data
 SDL_DisplayMode dimensions;
@@ -202,7 +204,6 @@ void close();
 void mainMenuEvents();
 void taskBarEvents();
 void quotationPageEvents(int nextPage);
-int choicePageEvents(int currentPage);
 void textPageEvents(int nextPage);
 void postChoicePageEvents(int nextPage);
 void muteButtonEvents();
@@ -215,7 +216,6 @@ void taskBarRenderer();
 void playerBarRenderer();
 void tutorialRenderer();
 void quotationPageRenderer();
-void choicePageRenderer();
 void postChoicePageRenderer();
 void textPageRenderer();
 void muteButtonRenderer(bool unMute);
@@ -272,7 +272,7 @@ int main( int argc, char* args[] )
                     break;
                 case GAME_PAGE_2:
                     taskBarEvents();
-                    choicePage.choicePageEvents(currentPage, color, textures, e, renderer);
+                    choicePage.choicePageEvents(currentPage, color, e, renderer);
                     break;
                 case GAME_PAGE_3_1:
                     taskBarEvents();
@@ -356,7 +356,7 @@ int main( int argc, char* args[] )
             case GAME_PAGE_2:
                 taskBarRenderer();
                 playerBarRenderer();
-                choicePageRenderer();
+                render.choicePageRenderer(choicePage.chooser(), renderer, player);
                 break;
             case GAME_PAGE_3_1:
                 taskBarRenderer();
@@ -381,7 +381,7 @@ int main( int argc, char* args[] )
             case GAME_PAGE_6:
                 taskBarRenderer();
                 playerBarRenderer();
-                choicePageRenderer();
+                // choicePageRenderer();
                 break;
             case GAME_PAGE_7_1:
                 taskBarRenderer();
@@ -607,7 +607,7 @@ bool loadMedia()
             }
             break;
         case GAME_PAGE_2:
-            choicePage.loadMedia(textures, renderer, newPage);
+            choicePage.loadMedia(renderer, newPage);
             break;
         case GAME_PAGE_3_1:
             textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
@@ -1237,15 +1237,15 @@ void quotationPageRenderer(){
         }
 }
 
-void choicePageRenderer(){
-    if (!gamer.getInsane())
-    for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++){
-        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        }
-    else
-        for (int i = 0; i < CHOICE_PAGE_TEXTURES - 2; i++)
-            textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-}
+// void choicePageRenderer(){
+//     if (!gamer.getInsane())
+//     for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++){
+//         textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+//         }
+//     else
+//         for (int i = 0; i < CHOICE_PAGE_TEXTURES - 2; i++)
+//             textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+// }
 
 void playerBarRenderer(){
     for (int i = 0; i < PLAYER_TEXTURES; i++)

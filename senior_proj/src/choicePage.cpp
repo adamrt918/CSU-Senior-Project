@@ -7,8 +7,9 @@ ChoicePage::ChoicePage(int txtrNum, Player* player){
     texture = txtrNum;
     gamer = player;
 }
-ChoicePage::ChoicePage(Player* player){
+ChoicePage::ChoicePage(Player* player, LTexture* textures){
     gamer = player;
+    this->textures = textures;
 }
 
 //Destructor
@@ -16,7 +17,7 @@ ChoicePage::~ChoicePage(){
     delete gamer;
 }
 
-bool ChoicePage::loadMedia(LTexture* textures, SDL_Renderer* gRenderer, int pgNum){
+bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
     switch (pgNum){
         case GAME_PAGE_2:
             //Load the game text
@@ -98,7 +99,7 @@ int ChoicePage::chooser(){
     return -1;
 }
 
-int ChoicePage::choicePageEvents(int pgNum, SDL_Color* textColor, LTexture* textures, SDL_Event e, SDL_Renderer* renderer){
+int ChoicePage::choicePageEvents(int pgNum, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer){
     int newPage;
     int storePage;
     switch (pgNum){
@@ -173,4 +174,5 @@ int ChoicePage::choicePageEvents(int pgNum, SDL_Color* textColor, LTexture* text
 
     return newPage;
 }
+
 #endif
