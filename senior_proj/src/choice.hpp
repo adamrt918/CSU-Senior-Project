@@ -14,8 +14,9 @@ using namespace std;
 class Choice
 {
     public:
-
+        
         Choice();
+        Choice(int type, string text, int* b[]);
         ~Choice();
 
 
@@ -26,13 +27,17 @@ class Choice
         string getChoiceText();
         void setChoiceText(string response);
 
-        int* getChoiceFactor();
-        void setChoiceFactor(int lower, int upper);
+        int* getChoiceBounds();
+        void setChoiceBounds(int* metrics[]);
+
+        bool getTextExists();
+        void setTextExists();
         
     private:        
         int choiceType; //Choice type 0 is hero, 1 is average, 2 is cowardly
         string choiceText; //Holds the actual text to be rendered
-        int choiceFactor[2]; // Holds the upper and lower bounds for random number selection
+        int choiceBounds[3][2]; // Holds the upper and lower bounds for each metric for random number selection
+        bool textExists; //Holds whether or not text has been added to the choice.
 
 
 
