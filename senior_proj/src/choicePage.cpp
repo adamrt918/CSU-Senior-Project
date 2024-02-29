@@ -99,10 +99,10 @@ int ChoicePage::chooser(){
     return -1;
 }
 
-int ChoicePage::choicePageEvents(int pgNum, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer){
-    int newPage;
+int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer){
+    int newPage = currentPage;
     int storePage;
-    switch (pgNum){
+    switch (currentPage){
         case GAME_PAGE_2:
 
             //Iterating over choice textures
@@ -111,54 +111,57 @@ int ChoicePage::choicePageEvents(int pgNum, SDL_Color* textColor, SDL_Event e, S
                 if (textures[i].isMouseOver(textures[i].getRect())){
                     *textColor = GREY;
                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
-                    if(e.type == SDL_MOUSEBUTTONDOWN && chooser() == -1)
+                    if(e.type == SDL_MOUSEBUTTONDOWN)
                     { 
-                        switch (choice[i].courageLevel){
-                            case Choices::Heroic: 
+                        int j = i - 1;
+                        switch (choice[j].courageLevel){
+                            case Choices::ChoiceType::Heroic: 
+
                                 newPage = OUTCOME_PAGE;
                                 storePage = GAME_PAGE_3_1;
-
+                                decision = j;
                                 //iterating over each metric within each choice
-                                for (int j = 0; j < 3; j++)
-                                    choice[i].statChange[j] = gamer->random(choice[i].bounds[j]);
+                                for (int k = 0; k < 3; k++)
+                                    choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
                                 
+
                                 //Set the new value with the change in stats
-                                gamer->setHealth(gamer->getHealth() + choice[i].statChange[0]);
-                                gamer->setSanity(gamer->getSanity() + choice[i].statChange[1]);
-                                gamer->setRep(gamer->getRep() + choice[i].statChange[2]);
+                                gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
                                 break;
                             //Cowardly, minus 1 to 3 sanity -- minus 0 to 2 reputation
-                            case Choices::Cowardly:
+                            case Choices::ChoiceType::Cowardly:
                                 newPage = OUTCOME_PAGE;
                                 storePage = GAME_PAGE_3_2;
-                                
+                                decision = j;
                                 //iterating over each metric within each choice
-                                for (int j = 0; j < 3; j++)
-                                    choice[i].statChange[j] = gamer->random(choice[i].bounds[j]);
+                                for (int k = 0; k < 3; k++)
+                                    choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
                                 
                                 //Set the new value with the change in stats
-                                gamer->setHealth(gamer->getHealth() + choice[i].statChange[0]);
-                                gamer->setSanity(gamer->getSanity() + choice[i].statChange[1]);
-                                gamer->setRep(gamer->getRep() + choice[i].statChange[2]);
+                                gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
                                 break;
                             //Average - 0 to 2 sanity -- minus 0 to 1 reputation
-                            case Choices::Average:
+                            case Choices::ChoiceType::Average:
                                 newPage = OUTCOME_PAGE;
                                 storePage = GAME_PAGE_3_3;
-
+                                decision = j;
                                 //iterating over each metric within the choice
-                                for (int j = 0; j < 3; j++)
-                                    choice[i].statChange[j] = gamer->random(choice[i].bounds[j]);
+                                for (int k = 0; k < 3; k++)
+                                    choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
                                 
                                 //Set the new value with the change in stats
-                                gamer->setHealth(gamer->getHealth() + choice[i].statChange[0]);
-                                gamer->setSanity(gamer->getSanity() + choice[i].statChange[1]);
-                                gamer->setRep(gamer->getRep() + choice[i].statChange[2]);                             
+                                gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                gamer->setRep(gamer->getRep() + choice[j].statChange[2]);                             
                                 break;
                             default:
                                 break;
-                        } //End Mouse button down events
-                    } //end if statement for non insane                  
+                        } //End courage level switch
+                    } // End Mouse button down events                  
                 }
                 else
                 {
@@ -171,8 +174,11 @@ int ChoicePage::choicePageEvents(int pgNum, SDL_Color* textColor, SDL_Event e, S
         default:
             break;
     } //End Page number switch
-
     return newPage;
+}
+
+int* ChoicePage::getStatChange(){
+    return choice[decision].statChange;
 }
 
 #endif

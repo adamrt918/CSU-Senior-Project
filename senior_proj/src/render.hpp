@@ -26,7 +26,7 @@ class Render
     ~Render();
 
     //Renderers for the different pages
-    void choicePageRenderer(int chooser, SDL_Renderer* renderer, Player* gamer);    
+    void choicePageRenderer(int chooser, SDL_Renderer* renderer, Player* gamer); //Renders the choice page based on sanity    
 
 private:
     int totalHeight(int tNum);

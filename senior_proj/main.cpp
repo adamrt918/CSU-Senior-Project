@@ -68,7 +68,7 @@ const int OUTCOME_PAGE_TEXTURES = 2;
 //Words Per Page
 const string NEXT_PAGE = "Next Page";
 const string TASKBAR_WORDS[TASKBAR_TEXTURES]{"Main Menu", "Exit to Desktop"};
-string PLAYER_WORDS[PLAYER_TEXTURES]{"Health: ", "Sanity: ", "Reputation: "};
+string PLAYER_WORDS[PLAYER_TEXTURES]{"Health:   ", "Sanity:   ", "Reputation:   "};
 const string MAIN_MENU_WORDS[MAIN_MENU_TEXTURES] = {"Begin", "Tutorial", "Survey", "Exit"};
 const string TUTORIAL_WORDS[TUTORIAL_TEXTURES] = {"Tutorial", 
     "    The novel will measure three metrics throughout the chapter, health and sanity which affect the individual player, and reputation, which affects the games ending. The metrics are affected through user-made decisions. The page of the visual novel is turned by clicking the interactive text. The novel is only advanced when a decision is made or when the timer runs out. Once the game ends, the player can choose to return to the main menu or exit the game. Progress is not saved, but the game should only take about 20 minutes to complete. Once complete, please fill out the survey.",  
@@ -153,7 +153,7 @@ LTexture TASKBAR[TASKBAR_TEXTURES];
 LTexture PLAYER_STATS[PLAYER_TEXTURES];
 Player gamer;
 Player* player = &gamer;
-int gamerStatChange[3]; //Holds Health/Sanity/Rep changes
+int* gamerStatChange; //Holds Health/Sanity/Rep changes
 const string GAMER_STAT[3] = {"health", "sanity", "reputation"};
 
 //Mute button variables
@@ -272,7 +272,7 @@ int main( int argc, char* args[] )
                     break;
                 case GAME_PAGE_2:
                     taskBarEvents();
-                    choicePage.choicePageEvents(currentPage, color, e, renderer);
+                    newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
                     break;
                 case GAME_PAGE_3_1:
                     taskBarEvents();
@@ -609,6 +609,40 @@ bool loadMedia()
         case GAME_PAGE_2:
             choicePage.loadMedia(renderer, newPage);
             break;
+        case OUTCOME_PAGE:
+            OUTCOME_PAGE_WORDS = "";
+            gamerStatChange = choicePage.getStatChange();
+            for (int i = 0; i < 3; i++) {
+                if (gamerStatChange[i] > 0)
+                    OUTCOME_PAGE_WORDS.append("You gained " + to_string(gamerStatChange[i]) + ' ' + GAMER_STAT[i] + ".\n");
+                else if (gamerStatChange[i] < 0)
+                    OUTCOME_PAGE_WORDS.append("You lost " + to_string(gamerStatChange[i]) + ' ' + GAMER_STAT[i] + ".\n");
+                else
+                    OUTCOME_PAGE_WORDS.append("No change in " + GAMER_STAT[i] + ".\n");
+            }
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, OUTCOME_PAGE_WORDS, TAN, dms.w() / 1.3))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+            if (textures[1].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[1].loadFromRenderedText(renderer, "Continue", TAN, dms.w() / 1.3))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            break;
         case GAME_PAGE_3_1:
             textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
             if (textures[0].gFont == NULL)
@@ -687,40 +721,6 @@ bool loadMedia()
                     printf( "Failed to render text texture!\n" );
                     return false;
                 }
-            }
-            break;
-        case OUTCOME_PAGE:
-            OUTCOME_PAGE_WORDS = "";
-            for (int i = 0; i < 3; i++) {
-                if (gamerStatChange[i] > 0){
-                    OUTCOME_PAGE_WORDS.append("You gained " + to_string(gamerStatChange[i]) + ' ' + GAMER_STAT[i] + ".\n");
-                }
-                else if (gamerStatChange[i] < 0)
-                    OUTCOME_PAGE_WORDS.append("You lost " + to_string(gamerStatChange[i]) + ' ' + GAMER_STAT[i] + ".\n");
-                else
-                    OUTCOME_PAGE_WORDS.append("No change in " + GAMER_STAT[i] + ".\n");
-            }
-            textures[OUTCOME_PAGE_TEXTURES - 2].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-            if (textures[OUTCOME_PAGE_TEXTURES - 2].gFont == NULL)
-            {
-                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
-                return false;
-            }
-            if (!textures[OUTCOME_PAGE_TEXTURES - 2].loadFromRenderedText(renderer, OUTCOME_PAGE_WORDS, TAN, dms.w() / 1.3))
-            {
-                printf( "Failed to render text texture!\n" );
-                return false;
-            }
-            textures[OUTCOME_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-            if (textures[OUTCOME_PAGE_TEXTURES - 1].gFont == NULL)
-            {
-                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
-                return false;
-            }
-            if (!textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, "Continue", TAN, dms.w() / 1.3))
-            {
-                printf( "Failed to render text texture!\n" );
-                return false;
             }
             break;
         case GAME_PAGE_4:

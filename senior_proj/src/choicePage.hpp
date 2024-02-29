@@ -53,26 +53,26 @@ class ChoicePage
         bool loadMedia(SDL_Renderer* gRenderer, int pgNum);
 
         //Chooses what to do based on the choice page
-        int choicePageEvents(int pgNum, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer);
+        int choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer);
 
         //Chooses which media should be rendered in case of insanity.
         int chooser();
 
-        //Chooses what to render based on sanity
-        void choicePageRenderer();
+        int* getStatChange();
 
     private:
         int texture; // the number of textures to be loaded.
         Player* gamer; //Holds the gamer's stats
         int coward = -1; //Holds the most cowardly choice
+        int decision; //Holds the player decision
         Window dimensions;
         LTexture* textures;
         struct Choices{
             string text;
             int bounds[3][2];
             int statChange[3]; //0 health, 1 sanity, 2 reputation
-            enum choiceType {Heroic, Average, Cowardly};
-            choiceType courageLevel;
+            enum ChoiceType {Heroic, Average, Cowardly};
+            ChoiceType courageLevel;
         };
         //A max of 3 choices per page
         Choices choice[3];
