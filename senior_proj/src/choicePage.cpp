@@ -12,7 +12,7 @@ ChoicePage::ChoicePage(int txtrNum, int pageNum, Player player){
 //Destructor
 ChoicePage::~ChoicePage(){}
 
-bool ChoicePage::loadMedia(LTexture* textures, SDL_Renderer* gRenderer){
+bool ChoicePage::loadMedia(LTexture* textures, SDL_Renderer* gRenderer, int pgNum){
     Window dimensions;
     switch (pgNum){
         case GAME_PAGE_2:

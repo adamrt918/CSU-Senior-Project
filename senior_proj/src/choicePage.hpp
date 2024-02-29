@@ -44,7 +44,7 @@ class ChoicePage
         ChoicePage(int txtrNum, int pageNum, Player player);
         ~ChoicePage();
 
-        bool loadMedia(LTexture* textures, SDL_Renderer* gRenderer);
+        bool loadMedia(LTexture* textures, SDL_Renderer* gRenderer, int pgNum);
 
     private:
         int texture; // the number of textures to be loaded.

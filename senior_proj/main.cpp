@@ -199,7 +199,7 @@ void close();
 //Event functions to determine what happens for different pages upon mouse events
 void mainMenuEvents();
 void taskBarEvents();
-void quotationPageEvents(int currentPage, int nextPage);
+void quotationPageEvents(int nextPage);
 int choicePageEvents(int currentPage);
 void textPageEvents(int nextPage);
 void postChoicePageEvents(int nextPage);
@@ -266,7 +266,7 @@ int main( int argc, char* args[] )
                     break;
                 case GAME_PAGE_1:
                     taskBarEvents();
-                    quotationPageEvents(currentPage, GAME_PAGE_2);                    
+                    quotationPageEvents(GAME_PAGE_2);                    
                     break;
                 case GAME_PAGE_2:
                     taskBarEvents();
@@ -605,7 +605,7 @@ bool loadMedia()
             }
             break;
         case GAME_PAGE_2:
-            // choicePage.loadMedia(textures);
+            choicePage.loadMedia(textures, renderer, newPage);
             break;
         case GAME_PAGE_3_1:
             textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
@@ -1013,7 +1013,7 @@ void mainMenuEvents()
     }
 }
 
-void quotationPageEvents(int currentPage, int nextPage) {
+void quotationPageEvents(int nextPage) {
     switch (currentPage){
         case GAME_PAGE_1:
             if (textures[2].isMouseOver(textures[2].getRect())){
