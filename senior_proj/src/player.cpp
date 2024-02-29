@@ -8,6 +8,8 @@ Player::Player()
     
     //Seed the twister
     seed.seed(random_device{}());
+
+    insane = false;
 }
 
 Player::~Player(){}
@@ -28,7 +30,6 @@ void Player::setRep(int num){reputation = num;}
 
 bool Player::getInsane(){return insane;}
 void Player::setInsane(bool sane){insane = sane;
-cout << "insane = " << sane << endl;
 }
 
 bool Player::getDead(){return dead;}

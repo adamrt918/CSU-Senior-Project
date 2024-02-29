@@ -28,7 +28,7 @@ class Choice
         void setChoiceText(string response);
 
         int* getChoiceBounds();
-        void setChoiceBounds(int* metrics[]);
+        void setChoiceBounds(int metrics[][2]);
 
         bool getTextExists();
         void setTextExists();
@@ -36,7 +36,9 @@ class Choice
     private:        
         int choiceType; //Choice type 0 is hero, 1 is average, 2 is cowardly
         string choiceText; //Holds the actual text to be rendered
+        //[Health/Sanity/Rep][lower/upper]
         int choiceBounds[3][2]; // Holds the upper and lower bounds for each metric for random number selection
+
         bool textExists; //Holds whether or not text has been added to the choice.
 
 

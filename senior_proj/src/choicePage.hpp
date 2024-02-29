@@ -8,6 +8,7 @@
 #include <../ltexture.hpp>
 #include <../player.hpp>
 #include <../window.hpp>
+#include <../choice.hpp>
 #include <string>
 #include <iostream>
 
@@ -18,7 +19,7 @@ class ChoicePage
     public:
         const int CHOICE_PAGE_TEXTURES = 4;
         static const int GAME_PAGE_2 = 20;
-        const int GAME_PAGE_6 = 60;
+        static const int GAME_PAGE_6 = 60;
         const string GAME_PAGE_2_WORDS[4] = {"    \"What does it mean to be a man?\" My father asked me, a young 17-year-old boy preparing to embark upon the adventures only found on the precipice of manhood. ",
         "\"Military service.\"", 
         "\"There\'s no such thing.\"", 
@@ -41,17 +42,31 @@ class ChoicePage
 
 
         ChoicePage();
-        ChoicePage(int txtrNum, int pageNum, Player player);
+        ChoicePage(int txtrNum, int pageNum, Player* player);
+        ChoicePage(Player* player);
         ~ChoicePage();
 
+        //Loads the page media
         bool loadMedia(LTexture* textures, SDL_Renderer* gRenderer, int pgNum);
+
+        
 
     private:
         int texture; // the number of textures to be loaded.
         int pgNum; //The page number of the choices to be loaded.
-        Player gamer; //Holds the gamer's stats
-        // LTexture* textures; //Pointer to an array of textures to be loaded.
+        Player* gamer; //Holds the gamer's stats
         SDL_DisplayMode dms;
+        struct Choices{
+            string text;
+            int bounds[3][2];
+            enum choiceType {Heroic, Average, Cowardly};
+            choiceType courageLevel;
+        };
+        //A max of 3 choices per page
+        Choices choice[3];
+
+        //Chooses which media should be loaded.
+        int chooser();
 
 };
 

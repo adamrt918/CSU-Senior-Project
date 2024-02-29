@@ -150,6 +150,7 @@ LTexture TASKBAR[TASKBAR_TEXTURES];
 //Player variables
 LTexture PLAYER_STATS[PLAYER_TEXTURES];
 Player gamer;
+Player* player = &gamer;
 int gamerStatChange[3]; //Holds Health/Sanity/Rep changes
 const string GAMER_STAT[3] = {"health", "sanity", "reputation"};
 
@@ -160,7 +161,7 @@ bool playMusic = true;
 Mix_Music *gMusic = NULL; //Music for background
 
 //Choice Variables
-ChoicePage choicePage;
+ChoicePage choicePage(player);
 
 //Monitor data
 SDL_DisplayMode dimensions;
@@ -1236,8 +1237,12 @@ void quotationPageRenderer(){
 }
 
 void choicePageRenderer(){
-    for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++)
-        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    if (!gamer.getInsane())
+        for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++)
+            textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    else
+        for (int i = 0; i < CHOICE_PAGE_TEXTURES - 2; i++)
+            textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 void playerBarRenderer(){
