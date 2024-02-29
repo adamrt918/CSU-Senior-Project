@@ -695,8 +695,9 @@ bool loadMedia()
                 }
                 else if (gamerStatChange[i] < 0)
                     OUTCOME_PAGE_WORDS.append("You lost " + to_string(gamerStatChange[i]) + ' ' + GAMER_STAT[i] + ".\n");
+                else
+                    OUTCOME_PAGE_WORDS.append("No change in " + GAMER_STAT[i] + ".\n");
             }
-            cout << OUTCOME_PAGE_WORDS << endl;
             textures[OUTCOME_PAGE_TEXTURES - 2].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
             if (textures[OUTCOME_PAGE_TEXTURES - 2].gFont == NULL)
             {
@@ -1261,8 +1262,8 @@ void muteButtonRenderer(bool unMute){
 }
 
 void outcomePageRenderer(){
-    for (int i = 0; i < OUTCOME_PAGE_TEXTURES; i++)
-        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() / 2 + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);    
+    textures[0].render(dms.w() / 2 - textures[0].getWidth() / 15, dms.h() / 2 - textures[0].getHeight() / 2 + totalHeight(0), NULL, 0, NULL, SDL_FLIP_NONE, renderer);    
+    textures[1].render(dms.w() / 2 - textures[1].getWidth() / 2, dms.h() / 2 - textures[1].getHeight() / 2 + totalHeight(1) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 
