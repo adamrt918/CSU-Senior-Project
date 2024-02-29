@@ -14,8 +14,8 @@ Player::Player()
 
 Player::~Player(){}
 
-int Player::random(int lowerBound, int upperBound){
-    roll = uniform_int_distribution<int>(lowerBound, upperBound);
+int Player::random(int* bounds){
+    roll = uniform_int_distribution<int>(bounds[0], bounds[1]);
     return roll(seed);
 }
 

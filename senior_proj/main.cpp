@@ -134,6 +134,7 @@ const SDL_Color TAN = {210, 180, 140, SDL_ALPHA_OPAQUE};
 const SDL_Color GREY = {128, 128, 128, SDL_ALPHA_OPAQUE};
 const SDL_Color WHITE = {255, 255, 255, SDL_ALPHA_OPAQUE};
 SDL_Color textColor = WHITE; //Text color white for initial use in the main loop.
+SDL_Color* color = &textColor;
 
 //Text sizes
 const int HEADING_1 = 72;
@@ -271,7 +272,7 @@ int main( int argc, char* args[] )
                     break;
                 case GAME_PAGE_2:
                     taskBarEvents();
-                    choicePageEvents(currentPage);
+                    choicePage.choicePageEvents(currentPage, color, textures, e, renderer);
                     break;
                 case GAME_PAGE_3_1:
                     taskBarEvents();
@@ -298,7 +299,7 @@ int main( int argc, char* args[] )
                     break;
                 case GAME_PAGE_6:
                     taskBarEvents();
-                    choicePageEvents(currentPage);
+                    // choicePageEvents(currentPage);
                     break;
                 case GAME_PAGE_7_1:
                     taskBarEvents();
@@ -1036,109 +1037,109 @@ void quotationPageEvents(int nextPage) {
     }
 }
 
-int choicePageEvents(int currentPage) {
-    switch (currentPage){
-        case GAME_PAGE_2:
-            for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
-            {
-                if (textures[i].isMouseOver(textures[i].getRect())){
-                    textColor = GREY;
-                    textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
-                    if(e.type == SDL_MOUSEBUTTONDOWN)
-                    { 
-                        switch (i){
-                            //Heroic, minus 0 to 1 sanity -- increase 0 to 2 rep, No change in health
-                            case 1: 
-                                newPage = OUTCOME_PAGE;
-                                storePage = GAME_PAGE_3_1;
-                                gamerStatChange[0] = 0;
-                                gamerStatChange[1] = gamer.random(-1, 0);
-                                gamerStatChange[2] = gamer.random(0, 2);
-                                gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
-                                gamer.setRep(gamer.getRep() + gamerStatChange[2]);
-                                break;
-                            //Cowardly, minus 1 to 3 sanity -- minus 0 to 2 reputation
-                            case 2:
-                                newPage = OUTCOME_PAGE;
-                                storePage = GAME_PAGE_3_2;
-                                gamerStatChange[0] = 0;
-                                gamerStatChange[1] = gamer.random(-3, -1);
-                                gamerStatChange[2] = gamer.random(-2, 0);
-                                gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
-                                gamer.setRep(gamer.getRep() + gamerStatChange[2]);
-                                break;
-                            //Average - 0 to 2 sanity -- minus 0 to 1 reputation
-                            case 3:
-                                newPage = OUTCOME_PAGE;
-                                storePage = GAME_PAGE_3_3;
-                                gamerStatChange[0] = 0;
-                                gamerStatChange[1] = gamer.random(-2, 0);
-                                gamerStatChange[2] = gamer.random(-1, 0);
-                                gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
-                                gamer.setRep(gamer.getRep() + gamerStatChange[2]);                             
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-                else
-                {
-                    textColor = TAN;
-                    textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-                }
-                textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], textColor, dms.w()/1.3);
-            }
-            return newPage;
-            break;
-        case GAME_PAGE_6:
-            for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
-            {
-                if (textures[i].isMouseOver(textures[i].getRect())){
-                    textColor = GREY;
-                    textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
-                    if(e.type == SDL_MOUSEBUTTONDOWN)
-                    { 
-                        switch (i){
-                            //Average, minus 1 to 2 sanity -- minus 0 to 1 health -- minus 0 2 reputations
-                            case 1: 
-                                newPage = GAME_PAGE_7_1;
-                                gamer.setSanity(gamer.getSanity() - gamer.random(1, 2));
-                                gamer.setRep(gamer.getRep() - gamer.random(0, 2));
-                                gamer.setHealth(gamer.getHealth() - gamer.random(0, 1));
-                                break;
-                            //Heroic, minus 0 to 1 sanity -- reputation no change-- Health minus 1 to 2
-                            case 2:
-                                newPage = GAME_PAGE_7_2;
-                                gamer.setSanity(gamer.getSanity() - gamer.random(0, 1));
-                                break;
-                            //Cowardly Health - 0 1 -- Sanity - 2 4 -- Reputation - 2 4
-                            case 3:
-                                newPage = GAME_PAGE_7_3;
-                                gamer.setSanity(gamer.getSanity() - gamer.random(2, 4));
-                                gamer.setRep(gamer.getRep() - gamer.random(2, 4));
-                                gamer.setHealth(gamer.getHealth() - gamer.random(0,1));
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-                else
-                {
-                    textColor = TAN;
-                    textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-                }
-                textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], textColor, dms.w()/1.3);
-            }
-            return newPage;            
-            break;
-        default:
-            return newPage;
-            break;
-    }
-    return newPage;
-}
+// int choicePageEvents(int currentPage) {
+//     switch (currentPage){
+//         case GAME_PAGE_2:
+//             for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
+//             {
+//                 if (textures[i].isMouseOver(textures[i].getRect())){
+//                     textColor = GREY;
+//                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
+//                     if(e.type == SDL_MOUSEBUTTONDOWN)
+//                     { 
+//                         switch (i){
+//                             //Heroic, minus 0 to 1 sanity -- increase 0 to 2 rep, No change in health
+//                             case 1: 
+//                                 newPage = OUTCOME_PAGE;
+//                                 storePage = GAME_PAGE_3_1;
+//                                 // gamerStatChange[0] = 0;
+//                                 // gamerStatChange[1] = gamer.random(-1, 0);
+//                                 // gamerStatChange[2] = gamer.random(0, 2);
+//                                 // gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
+//                                 // gamer.setRep(gamer.getRep() + gamerStatChange[2]);
+//                                 break;
+//                             //Cowardly, minus 1 to 3 sanity -- minus 0 to 2 reputation
+//                             case 2:
+//                                 newPage = OUTCOME_PAGE;
+//                                 storePage = GAME_PAGE_3_2;
+//                                 // gamerStatChange[0] = 0;
+//                                 // gamerStatChange[1] = gamer.random(-3, -1);
+//                                 // gamerStatChange[2] = gamer.random(-2, 0);
+//                                 // gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
+//                                 // gamer.setRep(gamer.getRep() + gamerStatChange[2]);
+//                                 break;
+//                             //Average - 0 to 2 sanity -- minus 0 to 1 reputation
+//                             case 3:
+//                                 newPage = OUTCOME_PAGE;
+//                                 storePage = GAME_PAGE_3_3;
+//                                 // gamerStatChange[0] = 0;
+//                                 // gamerStatChange[1] = gamer.random(-2, 0);
+//                                 // gamerStatChange[2] = gamer.random(-1, 0);
+//                                 // gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
+//                                 // gamer.setRep(gamer.getRep() + gamerStatChange[2]);                             
+//                                 break;
+//                             default:
+//                                 break;
+//                         }
+//                     }
+//                 }
+//                 else
+//                 {
+//                     textColor = TAN;
+//                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+//                 }
+//                 textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], textColor, dms.w()/1.3);
+//             }
+//             return newPage;
+//             break;
+//         case GAME_PAGE_6:
+//             for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
+//             {
+//                 if (textures[i].isMouseOver(textures[i].getRect())){
+//                     textColor = GREY;
+//                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
+//                     if(e.type == SDL_MOUSEBUTTONDOWN)
+//                     { 
+//                         switch (i){
+//                             //Average, minus 1 to 2 sanity -- minus 0 to 1 health -- minus 0 2 reputations
+//                             case 1: 
+//                                 newPage = GAME_PAGE_7_1;
+//                                 gamer.setSanity(gamer.getSanity() - gamer.random(1, 2));
+//                                 gamer.setRep(gamer.getRep() - gamer.random(0, 2));
+//                                 gamer.setHealth(gamer.getHealth() - gamer.random(0, 1));
+//                                 break;
+//                             //Heroic, minus 0 to 1 sanity -- reputation no change-- Health minus 1 to 2
+//                             case 2:
+//                                 newPage = GAME_PAGE_7_2;
+//                                 gamer.setSanity(gamer.getSanity() - gamer.random(0, 1));
+//                                 break;
+//                             //Cowardly Health - 0 1 -- Sanity - 2 4 -- Reputation - 2 4
+//                             case 3:
+//                                 newPage = GAME_PAGE_7_3;
+//                                 gamer.setSanity(gamer.getSanity() - gamer.random(2, 4));
+//                                 gamer.setRep(gamer.getRep() - gamer.random(2, 4));
+//                                 gamer.setHealth(gamer.getHealth() - gamer.random(0,1));
+//                                 break;
+//                             default:
+//                                 break;
+//                         }
+//                     }
+//                 }
+//                 else
+//                 {
+//                     textColor = TAN;
+//                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+//                 }
+//                 textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], textColor, dms.w()/1.3);
+//             }
+//             return newPage;            
+//             break;
+//         default:
+//             return newPage;
+//             break;
+//     }
+//     return newPage;
+// }
 
 void textPageEvents(int nextPage){
     if (textures[TEXT_PAGE_TEXTURES - 1].isMouseOver(textures[TEXT_PAGE_TEXTURES - 1].getRect())){
@@ -1238,8 +1239,9 @@ void quotationPageRenderer(){
 
 void choicePageRenderer(){
     if (!gamer.getInsane())
-        for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++)
-            textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++){
+        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        }
     else
         for (int i = 0; i < CHOICE_PAGE_TEXTURES - 2; i++)
             textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);

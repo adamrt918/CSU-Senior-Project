@@ -14,7 +14,7 @@ class Player
     Player();
     ~Player();
     
-    int random(int lowerBound, int upperBound);
+    int random(int* bounds);
     int chooseSanity(int lowerBound, int upperBound);
     int chooseRep(int lowerBound, int upperBound);
 
