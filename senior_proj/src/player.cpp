@@ -26,4 +26,12 @@ void Player::setSanity(int num){sanity = num;}
 int Player::getRep(){return reputation;}
 void Player::setRep(int num){reputation = num;}
 
+bool Player::getInsane(){return insane;}
+void Player::setInsane(bool sane){insane = sane;
+cout << "insane = " << sane << endl;
+}
+
+bool Player::getDead(){return dead;}
+void Player::setDead(bool death){dead = death;}
+
 #endif

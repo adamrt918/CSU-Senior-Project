@@ -32,6 +32,12 @@ class Player
     random_device getRd();
     random_device setRd();
 
+    bool getInsane();
+    void setInsane(bool sane);
+
+    bool getDead();
+    void setDead(bool death);
+
     private:
         int health;
         int sanity;
@@ -45,6 +51,9 @@ class Player
         
         //Twister for random number seed
         mt19937_64 seed;
+
+        bool insane;
+        bool dead;
 };
 
 #include "player.cpp"
