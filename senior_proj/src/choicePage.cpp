@@ -1,15 +1,10 @@
 #ifdef CHOICEPAGE_H
 
 //Constructor -- overloaded when I want to initialize
-ChoicePage::ChoicePage(){
-}
-ChoicePage::ChoicePage(int txtrNum, Player* player){
-    texture = txtrNum;
-    gamer = player;
-}
 ChoicePage::ChoicePage(Player* player, LTexture* textures){
     gamer = player;
     this->textures = textures;
+    storePage = -1;
 }
 
 //Destructor
@@ -67,7 +62,6 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
             }
             //Only load the cowardly option on insanity = true
             if (gamer->getInsane()){
-                texture = 2;
                 textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 if (textures[1].gFont == NULL)
                 {
@@ -83,8 +77,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
             }
             //Load all other options when insanity is not true
             else{
-                texture = CHOICE_PAGE_TEXTURES;
-                for (int i = 1; i < texture; i++){
+                for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++){
                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                     if (textures[i].gFont == NULL)
                     {
@@ -92,7 +85,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                         return false;
                     }
                     //Load in the textures for rendering
-                    if (!textures[i].loadFromRenderedText(gRenderer, choice[i].text, TAN, dimensions.w() / 1.3))
+                    if (!textures[i].loadFromRenderedText(gRenderer, choice[i - 1].text, TAN, dimensions.w() / 1.3))
                     {
                         printf( "Failed to render text texture!\n" );
                         return false;
@@ -120,19 +113,18 @@ int ChoicePage::chooser(){
 
 int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer){
     int newPage = currentPage;
-    int storePage;
     switch (currentPage){
         case GAME_PAGE_2:
-            //Iterating over choice textures
-            if (!gamer->getSanity()){    
+            if (!gamer->getInsane()){
+                //Iterating over choice textures    
                 for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
                 {
+                    int j = i - 1;
                     if (textures[i].isMouseOver(textures[i].getRect())){
                         *textColor = GREY;
                         textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
                         if(e.type == SDL_MOUSEBUTTONDOWN)
                         { 
-                            int j = i - 1;
                             switch (choice[j].courageLevel){
                                 case Choices::ChoiceType::Heroic: 
                                     newPage = OUTCOME_PAGE;
@@ -147,7 +139,6 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                                     gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
                                     gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
                                     break;
-                                //Cowardly, minus 1 to 3 sanity -- minus 0 to 2 reputation
                                 case Choices::ChoiceType::Cowardly:
                                     newPage = OUTCOME_PAGE;
                                     storePage = GAME_PAGE_3_2;
@@ -162,7 +153,6 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                                     gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
                                     gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
                                     break;
-                                //Average - 0 to 2 sanity -- minus 0 to 1 reputation
                                 case Choices::ChoiceType::Average:
                                     newPage = OUTCOME_PAGE;
                                     storePage = GAME_PAGE_3_3;
@@ -186,7 +176,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                         *textColor = TAN;
                         textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                     }
-                    textures[i].loadFromRenderedText(renderer, choice[i - 1].text, *textColor, dimensions.w()/1.3);
+                    textures[i].loadFromRenderedText(renderer, choice[j].text, *textColor, dimensions.w()/1.3);
                 } //End the texture for loop
             } // End Sane events
             else{
@@ -197,7 +187,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                     { 
                         newPage = OUTCOME_PAGE;
                         storePage = GAME_PAGE_3_2;
-
+                        decision = chooser();
                         //iterating over each metric with k
                         for (int k = 0; k < 3; k++)
                             choice[chooser()].statChange[k] = gamer->random(choice[chooser()].bounds[k]);
@@ -222,9 +212,15 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
 }
 
 int* ChoicePage::getStatChange(){
-    if (!gamer->getInsane())
-        return choice[decision].statChange;
-    return choice[chooser()].statChange;
+    return choice[decision].statChange;
+}
+
+int ChoicePage::getStorePage(){
+    return storePage;
+}
+
+void ChoicePage::setStorePage(int sp){
+    storePage = sp;
 }
 
 #endif

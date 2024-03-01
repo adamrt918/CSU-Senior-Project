@@ -44,8 +44,6 @@ class ChoicePage
         const int WRITING = 24;
 
 
-        ChoicePage();
-        ChoicePage(int txtrNum, Player* player);
         ChoicePage(Player* player, LTexture* textures);
         ~ChoicePage();
 
@@ -58,13 +56,21 @@ class ChoicePage
         //Chooses which media should be rendered in case of insanity.
         int chooser();
 
+        //Gets the 3 stat changes for the decision
         int* getStatChange();
+
+        //Gets the stored page
+        int getStorePage();
+        void setStorePage(int sp);
+
+
 
     private:
         int texture; // the number of textures to be loaded.
         Player* gamer; //Holds the gamer's stats
         int coward = -1; //Holds the most cowardly choice
         int decision; //Holds the player decision
+        int storePage; //Stores the page to display after the outcome
         Window dimensions;
         LTexture* textures;
         struct Choices{

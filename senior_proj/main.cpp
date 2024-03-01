@@ -34,6 +34,7 @@ using namespace std;
 
 
 /*Page Numbers*/
+const int NULL_PAGE = -1;
 const int START_PAGE = 0;
 const int MAIN_MENU_PAGE = 1;
 const int TUTORIAL_PAGE = 2;
@@ -185,7 +186,6 @@ bool gaming = true;
 //The current page variable so the game knows what to load.
 int currentPage = -1;
 int newPage = 1;
-int storePage = -1;
 
 //Starts up SDL and creates window
 bool init();
@@ -238,7 +238,6 @@ int main( int argc, char* args[] )
         SDL_Quit();
         return 1;
     }
-    gamer.setInsane(true);
 
     /*GAME LOOP*/
     while( gaming )
@@ -275,6 +274,10 @@ int main( int argc, char* args[] )
                     taskBarEvents();
                     newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
                     break;
+                case OUTCOME_PAGE:
+                    taskBarEvents();
+                    outcomeEvents(choicePage.getStorePage());
+                    break;
                 case GAME_PAGE_3_1:
                     taskBarEvents();
                     postChoicePageEvents(GAME_PAGE_4);
@@ -287,9 +290,6 @@ int main( int argc, char* args[] )
                     taskBarEvents();
                     postChoicePageEvents(GAME_PAGE_4);
                     break;
-                case OUTCOME_PAGE:
-                    taskBarEvents();
-                    outcomeEvents(storePage);
                 case GAME_PAGE_4:
                     taskBarEvents();
                     textPageEvents(GAME_PAGE_5);
@@ -359,6 +359,11 @@ int main( int argc, char* args[] )
                 playerBarRenderer();
                 render.choicePageRenderer(choicePage.chooser(), renderer, player);
                 break;
+            case OUTCOME_PAGE:
+                taskBarRenderer();
+                playerBarRenderer();
+                outcomePageRenderer();
+                break;
             case GAME_PAGE_3_1:
                 taskBarRenderer();
                 playerBarRenderer();
@@ -373,11 +378,6 @@ int main( int argc, char* args[] )
                 taskBarRenderer();
                 playerBarRenderer();
                 postChoicePageRenderer();
-                break;
-            case OUTCOME_PAGE:
-                taskBarRenderer();
-                playerBarRenderer();
-                outcomePageRenderer();
                 break;
             case GAME_PAGE_6:
                 taskBarRenderer();
@@ -603,7 +603,8 @@ bool loadMedia()
             }
             break;
         case GAME_PAGE_2:
-            choicePage.loadMedia(renderer, newPage);
+            if(!choicePage.loadMedia(renderer, newPage))
+                cout << "Cannot load choice page 2" << endl;
             break;
         case OUTCOME_PAGE:
             OUTCOME_PAGE_WORDS = "";
@@ -1191,7 +1192,7 @@ void outcomeEvents(int nextPage){
         textures[OUTCOME_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
         if(e.type == SDL_MOUSEBUTTONDOWN){
             newPage = nextPage;
-            storePage = -1;
+            choicePage.setStorePage(NULL_PAGE);
         }
     }
     else{
