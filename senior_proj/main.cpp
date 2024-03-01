@@ -238,6 +238,7 @@ int main( int argc, char* args[] )
         SDL_Quit();
         return 1;
     }
+    gamer.setInsane(true);
 
     /*GAME LOOP*/
     while( gaming )
@@ -486,11 +487,6 @@ bool init()
 
 bool loadMedia()
 {
-    //The following function can size text
-    //SDL_TTF.SizeText(game.font, text_cstring, &text.rect.w, &text.rect.h)
-    //Render the tasbar before getting into specific pages
-    //Open the font
-
     //Load the Taskbar textures
     for (int i = 0; i < TASKBAR_TEXTURES; i++){
         TASKBAR[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
