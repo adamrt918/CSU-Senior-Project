@@ -32,6 +32,18 @@
 
 using namespace std;
 
+//Textures Per Page
+const int TASKBAR_TEXTURES = 2;
+const int PLAYER_TEXTURES = 3;
+const int START_PAGE_TEXTURES = 1;
+const int MAIN_MENU_TEXTURES = 4; // 1 texture for each clickable word
+const int TUTORIAL_TEXTURES = 12; // textures for individual highlights and going back to the main menu
+const int QUOTATION_PAGE_TEXTURES = 3;
+const int CHOICE_PAGE_TEXTURES = 4;
+const int POST_CHOICE_PAGE_TEXTURES = 3;
+const int TEXT_PAGE_TEXTURES = 2;
+const int OUTCOME_PAGE_TEXTURES = 2;
+const int VERSE_PAGE_TEXTURES = 2;
 
 /*Page Numbers*/
 const int NULL_PAGE = -1;
@@ -59,19 +71,11 @@ const int GAME_PAGE_11_2 = 112;
 const int GAME_PAGE_11_3 = 113;
 const int GAME_PAGE_12 = 120;
 const int GAME_PAGE_13 = 130;
-
-//Textures Per Page
-const int TASKBAR_TEXTURES = 2;
-const int PLAYER_TEXTURES = 3;
-const int START_PAGE_TEXTURES = 1;
-const int MAIN_MENU_TEXTURES = 4; // 1 texture for each clickable word
-const int TUTORIAL_TEXTURES = 12; // textures for individual highlights and going back to the main menu
-const int QUOTATION_PAGE_TEXTURES = 3;
-const int CHOICE_PAGE_TEXTURES = 4;
-const int POST_CHOICE_PAGE_TEXTURES = 3;
-const int TEXT_PAGE_TEXTURES = 2;
-const int OUTCOME_PAGE_TEXTURES = 2;
-
+const int GAME_PAGE_14_1 = 141;
+const int GAME_PAGE_14_2 = 142;
+const int GAME_PAGE_14_3 = 143;
+const int GAME_PAGE_15 = 150;
+const int GAME_PAGE_16 = 160;
 
 /* Words per page */
 const string NEXT_PAGE = "Next Page";
@@ -118,7 +122,7 @@ const string GAME_PAGE_5_WORDS[TEXT_PAGE_TEXTURES] = {"    My phone rings and I 
     "    I rapidly find a place to elevate my feet. Privates in Ranger Regiment aren\'t even allowed to do normal pushups. We must elevate our feet off the ground by placing them on some object. I start banging out decline pushups.",
     NEXT_PAGE};
 const string GAME_PAGE_6_WORDS[CHOICE_PAGE_TEXTURES] = {"\"Where were you?\" the sergeant asks. ",
-    "\"I couldn''t find my belt, sergeant.\"",
+    "\"I couldn't find my belt, sergeant.\"",
     "\"I was sleeping and didn't set an alarm.\"",
     "\"I don't want to be a ranger anymore. I quit."};
 const string GAME_PAGE_7_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_6_WORDS[1],
@@ -147,8 +151,8 @@ const string GAME_PAGE_9_WORDS[TEXT_PAGE_TEXTURES] = { "\"<LAST NAME>, what are 
     NEXT_PAGE
 };
 const string GAME_PAGE_10_WORDS[CHOICE_PAGE_TEXTURES] = {
-    "I spent the whole night typing in tiny font to finish this essay. The question my Dad had asked me was at the forefront of my mind. What have I been doing all this time? I'm going through my time in service, but do I have what it takes to be a man?\n" 
-    "The answer I settled on was:\n",
+    "    I spent the whole night typing in tiny font to finish this essay. The question my Dad had asked me was at the forefront of my mind. What have I been doing all this time? I'm going through my time in service, but do I have what it takes to be a man?\n" 
+    "    The answer I settled on was:\n",
     "responsibility, accountability, discipline, and love.",
     "Manhood doesn't matter. Just how good of a person you are.",
     "Being a Christian and following the Christian tenants of love, mercy, and grace."
@@ -156,16 +160,19 @@ const string GAME_PAGE_10_WORDS[CHOICE_PAGE_TEXTURES] = {
 const string GAME_PAGE_11_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_10_WORDS[1],
 	"    Sergeant Davis and I made purposeful eye contact, and I saw the pride he had from reading my paper. I reached out to shake his hand. He looked down at my hand, with a slight dampening of his demeanor.\n"
     "    \"I'm still your team leader, <LAST NAME>, not your buddy or your father. Drop.\"\n"
-    "    I dropped and began knocking out my decline pushups. Why are these values the values which my father taught me?\n"
+    "    I dropped and began knocking out my decline pushups. Why are these values the values which my father taught me?\n",
+    NEXT_PAGE
 };
 const string GAME_PAGE_11_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_10_WORDS[2],
     "    As long as I follow my own moral code, I am in the right. As such, rank doesn't matter as long as I follow my own idea of right and wrong. The sergeant was treating me like I was inferior and I was right to stand up for myself.\n"
     "    \"<LAST NAME>, you missed the point on this one. I don't know what kind of childhood you had, but in my team you will be a man, respect authority, and be accountable for your actions, no matter what they are. Re-write the paper by tomorrow morning about respect and accountability.\" Sergeant Davis ordered.\n"
-    "    Regardless, my actions were justified."
+    "    Regardless, my actions were justified.",
+    NEXT_PAGE
 };
 const string GAME_PAGE_11_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_10_WORDS[3],
     "    \"<LAST NAME>, we are Army Rangers. We close with to kill and destroy the enemy in cold blood with our bare hands if necessary. I don't know what kind of Bible you are reading, but when the Israelites stormed the walls of Jericho, they killed every man, woman, and child. So help me God you will be the best at killing. Hold squat.\" Sergeant Davis ordered.\n"
-    "    He smoked me relentlessly to drive the point home... and drive the point home he did. Perhaps being a Christian was not only about these notably soft virtues, but also boldness, discipline, and savagery when the time calls? If God could allow such an awful thing as war, then surely He must provision a way for us to be made righteous within that anguish?\n"
+    "    He smoked me relentlessly to drive the point home... and drive the point home he did. Perhaps being a Christian was not only about these notably soft virtues, but also boldness, discipline, and savagery when the time calls? If God could allow such an awful thing as war, then surely He must provision a way for us to be made righteous within that anguish?\n",
+    NEXT_PAGE
 };
 const string GAME_PAGE_12_WORDS[TEXT_PAGE_TEXTURES] = {
     "    Every hazing incident was also a fire hose of information being blasted into me by force. My first live fire exercise took place after just 6 months in the Ranger Battalion. Sergeant Davis was not my team leader at the time. I was 18 years old, handling live ammunition around other human beings. This is the first exercise in which I truly felt I was being trained for war. My job was to carry the stretcher, also known as a litter. During the night live fire portion of the exercise, the Alpha Team, led by Corporal Andrew Aimesbury, laid down a base of fire, while my section maneuvered on the targets. While waiting on the order to move, something peculiar happened. A white light beamed towards Aimesbury's team, and the shooting became more sporadic, soon stopping.\n" 
@@ -174,6 +181,43 @@ const string GAME_PAGE_12_WORDS[TEXT_PAGE_TEXTURES] = {
     "    \"Stay down unless I tell you to move.\" The team leader barked.\n",
     NEXT_PAGE
 };
+const string GAME_PAGE_13_WORDS[CHOICE_PAGE_TEXTURES] = {"Troubled, I thought about my next move.",
+    "I stood back up and started sprinting towards the white light, completely disregarding a direct order.",
+    "I remained laying on the ground, waiting to see what my team leader would do next.",
+    "I took a knee and tried to convince the corporal that something was wrong."
+};
+const string GAME_PAGE_14_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_13_WORDS[1],
+    "As I ran, I heard my team leader behind me, following suit. Up ahead, I heard people yelling for the litter bearer - me. I sprinted as fast as my legs would carry me. Tripping and smashing my night vision into my face, I still arrived in time to see Corporal Andrew Aimesbury in the throes of death. I performed my litter drill, removing the litter from the bag and extending it to carrying configuration fully under night vision. I placed the heat blanket on the stretcher and lined it up next to Aimesbury as he gasped for breath. My team leader looked on, unable to be angry at my decisiveness but concerned for his best friend who was dying.",
+    NEXT_PAGE
+};
+const string GAME_PAGE_14_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_13_WORDS[2],
+    "    \"Take a knee and pull security. If you ever do that again during a live fire I'll make sure you get kicked out of the Ranger battalion.\" Snapped my team leader.\n"
+	"    The white light shone towards us and started waving erratically. Shouts could be heard bouncing through the trees.\n" 
+	"    \"Let's go.\" The team leader stated.\n" 
+	"    We ran through the trees, reaching the near lifeless body of Corporal Aimesbury.\n" 
+	"    The team leader grabbed the litter off my back and performed the litter drill himself, telling me to get out of his way. My team leader treated me like dirt, unable to perform my duties under austere circumstances. But how was I supposed to know? I listened to him. He was wrong.",
+    NEXT_PAGE
+};
+const string GAME_PAGE_14_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_13_WORDS[3],
+    "    \"You don't get to make the calls around here, <LAST NAME>! It is a live fire, and it is training. Whatever trouble Aimesbury's team is having they will work through. The squad leader will give us a call and we will maneuver on the targets when Aimesbury is set.\" The team leader wisely responded.\n"
+    "    Static came over radio, then a voice feverishly called for a stretcher bearer.\n"
+    "    \"GO!\" The team leader screamed in my ear.\n"
+    "    I ran towards the light as fast as I could, tripping and smashing my night vision into my face, but arriving as Aimesbury took his last breaths. I performed my litter drill under night vision, the team leader grabbed the heat blanket and opened it up once I had prepared the stretcher. I had known something was wrong. I should have acted sooner.\n",
+    NEXT_PAGE
+};
+const string GAME_PAGE_15_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    \"Stay with me, Aims!!\" The squad leader yelled.\n"
+    "    Corporal Aimesbury was gushing blood at a rate which was unimaginable to my young mind while the senior medic worked on stopping the bleeding. The squad medic worked on sticking an IV port to push fluids and narcotics, but Corporal Aimesbury kept convulsing and it was nearly impossible to stick a vein. Finally, I watched him take his last breath. On December 9th, 2015, Corproal Andrew Aimesbury was pronounced dead upon arrival to the hospital. I watched my mentors and some of the hardest men I ever knew break down and cry.\n"
+    "    Wanting help to process what I had just witnessed, I reached out to a mentor I had in high school who was an ex-Ranger, explaining what had happened.\n"
+    "    He responded, \"I'm sorry for your loss... But that is good training.\"\n",
+    "What is the point of all this suffering?"
+};
+const string GAME_PAGE_16_WORDS[VERSE_PAGE_TEXTURES] = {
+    "    In this you rejoice, though now for a little while, if necessary, you have been grieved by various trials, so that the tested genuineness of your faith - more precious than gold that perishes though it is tested by fire - may be found to result in praise and glory and honor at the revelation of Jesus Christ.\n"
+    "    Though you have not seen him, you love him. Though you do not now see him, you believe in him and rejoice with joy that is inexpressible and filled with glory, obtaining the outcome of your faith, the salvation of your souls.",
+    "-- 1 Peter 1: 6-9, ESV"
+};
+
 
 //Colors {r, g, b, alpha}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
@@ -231,7 +275,7 @@ bool gaming = true;
 
 //The current page variable so the game knows what to load.
 int currentPage = -1;
-int newPage = 80;
+int newPage = 100;
 
 //Starts up SDL and creates window
 bool init();
@@ -266,6 +310,7 @@ void postChoicePageRenderer();
 void textPageRenderer();
 void muteButtonRenderer(bool unMute);
 void outcomePageRenderer();
+void versePageRenderer();
 
 int main( int argc, char* args[] )
 {
@@ -384,6 +429,33 @@ int main( int argc, char* args[] )
                     taskBarEvents();
                     postChoicePageEvents(GAME_PAGE_12);
                     break;
+                case GAME_PAGE_12:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_13);
+                    break; 
+                case GAME_PAGE_13:// choice page
+                    taskBarEvents();
+                    newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
+                    break;
+                case GAME_PAGE_14_1:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_15);
+                    break;
+                case GAME_PAGE_14_2:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_15);
+                    break;
+                case GAME_PAGE_14_3:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_15);
+                    break;
+                case GAME_PAGE_15:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_16);
+                    break; 
+                case GAME_PAGE_16: //STUBBED
+                    taskBarEvents();
+                    break;
                 default:
                     taskBarEvents();
                     break;
@@ -400,6 +472,7 @@ int main( int argc, char* args[] )
                 cout << "Failed to load player media on page " << newPage << "!\n";
             //Once the media is loaded, the player is on the new page.
             currentPage = newPage;
+            cout << "current page: " << currentPage << endl;
         }
 
         //Clear screen
@@ -488,6 +561,31 @@ int main( int argc, char* args[] )
                 taskBarRenderer();
                 playerBarRenderer();
                 postChoicePageRenderer();
+                break;
+            case GAME_PAGE_13:
+                taskBarRenderer();
+                playerBarRenderer();
+                render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
+                break;
+            case GAME_PAGE_14_1:
+                taskBarRenderer();
+                playerBarRenderer();
+                postChoicePageRenderer();
+                break;
+            case GAME_PAGE_14_2:
+                taskBarRenderer();
+                playerBarRenderer();
+                postChoicePageRenderer();
+                break;
+            case GAME_PAGE_14_3:
+                taskBarRenderer();
+                playerBarRenderer();
+                postChoicePageRenderer();
+                break;
+            case GAME_PAGE_16:
+                taskBarRenderer();
+                playerBarRenderer();
+                versePageRenderer();
                 break;
             default: //Default is for regular text pages
                 taskBarRenderer();
@@ -972,11 +1070,13 @@ bool loadMedia()
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                cout << "texture 0" << endl;
                 return false;
             }
             if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_11_1_WORDS[0], GREY, dms.w() / 2.5))
             {
                 printf( "Failed to render text texture!\n" );
+                cout << "word 0" << endl;
                 return false;
             }
             for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
@@ -989,6 +1089,7 @@ bool loadMedia()
                 if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_11_1_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
                     return false;
                 }
             }
@@ -1015,6 +1116,7 @@ bool loadMedia()
                 if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_11_2_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
                     return false;
                 }
             }
@@ -1041,6 +1143,7 @@ bool loadMedia()
                 if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_11_3_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
                     return false;
                 }
             }        
@@ -1061,7 +1164,130 @@ bool loadMedia()
                     return false;
                 }
             }
+            break;
         case GAME_PAGE_13:
+            if(!choicePage.loadMedia(renderer, newPage))
+                cout << "Cannot load choice page" << currentPage << endl;
+            break;
+        case GAME_PAGE_14_1:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                cout << "texture 0" << endl;
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_14_1_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                cout << "word 0" << endl;
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_14_1_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_14_2:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                cout << "texture 0" << endl;
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_14_2_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                cout << "word 0" << endl;
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_14_2_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_14_3:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                cout << "texture 0" << endl;
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_14_3_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                cout << "word 0" << endl;
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_14_3_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_15:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_15_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_16:
+            for (int i = 0; i < VERSE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", QUOTATION);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_16_WORDS[i], TAN, dms.w() / 3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
             break;
     } // End Switch
 	return true;
@@ -1221,110 +1447,6 @@ void quotationPageEvents(int nextPage) {
     }
 }
 
-// int choicePageEvents(int currentPage) {
-//     switch (currentPage){
-//         case GAME_PAGE_2:
-//             for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
-//             {
-//                 if (textures[i].isMouseOver(textures[i].getRect())){
-//                     textColor = GREY;
-//                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
-//                     if(e.type == SDL_MOUSEBUTTONDOWN)
-//                     { 
-//                         switch (i){
-//                             //Heroic, minus 0 to 1 sanity -- increase 0 to 2 rep, No change in health
-//                             case 1: 
-//                                 newPage = OUTCOME_PAGE;
-//                                 storePage = GAME_PAGE_3_1;
-//                                 // gamerStatChange[0] = 0;
-//                                 // gamerStatChange[1] = gamer.random(-1, 0);
-//                                 // gamerStatChange[2] = gamer.random(0, 2);
-//                                 // gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
-//                                 // gamer.setRep(gamer.getRep() + gamerStatChange[2]);
-//                                 break;
-//                             //Cowardly, minus 1 to 3 sanity -- minus 0 to 2 reputation
-//                             case 2:
-//                                 newPage = OUTCOME_PAGE;
-//                                 storePage = GAME_PAGE_3_2;
-//                                 // gamerStatChange[0] = 0;
-//                                 // gamerStatChange[1] = gamer.random(-3, -1);
-//                                 // gamerStatChange[2] = gamer.random(-2, 0);
-//                                 // gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
-//                                 // gamer.setRep(gamer.getRep() + gamerStatChange[2]);
-//                                 break;
-//                             //Average - 0 to 2 sanity -- minus 0 to 1 reputation
-//                             case 3:
-//                                 newPage = OUTCOME_PAGE;
-//                                 storePage = GAME_PAGE_3_3;
-//                                 // gamerStatChange[0] = 0;
-//                                 // gamerStatChange[1] = gamer.random(-2, 0);
-//                                 // gamerStatChange[2] = gamer.random(-1, 0);
-//                                 // gamer.setSanity(gamer.getSanity() + gamerStatChange[1]);
-//                                 // gamer.setRep(gamer.getRep() + gamerStatChange[2]);                             
-//                                 break;
-//                             default:
-//                                 break;
-//                         }
-//                     }
-//                 }
-//                 else
-//                 {
-//                     textColor = TAN;
-//                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-//                 }
-//                 textures[i].loadFromRenderedText(renderer, GAME_PAGE_2_WORDS[i], textColor, dms.w()/1.3);
-//             }
-//             return newPage;
-//             break;
-//         case GAME_PAGE_6:
-//             for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
-//             {
-//                 if (textures[i].isMouseOver(textures[i].getRect())){
-//                     textColor = GREY;
-//                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
-//                     if(e.type == SDL_MOUSEBUTTONDOWN)
-//                     { 
-//                         switch (i){
-//                             //Average, minus 1 to 2 sanity -- minus 0 to 1 health -- minus 0 2 reputations
-//                             case 1: 
-//                                 newPage = GAME_PAGE_7_1;
-//                                 gamer.setSanity(gamer.getSanity() - gamer.random(1, 2));
-//                                 gamer.setRep(gamer.getRep() - gamer.random(0, 2));
-//                                 gamer.setHealth(gamer.getHealth() - gamer.random(0, 1));
-//                                 break;
-//                             //Heroic, minus 0 to 1 sanity -- reputation no change-- Health minus 1 to 2
-//                             case 2:
-//                                 newPage = GAME_PAGE_7_2;
-//                                 gamer.setSanity(gamer.getSanity() - gamer.random(0, 1));
-//                                 break;
-//                             //Cowardly Health - 0 1 -- Sanity - 2 4 -- Reputation - 2 4
-//                             case 3:
-//                                 newPage = GAME_PAGE_7_3;
-//                                 gamer.setSanity(gamer.getSanity() - gamer.random(2, 4));
-//                                 gamer.setRep(gamer.getRep() - gamer.random(2, 4));
-//                                 gamer.setHealth(gamer.getHealth() - gamer.random(0,1));
-//                                 break;
-//                             default:
-//                                 break;
-//                         }
-//                     }
-//                 }
-//                 else
-//                 {
-//                     textColor = TAN;
-//                     textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-//                 }
-//                 textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], textColor, dms.w()/1.3);
-//             }
-//             return newPage;            
-//             break;
-//         default:
-//             return newPage;
-//             break;
-//     }
-//     return newPage;
-// }
-
 void textPageEvents(int nextPage){
     if (textures[TEXT_PAGE_TEXTURES - 1].isMouseOver(textures[TEXT_PAGE_TEXTURES - 1].getRect())){
         textColor = GREY;
@@ -1416,20 +1538,9 @@ void tutorialRenderer(){
 
 void quotationPageRenderer(){
     textures[0].render(dms.w() / 2 - textures[0].getWidth() / 2, dms.h() / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        for (int i = 1; i < QUOTATION_PAGE_TEXTURES; i++){
+        for (int i = 1; i < QUOTATION_PAGE_TEXTURES; i++)
             textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        }
 }
-
-// void choicePageRenderer(){
-//     if (!gamer.getInsane())
-//     for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++){
-//         textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-//         }
-//     else
-//         for (int i = 0; i < CHOICE_PAGE_TEXTURES - 2; i++)
-//             textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-// }
 
 void playerBarRenderer(){
     for (int i = 0; i < PLAYER_TEXTURES; i++)
@@ -1473,6 +1584,11 @@ void muteButtonRenderer(bool unMute){
 void outcomePageRenderer(){
     textures[0].render(dms.w() / 2 - textures[0].getWidth() / 15, dms.h() / 2 - textures[0].getHeight() / 2 + totalHeight(0), NULL, 0, NULL, SDL_FLIP_NONE, renderer);    
     textures[1].render(dms.w() / 2 - textures[1].getWidth() / 2, dms.h() / 2 - textures[1].getHeight() / 2 + totalHeight(1) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+}
+
+void versePageRenderer(){
+    for (int i = 0; i < VERSE_PAGE_TEXTURES; i++)
+        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 
