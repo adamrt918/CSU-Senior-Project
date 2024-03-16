@@ -23,11 +23,19 @@ class ChoicePage
         static const int GAME_PAGE_3_2 = 32;
         static const int GAME_PAGE_3_3 = 33;
         static const int GAME_PAGE_6 = 60;
+        static const int GAME_PAGE_7_1 = 71;
+        static const int GAME_PAGE_7_2 = 72;
+        static const int GAME_PAGE_7_3 = 73;
+        static const int GAME_PAGE_8 = 80;
+
         const string GAME_PAGE_2_WORDS[4] = {"    \"What does it mean to be a man?\" My father asked me, a young 17-year-old boy preparing to embark upon the adventures only found on the precipice of manhood. ",
         "\"Military service.\"", 
         "\"There\'s no such thing.\"", 
         "\"I don\'t know.\""};
-
+        const string GAME_PAGE_6_WORDS[4] = {"\"Where were you?\" the sergeant asks. ",
+        "\"I couldn''t find my belt, sergeant.\"",
+        "\"I was sleeping and didn't set an alarm.\"",
+        "\"I don't want to be a ranger anymore. I quit."};
         //Colors
         const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
         const SDL_Color RED = {255, 0, 0, SDL_ALPHA_OPAQUE};

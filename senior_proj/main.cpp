@@ -270,7 +270,7 @@ int main( int argc, char* args[] )
                     taskBarEvents();
                     quotationPageEvents(GAME_PAGE_2);                    
                     break;
-                case GAME_PAGE_2:
+                case GAME_PAGE_2: // choice page
                     taskBarEvents();
                     newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
                     break;
@@ -298,9 +298,9 @@ int main( int argc, char* args[] )
                     taskBarEvents();
                     textPageEvents(GAME_PAGE_6);
                     break;
-                case GAME_PAGE_6:
+                case GAME_PAGE_6: // choice page
                     taskBarEvents();
-                    // choicePageEvents(currentPage);
+                    newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
                     break;
                 case GAME_PAGE_7_1:
                     taskBarEvents();
@@ -382,7 +382,7 @@ int main( int argc, char* args[] )
             case GAME_PAGE_6:
                 taskBarRenderer();
                 playerBarRenderer();
-                // choicePageRenderer();
+                render.choicePageRenderer(choicePage.chooser(), renderer, player);
                 break;
             case GAME_PAGE_7_1:
                 taskBarRenderer();
@@ -755,31 +755,8 @@ bool loadMedia()
             }
             break;
         case GAME_PAGE_6:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-            if (textures[0].gFont == NULL)
-            {
-                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
-                return false;
-            }  
-            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[0], GREY, dms.w() / 1.3))
-                {
-                    printf( "Failed to render text texture!\n" );
-                    return false;
-                }          
-            for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++){
-                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-                if (textures[i].gFont == NULL)
-                {
-                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
-                    return false;
-                }
-                //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_6_WORDS[i], TAN, dms.w() / 1.3))
-                {
-                    printf( "Failed to render text texture!\n" );
-                    return false;
-                }
-            }
+            if(!choicePage.loadMedia(renderer, newPage))
+                cout << "Cannot load choice page 6" << endl;
             break;
         case GAME_PAGE_7_1:
             textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
