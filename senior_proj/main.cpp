@@ -54,6 +54,11 @@ const int GAME_PAGE_7_3 = 73;
 const int GAME_PAGE_8 = 80;
 const int GAME_PAGE_9 = 90;
 const int GAME_PAGE_10 = 100;
+const int GAME_PAGE_11_1 = 111;
+const int GAME_PAGE_11_2 = 112;
+const int GAME_PAGE_11_3 = 113;
+const int GAME_PAGE_12 = 120;
+const int GAME_PAGE_13 = 130;
 
 //Textures Per Page
 const int TASKBAR_TEXTURES = 2;
@@ -68,7 +73,7 @@ const int TEXT_PAGE_TEXTURES = 2;
 const int OUTCOME_PAGE_TEXTURES = 2;
 
 
-//Words Per Page
+/* Words per page */
 const string NEXT_PAGE = "Next Page";
 const string TASKBAR_WORDS[TASKBAR_TEXTURES]{"Main Menu", "Exit to Desktop"};
 string PLAYER_WORDS[PLAYER_TEXTURES]{"Health:   ", "Sanity:   ", "Reputation:   "};
@@ -123,7 +128,8 @@ const string GAME_PAGE_7_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_6_WORDS
     "    You say with utmost honesty, not mentioning your missing belt.\n    \"Well, at least you're honest.\" The sergeant said. \"Everyone else get up. <LAST NAME>, what is your least favorite exercise?\" he asks, smiling.\n    \"Burpees.\" You gasp, winded from the set of decline pushups.\n    \"Maybe too honest. Do burpees,\" He orders, not cutting you a break for your honesty, \"and then after that, hang from the cage.\"\n    You knock out your 25 burpees and jump up to begin your hang.",
     NEXT_PAGE};
 const string GAME_PAGE_7_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_6_WORDS[3],
-    "    I state, wanting to get out of the impending physical destruction which awaits me. The anxiety of watching my comrades suffer because of my actions has broken me. \"Well you should have done it before you ran here. Hang from the cage.\" the sadist smiled, knowing there was no one to save you from his wrath.",
+    "    I state, wanting to get out of the impending physical destruction which awaits me. The anxiety of watching my comrades suffer because of my actions has broken me.\n"
+    "    \"Well you should have done it before you ran here. Hang from the cage.\" the sadist smiled, knowing there was no one to save you from his wrath.\n",
     NEXT_PAGE};
 const string GAME_PAGE_8_WORDS[TEXT_PAGE_TEXTURES] = {"    Ranger squads reside in the COF which is something resembling a WWE cage match. Lord knows that as a private, every day felt like it. When I went to work in the morning, I would enter Delta Company\'s COF, then enter my squad\'s cage. There was chain link surrounding the entire squad cage with all our gear, to include chain link on the ceiling. The only entrance is through the chain link door between the lockers. The cage is a literal prison when one is a private.\n"    
     "    When my team leader told me to hang from the cage, I jumped to grab the chain link ceiling surrounding me. It was a barbaric practice. The space between intersections of the chain link was not big enough to fit two fingers comfortably; however, one\'s hand would be too stretched out to fit every finger in its own space. One could painfully jam their pinky into the space with their ring finger, tearing skin and cutting off blood flow to both, or leave one finger\'s worth of strength out of the equation, lessening one\'s ability to hang on for long periods of time. With the sadist breathing fire down my neck, I wanted to hang on for as long as possible.\n"
@@ -137,7 +143,36 @@ const string GAME_PAGE_9_WORDS[TEXT_PAGE_TEXTURES] = { "\"<LAST NAME>, what are 
     "    \"You're never just walking, <LAST NAME>. We are Rangers, there's always something we need to be doing. You are scanning for the enemy. Every ten meters you're surveying the ground around you. You're thinking to yourself, 'Where do I take cover if I get shot at from the front? Where do I take cover if I get shot at from the left, right, or rear? Where do I go if I need to break contact or take cover from indirect fire?' If you're a leader, you're thinking, 'What should my men be doing? How can I help them?' You are NEVER just walking.\"\n\n"
     "    During the testing for my expert infantryman's badge (EIB), I did not give due respect to a ranking NCO who was failing me on a lane for the sake of semantics. In my eyes, this NCO was keeping me from achieving the same level of expertise as my peers for no reason – and I let him know as much. He destroyed me with physical training then grabbed my team leader to tell him what I did. My team leader at the time, Sergeant Davis, calmed the situation down. He told the NCO that he would punish me for my lack of respect and rude behavior, but also that I should pass the lane because I did not fail. The other NCO respected his opinion and his reasoning, passing me through the lane after a long and brutal session of physical exercise. Again, the session crossed the grey area into what many would consider hazing.\n" 
     "    That was not the end of my punishment.\n"
-    "    \"<LAST NAME>, what you did was wrong, childish, and stupid. I want a 4-page paper written in 8 pt font, front and back, about what it means to be a man by tomorrow morning.\" Sergeant Davis ordered at 5pm that evening.\n" 
+    "    \"<LAST NAME>, what you did was wrong, childish, and stupid. I want a 4-page paper written in 8 pt font, front and back, about what it means to be a man by tomorrow morning.\" Sergeant Davis ordered at 5pm that evening.\n",
+    NEXT_PAGE
+};
+const string GAME_PAGE_10_WORDS[CHOICE_PAGE_TEXTURES] = {
+    "I spent the whole night typing in tiny font to finish this essay. The question my Dad had asked me was at the forefront of my mind. What have I been doing all this time? I'm going through my time in service, but do I have what it takes to be a man?\n" 
+    "The answer I settled on was:\n",
+    "responsibility, accountability, discipline, and love.",
+    "Manhood doesn't matter. Just how good of a person you are.",
+    "Being a Christian and following the Christian tenants of love, mercy, and grace."
+};
+const string GAME_PAGE_11_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_10_WORDS[1],
+	"    Sergeant Davis and I made purposeful eye contact, and I saw the pride he had from reading my paper. I reached out to shake his hand. He looked down at my hand, with a slight dampening of his demeanor.\n"
+    "    \"I'm still your team leader, <LAST NAME>, not your buddy or your father. Drop.\"\n"
+    "    I dropped and began knocking out my decline pushups. Why are these values the values which my father taught me?\n"
+};
+const string GAME_PAGE_11_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_10_WORDS[2],
+    "    As long as I follow my own moral code, I am in the right. As such, rank doesn't matter as long as I follow my own idea of right and wrong. The sergeant was treating me like I was inferior and I was right to stand up for myself.\n"
+    "    \"<LAST NAME>, you missed the point on this one. I don't know what kind of childhood you had, but in my team you will be a man, respect authority, and be accountable for your actions, no matter what they are. Re-write the paper by tomorrow morning about respect and accountability.\" Sergeant Davis ordered.\n"
+    "    Regardless, my actions were justified."
+};
+const string GAME_PAGE_11_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_10_WORDS[3],
+    "    \"<LAST NAME>, we are Army Rangers. We close with to kill and destroy the enemy in cold blood with our bare hands if necessary. I don't know what kind of Bible you are reading, but when the Israelites stormed the walls of Jericho, they killed every man, woman, and child. So help me God you will be the best at killing. Hold squat.\" Sergeant Davis ordered.\n"
+    "    He smoked me relentlessly to drive the point home... and drive the point home he did. Perhaps being a Christian was not only about these notably soft virtues, but also boldness, discipline, and savagery when the time calls? If God could allow such an awful thing as war, then surely He must provision a way for us to be made righteous within that anguish?\n"
+};
+const string GAME_PAGE_12_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    Every hazing incident was also a fire hose of information being blasted into me by force. My first live fire exercise took place after just 6 months in the Ranger Battalion. Sergeant Davis was not my team leader at the time. I was 18 years old, handling live ammunition around other human beings. This is the first exercise in which I truly felt I was being trained for war. My job was to carry the stretcher, also known as a litter. During the night live fire portion of the exercise, the Alpha Team, led by Corporal Andrew Aimesbury, laid down a base of fire, while my section maneuvered on the targets. While waiting on the order to move, something peculiar happened. A white light beamed towards Aimesbury's team, and the shooting became more sporadic, soon stopping.\n" 
+    "    I stood up and started moving towards Aimesbury's team, saying to my team leader, \"Something is wrong.\"\n" 
+    "    Privates have no right to tell team leaders what to do, and I was immediately yanked to the ground.\n"
+    "    \"Stay down unless I tell you to move.\" The team leader barked.\n",
+    NEXT_PAGE
 };
 
 //Colors {r, g, b, alpha}
@@ -196,7 +231,7 @@ bool gaming = true;
 
 //The current page variable so the game knows what to load.
 int currentPage = -1;
-int newPage = 1;
+int newPage = 80;
 
 //Starts up SDL and creates window
 bool init();
@@ -332,7 +367,23 @@ int main( int argc, char* args[] )
                 case GAME_PAGE_9:
                     taskBarEvents();
                     textPageEvents(GAME_PAGE_10);
-                    break;                             
+                    break; 
+                case GAME_PAGE_10: // choice page
+                    taskBarEvents();
+                    newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
+                    break;
+                case GAME_PAGE_11_1:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_12);
+                    break;
+                case GAME_PAGE_11_2:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_12);
+                    break;
+                case GAME_PAGE_11_3:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_12);
+                    break;
                 default:
                     taskBarEvents();
                     break;
@@ -418,6 +469,26 @@ int main( int argc, char* args[] )
                 playerBarRenderer();
                 postChoicePageRenderer();
                 break;
+            case GAME_PAGE_10:
+                taskBarRenderer();
+                playerBarRenderer();
+                render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
+                break;
+            case GAME_PAGE_11_1:
+                taskBarRenderer();
+                playerBarRenderer();
+                postChoicePageRenderer();
+                break;
+            case GAME_PAGE_11_2:
+                taskBarRenderer();
+                playerBarRenderer();
+                postChoicePageRenderer();
+                break;
+            case GAME_PAGE_11_3:
+                taskBarRenderer();
+                playerBarRenderer();
+                postChoicePageRenderer();
+                break;
             default: //Default is for regular text pages
                 taskBarRenderer();
                 playerBarRenderer();
@@ -464,6 +535,9 @@ bool init()
         printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
         return false;
     }
+    //Add window size to the choice page
+    choicePage.setW(dms.w());
+    choicePage.setH(dms.h());
 
     //Create vsynced renderer for window
     renderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
@@ -893,6 +967,102 @@ bool loadMedia()
             if(!choicePage.loadMedia(renderer, newPage))
                 cout << "Cannot load choice page 10" << endl;
             break;
+        case GAME_PAGE_11_1:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_11_1_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_11_1_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_11_2:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_11_2_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_11_2_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;        
+        case GAME_PAGE_11_3:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_11_3_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_11_3_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }        
+            break;
+        case GAME_PAGE_12:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_12_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+        case GAME_PAGE_13:
+            break;
     } // End Switch
 	return true;
 }
@@ -1285,13 +1455,13 @@ void textPageRenderer(){
             x = dms.w() - textures[i].getWidth();
         if (y > (dms.h() - textures[i].getHeight()))
             y = dms.h() - textures[i].getHeight();
-        cout << "page: " << currentPage << endl;
-        cout << "Texture[" << i << "].getWidth() = " << textures[i].getWidth() << endl;
-        cout << "Texture[" << i << "].getHeight() = " << textures[i].getHeight() << endl;
-        cout << "dms.w() = " << dms.w() << endl;
-        cout << "dms.h() = " << dms.h() << endl;
-        cout << " x = " << x << endl;
-        cout << " y = " << y << endl;
+        // cout << "page: " << currentPage << endl;
+        // cout << "Texture[" << i << "].getWidth() = " << textures[i].getWidth() << endl;
+        // cout << "Texture[" << i << "].getHeight() = " << textures[i].getHeight() << endl;
+        // cout << "dms.w() = " << dms.w() << endl;
+        // cout << "dms.h() = " << dms.h() << endl;
+        // cout << " x = " << x << endl;
+        // cout << " y = " << y << endl;
         textures[i].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
     }
 }
