@@ -52,6 +52,8 @@ const int GAME_PAGE_7_1 = 71;
 const int GAME_PAGE_7_2 = 72;
 const int GAME_PAGE_7_3 = 73;
 const int GAME_PAGE_8 = 80;
+const int GAME_PAGE_9 = 90;
+const int GAME_PAGE_10 = 100;
 
 //Textures Per Page
 const int TASKBAR_TEXTURES = 2;
@@ -128,6 +130,15 @@ const string GAME_PAGE_8_WORDS[TEXT_PAGE_TEXTURES] = {"    Ranger squads reside 
     "    The protective paint on the chain link had worn off from the privates who had to hang on the cage before me, and the privates who had to hang on the cage before them, and so on. The bodyweight of the individual caused the raw metal chain link to tear skin like a sandpaper blade directly to the joints of one\'s fingers. Eventually, the chain link would saw deep enough to draw blood. One could not hold on much longer than a minute or so, but with a team leader breathing fire down my neck, I must have held onto the chain link for about fifteen minutes - an eternity in such a situation. Hazing cuts deeper than the skin, but not as deep as artillery shrapnel or a bullet.\n"
     "    I did not consider these incidents hazing, but training, and they occurred often during my years as a private. These incidents taught me valuable lessons. There was a shoot house on HAAF named after Bradley Crose, a fallen Ranger. For physical exercise in the morning, the squad would sometimes run about two miles to the shoot house with full kit, weapons, and night vision to practice close quarters battle (CQB). Unfortunately, this was 2015. I was new to Ranger Regiment, so the entire trip to Bradley Crose consisted of my team leader crushing the new guys of the squad.", 
     NEXT_PAGE};
+const string GAME_PAGE_9_WORDS[TEXT_PAGE_TEXTURES] = { "\"<LAST NAME>, what are you doing?\" My team leader barked as I walked in a mock patrol, breathing heavily from the most recent set of burpees.\n" 
+    "    My night vision goggles were pointed straight at the ground, fogging up from the perspiration evaporating off my body, as I just tried to put one foot in front of the next.\n" 
+    "    \"Walking, Corporal!\" I responded inadequately.\n" 
+    "    After my team leader promptly ordered another set of burpees, my squad leader, Staff Sergeant Morton, looked at me and told me something I would never forget:\n\n" 
+    "    \"You're never just walking, <LAST NAME>. We are Rangers, there's always something we need to be doing. You are scanning for the enemy. Every ten meters you're surveying the ground around you. You're thinking to yourself, 'Where do I take cover if I get shot at from the front? Where do I take cover if I get shot at from the left, right, or rear? Where do I go if I need to break contact or take cover from indirect fire?' If you're a leader, you're thinking, 'What should my men be doing? How can I help them?' You are NEVER just walking.\"\n\n"
+    "    During the testing for my expert infantryman's badge (EIB), I did not give due respect to a ranking NCO who was failing me on a lane for the sake of semantics. In my eyes, this NCO was keeping me from achieving the same level of expertise as my peers for no reason – and I let him know as much. He destroyed me with physical training then grabbed my team leader to tell him what I did. My team leader at the time, Sergeant Davis, calmed the situation down. He told the NCO that he would punish me for my lack of respect and rude behavior, but also that I should pass the lane because I did not fail. The other NCO respected his opinion and his reasoning, passing me through the lane after a long and brutal session of physical exercise. Again, the session crossed the grey area into what many would consider hazing.\n" 
+    "    That was not the end of my punishment.\n"
+    "    \"<LAST NAME>, what you did was wrong, childish, and stupid. I want a 4-page paper written in 8 pt font, front and back, about what it means to be a man by tomorrow morning.\" Sergeant Davis ordered at 5pm that evening.\n" 
+};
 
 //Colors {r, g, b, alpha}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
@@ -313,7 +324,15 @@ int main( int argc, char* args[] )
                 case GAME_PAGE_7_3:
                     taskBarEvents();
                     postChoicePageEvents(GAME_PAGE_8);
-                    break;                
+                    break; 
+                case GAME_PAGE_8:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_9);
+                    break;    
+                case GAME_PAGE_9:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_10);
+                    break;                             
                 default:
                     taskBarEvents();
                     break;
@@ -357,7 +376,7 @@ int main( int argc, char* args[] )
             case GAME_PAGE_2:
                 taskBarRenderer();
                 playerBarRenderer();
-                render.choicePageRenderer(choicePage.chooser(), renderer, player);
+                render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
                 break;
             case OUTCOME_PAGE:
                 taskBarRenderer();
@@ -382,7 +401,7 @@ int main( int argc, char* args[] )
             case GAME_PAGE_6:
                 taskBarRenderer();
                 playerBarRenderer();
-                render.choicePageRenderer(choicePage.chooser(), renderer, player);
+                render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
                 break;
             case GAME_PAGE_7_1:
                 taskBarRenderer();
@@ -853,7 +872,28 @@ bool loadMedia()
                 }
             }
             break;
-    }
+        case GAME_PAGE_9:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_9_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_10:
+            if(!choicePage.loadMedia(renderer, newPage))
+                cout << "Cannot load choice page 10" << endl;
+            break;
+    } // End Switch
 	return true;
 }
 
@@ -1234,8 +1274,26 @@ void postChoicePageRenderer(){
 }
 
 void textPageRenderer(){
-    for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
-        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() / 2 + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+
+    for (int i = 0; i < TEXT_PAGE_TEXTURES; i++){
+        //Formulas for text position based on texture dimensions and screen dimensions
+        int x = dms.w() / 2 - textures[i].getWidth() / 2;
+        int y = dms.h() / 2 - textures[i].getHeight() / 2 + totalHeight(i) + (i * 20);
+
+        //Validation to keep text on screen
+        if (x > (dms.w() - textures[i].getWidth()))
+            x = dms.w() - textures[i].getWidth();
+        if (y > (dms.h() - textures[i].getHeight()))
+            y = dms.h() - textures[i].getHeight();
+        cout << "page: " << currentPage << endl;
+        cout << "Texture[" << i << "].getWidth() = " << textures[i].getWidth() << endl;
+        cout << "Texture[" << i << "].getHeight() = " << textures[i].getHeight() << endl;
+        cout << "dms.w() = " << dms.w() << endl;
+        cout << "dms.h() = " << dms.h() << endl;
+        cout << " x = " << x << endl;
+        cout << " y = " << y << endl;
+        textures[i].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    }
 }
 
 void muteButtonRenderer(bool unMute){

@@ -62,7 +62,7 @@ class ChoicePage
         int choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer);
 
         //Chooses which media should be rendered in case of insanity.
-        int chooser();
+        int chooseInsane();
 
         //Gets the 3 stat changes for the decision
         int* getStatChange();
