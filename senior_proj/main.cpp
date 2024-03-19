@@ -44,6 +44,7 @@ const int POST_CHOICE_PAGE_TEXTURES = 3;
 const int TEXT_PAGE_TEXTURES = 2;
 const int OUTCOME_PAGE_TEXTURES = 2;
 const int VERSE_PAGE_TEXTURES = 2;
+const int END_CHAPTER_PAGE_TEXTURES = 2;
 
 /*Page Numbers*/
 const int NULL_PAGE = -1;
@@ -52,8 +53,7 @@ const int MAIN_MENU_PAGE = 1;
 const int TUTORIAL_PAGE = 2;
 const int SURVEY_PAGE = 3;
 const int OUTCOME_PAGE = 4;
-const int DEATH_PAGE = 5;
-const int INSANITY_PAGE = 6;
+const int END_CHAPTER_PAGE = 9;
 const int GAME_PAGE_1 = 10;
 const int GAME_PAGE_2 = 20;
 const int GAME_PAGE_3_1 = 31;
@@ -96,7 +96,8 @@ const string TUTORIAL_WORDS[TUTORIAL_TEXTURES] = {"Tutorial",
     "Ending", 
     "    There are 3 endings. Play the game as a hero, as a human, or as a coward to see each ending." ,
     "Decisions",
-    "    At various points throughout the novel, the player will need to make decisions by clicking on them with their mouse. It is not always clear what the right choice is in these decisions, as it is not always clear in life what decisions one should make. Often, decisions which are competent and correct in one situation are deluded and ineffective in another. Sometimes, there is no correct decision. Other times, decisions need to be made quickly. The decisions in this game are no different. It is meant to display the futility of choice in certain situations and the need for a higher power. Decisions affect health and/or sanity, and reputation."};
+    "    At various points throughout the novel, the player will need to make decisions by clicking on them with their mouse. It is not always clear what the right choice is in these decisions, as it is not always clear in life what decisions one should make. Often, decisions which are competent and correct in one situation are deluded and ineffective in another. Sometimes, there is no correct decision. Other times, decisions need to be made quickly. The decisions in this game are no different. It is meant to display the futility of choice in certain situations and the need for a higher power. Decisions affect health and/or sanity, and reputation."
+};
 const string GAME_PAGE_1_WORDS[QUOTATION_PAGE_TEXTURES] = {"Chapter 1", 
     "To each there comes in their lifetime a special moment when they are figuratively tapped on the shoulder and offered the chance to do a very special thing, unique to them and fitted to their talents. What a tragedy if that moment finds them unprepared or unqualified for that which could have been their finest hour.",  
     "- Winston Churchill"};
@@ -220,7 +221,7 @@ const string GAME_PAGE_16_WORDS[VERSE_PAGE_TEXTURES] = {
     "    Though you have not seen him, you love him. Though you do not now see him, you believe in him and rejoice with joy that is inexpressible and filled with glory, obtaining the outcome of your faith, the salvation of your souls.",
     "-- 1 Peter 1: 6-9, ESV"
 };
-
+string END_CHAPTER_PAGE_WORDS[END_CHAPTER_PAGE_TEXTURES] = {"You have finished the chapter", "Next Chapter"};
 
 //Colors {r, g, b, alpha}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
@@ -279,6 +280,7 @@ bool gaming = true;
 //The current page variable so the game knows what to load.
 int currentPage = -1;
 int newPage = 0;
+int chapterHolder = 0;
 
 //Starts up SDL and creates window
 bool init();
@@ -303,6 +305,7 @@ void textPageEvents(int nextPage);
 void postChoicePageEvents(int nextPage);
 void muteButtonEvents();
 void outcomeEvents(int nextPage);
+void versePageEvents();
 
 //Rendering functions to determine what happens for different loaded text
 //depending on page
@@ -374,7 +377,11 @@ int main( int argc, char* args[] )
                     break;
                 case OUTCOME_PAGE:
                     taskBarEvents();
-                    outcomeEvents(choicePage.getStorePage());
+                    //Display normal outcome if not dead, or else restart the chapter.
+                    if (!gamer.checkDeath())
+                        outcomeEvents(choicePage.getStorePage());
+                    else 
+                        outcomeEvents(chapterHolder);
                     break;
                 case GAME_PAGE_3_1:
                     taskBarEvents();
@@ -460,7 +467,8 @@ int main( int argc, char* args[] )
                     taskBarEvents();
                     textPageEvents(GAME_PAGE_16);
                     break; 
-                case GAME_PAGE_16: //STUBBED
+                case GAME_PAGE_16: //Verse Page
+                    versePageEvents();
                     taskBarEvents();
                     break;
                 default:
@@ -833,6 +841,12 @@ bool loadMedia()
                 else
                     OUTCOME_PAGE_WORDS.append("No change in " + GAMER_STAT[i] + ".\n");
             }
+            //Check for death and insanity.
+            if (gamer.checkDeath())
+                OUTCOME_PAGE_WORDS.append("You have died a hero, but you are dead nonetheless.\n");
+            else if (gamer.checkInsanity())
+                OUTCOME_PAGE_WORDS.append("You have gone insane. You will choose self-preservation at any cost. Your reputation will be heavily impacted.\n");
+                
             textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
             if (textures[0].gFont == NULL)
             {
@@ -850,11 +864,21 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[1].loadFromRenderedText(renderer, "Continue", TAN, dms.w() / 1.3))
+            //If the player is not dead
+            if (!gamer.checkDeath())
             {
-                printf( "Failed to render text texture!\n" );
-                return false;
+                if (!textures[1].loadFromRenderedText(renderer, "Continue", TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
             }
+            else 
+                if (!textures[1].loadFromRenderedText(renderer, "Restart Chapter", TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
             break;
         case GAME_PAGE_3_1:
             textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
@@ -1314,6 +1338,22 @@ bool loadMedia()
                 }
             }
             break;
+        case END_CHAPTER_PAGE:
+            for (int i = 0; i < END_CHAPTER_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, END_CHAPTER_PAGE_WORDS[i], TAN, dms.w() / 3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
     } // End Switch
 	return true;
 }
@@ -1408,9 +1448,7 @@ void taskBarEvents(){
                 switch (i){
                     case 0: 
                         newPage = MAIN_MENU_PAGE;
-                        gamer.setHealth(10);
-                        gamer.setRep(10);
-                        gamer.setSanity(20);
+                        gamer.resetStats();
                         break;
                     case 1:
                         gaming = false;
@@ -1465,6 +1503,7 @@ void mainMenuEvents()
 void quotationPageEvents(int nextPage) {
     switch (currentPage){
         case GAME_PAGE_1:
+            chapterHolder = GAME_PAGE_1;
             if (textures[2].isMouseOver(textures[2].getRect())){
                 textColor = GREY;
                 textures[2].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", QUOTATION + 2);                        
@@ -1538,6 +1577,8 @@ void outcomeEvents(int nextPage){
         if(e.type == SDL_MOUSEBUTTONDOWN){
             newPage = nextPage;
             choicePage.setStorePage(NULL_PAGE);
+            if (gamer.checkDeath())
+                gamer.resetStats();
         }
     }
     else{
@@ -1548,7 +1589,24 @@ void outcomeEvents(int nextPage){
     //Return NEXT PAGE if not
     if (textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, textures[OUTCOME_PAGE_TEXTURES - 1].getWord(), textColor, dms.w()/1.3))
         return;
-    textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, "Continue", textColor, dms.w()/1.3);  
+    if (!gamer.checkDeath())
+        textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, "Continue", textColor, dms.w()/1.3);  
+    else
+        textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, "Restart Chapter", textColor, dms.w()/1.3);  
+}
+
+void versePageEvents(){
+    if (textures[VERSE_PAGE_TEXTURES - 1].isMouseOver(textures[VERSE_PAGE_TEXTURES - 1].getRect())){
+        textColor = GREY;
+        textures[VERSE_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
+        if(e.type == SDL_MOUSEBUTTONDOWN)
+            newPage = END_CHAPTER_PAGE;
+    }
+    else{
+        textColor = WHITE;
+        textures[VERSE_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+    }
+    textures[VERSE_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, textures[VERSE_PAGE_TEXTURES - 1].getWord(), textColor, dms.w()/1.3);
 }
 
 void startPageRenderer(){

@@ -19,10 +19,13 @@ class Player
 
     //Check for player death
     bool checkDeath();
-
+    bool checkInsanity();
     //If I want to have different calculation methods
     // int chooseSanity(int lowerBound, int upperBound);
     // int chooseRep(int lowerBound, int upperBound);
+
+    //Resets stats on death or main menu choice
+    void resetStats();
 
     int getHealth();
     void setHealth(int num);
@@ -35,13 +38,7 @@ class Player
 
     random_device getRd();
     random_device setRd();
-
-    bool getInsane();
-    void setInsane(bool sane);
-
-    bool getDead();
-    void setDead(bool death);
-
+   
     private:
         int health;
         int sanity;
@@ -55,9 +52,6 @@ class Player
         
         //Twister for random number seed
         mt19937_64 seed;
-
-        bool insane;
-        bool dead;
 };
 
 #include "player.cpp"

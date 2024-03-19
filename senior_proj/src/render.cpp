@@ -12,7 +12,7 @@ Render::~Render()
 void Render::choicePageRenderer(int chooser, SDL_Renderer* renderer, Player* gamer)
 {
     dimensions.initWindow();
-    if (!gamer->getInsane())
+    if (!gamer->checkInsanity())
         for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++)
             textures[i].render(dimensions.w() / 2 - textures[i].getWidth() / 2, dimensions.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i*20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
     else{

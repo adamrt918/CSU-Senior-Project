@@ -44,8 +44,8 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -25; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -20; //Upper bound for sanity
+                    choice[i].bounds[1][0] = -7; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -1; //Upper bound for sanity
                     choice[i].bounds[2][0] = -4; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
@@ -54,8 +54,8 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].courageLevel = Choices::Average;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -2; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -4; //Upper bound for sanity
+                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -2; //Upper bound for sanity
                     choice[i].bounds[2][0] = -1; //Lower bound for reputation
                     choice[i].bounds[2][1] = 3; //Upper bound for reputation
                 }
@@ -147,7 +147,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].courageLevel = Choices::Heroic;
                     choice[i].bounds[0][0] = -4; //Lower bound for health
                     choice[i].bounds[0][1] = -2; //Upper bound for health
-                    choice[i].bounds[1][0] = -3; //Lower bound for sanity
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
                     choice[i].bounds[1][1] = 2; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
                     choice[i].bounds[2][1] = 2; //Upper bound for reputation
@@ -206,8 +206,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
     } //End switch
 
     //Only load the cowardly option on insanity = true
-    if (gamer->getInsane()){
-        cout << "We are insane" << endl;
+    if (gamer->checkInsanity()){
         textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
         if (textures[1].gFont == NULL)
         {
@@ -215,7 +214,6 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
             return false;
         }
         //Load in the textures for rendering
-        cout << "choose insane is choice " << chooseInsane() << endl;
         if (!textures[1].loadFromRenderedText(gRenderer, choice[chooseInsane()].text, TAN, w / 1.3))
         {
             printf( "Failed to render text texture!\n" );
@@ -246,7 +244,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
 int ChoicePage::chooseInsane(){
     
     //Return the cowardly choice if the gamer is insane
-    if (gamer->getInsane())
+    if (gamer->checkInsanity())
         for (int i = 0; i < 3; i++)
             if (choice[i].courageLevel == Choices::Cowardly)
                 return i;
@@ -257,7 +255,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
     int newPage = currentPage;
     switch (currentPage){
         case GAME_PAGE_2:
-            if (!gamer->getInsane()){
+            if (!gamer->checkInsanity()){
                 //Iterating over choice textures    
                 for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
                 {
@@ -348,7 +346,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
             } // End insane events
             break;
         case GAME_PAGE_6:
-                if (!gamer->getInsane()){
+                if (!gamer->checkInsanity()){
                 //Iterating over choice textures    
                 for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
                 {
@@ -439,7 +437,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
             } // End insane events
             break;
         case GAME_PAGE_10:
-            if (!gamer->getInsane()){
+            if (!gamer->checkInsanity()){
                 //Iterating over choice textures    
                 for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
                 {
@@ -530,7 +528,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
             } // End insane events
             break;
         case GAME_PAGE_13:
-            if (!gamer->getInsane()){
+            if (!gamer->checkInsanity()){
                 //Iterating over choice textures    
                 for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
                 {
