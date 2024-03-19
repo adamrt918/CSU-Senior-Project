@@ -14,11 +14,15 @@ class Player
     Player();
     ~Player();
     
+    //Get the random number.
     int random(int* bounds);
-    int chooseSanity(int lowerBound, int upperBound);
-    int chooseRep(int lowerBound, int upperBound);
 
+    //Check for player death
+    bool checkDeath();
 
+    //If I want to have different calculation methods
+    // int chooseSanity(int lowerBound, int upperBound);
+    // int chooseRep(int lowerBound, int upperBound);
 
     int getHealth();
     void setHealth(int num);

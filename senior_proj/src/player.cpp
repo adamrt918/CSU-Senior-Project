@@ -19,6 +19,12 @@ int Player::random(int* bounds){
     return roll(seed);
 }
 
+bool Player::checkDeath(){
+    if (health < 1)
+        return true;
+    return false;
+}
+
 int Player::getHealth(){ return health;}
 void Player::setHealth(int num){health = num;}
 
@@ -29,8 +35,7 @@ int Player::getRep(){return reputation;}
 void Player::setRep(int num){reputation = num;}
 
 bool Player::getInsane(){return insane;}
-void Player::setInsane(bool sane){insane = sane;
-}
+void Player::setInsane(bool sane){insane = sane;}
 
 bool Player::getDead(){return dead;}
 void Player::setDead(bool death){dead = death;}

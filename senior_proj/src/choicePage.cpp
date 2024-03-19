@@ -35,8 +35,8 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].courageLevel = Choices::Heroic;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -1; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 3; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
                     choice[i].bounds[2][1] = 2; //Upper bound for reputation
                 }
@@ -44,9 +44,9 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -3; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -1; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -2; //Lower bound for reputation
+                    choice[i].bounds[1][0] = -25; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -20; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -4; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else 
@@ -55,12 +55,11 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].bounds[0][0] = 0; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
                     choice[i].bounds[1][0] = -2; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[1][1] = -4; //Upper bound for sanity
                     choice[i].bounds[2][0] = -1; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[2][1] = 3; //Upper bound for reputation
                 }
             }
-
             break;
         case GAME_PAGE_6:
             //Load the game text
@@ -83,26 +82,26 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].courageLevel = Choices::Average;
                     choice[i].bounds[0][0] = -1; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -2; //Lower bound for sanity
+                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
                     choice[i].bounds[1][1] = -1; //Upper bound for sanity
                     choice[i].bounds[2][0] = -1; //Lower bound for reputation
                     choice[i].bounds[2][1] = 1; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = -2; //Lower bound for health
-                    choice[i].bounds[0][1] = -1; //Upper bound for health
+                    choice[i].bounds[0][0] = -5; //Lower bound for health
+                    choice[i].bounds[0][1] = -2; //Upper bound for health
                     choice[i].bounds[1][0] = -1; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 1; //Upper bound for sanity
+                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
                     choice[i].bounds[2][1] = 2; //Upper bound for reputation
                 }
                 else 
                 {    
                     choice[i].courageLevel = Choices::Cowardly;
-                    choice[i].bounds[0][0] = -1; //Lower bound for health
+                    choice[i].bounds[0][0] = -4; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
+                    choice[i].bounds[1][0] = -7; //Lower bound for sanity
                     choice[i].bounds[1][1] = -2; //Upper bound for sanity
                     choice[i].bounds[2][0] = -4; //Lower bound for reputation
                     choice[i].bounds[2][1] = -1; //Upper bound for reputation
@@ -117,7 +116,6 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }  
-
             if (!textures[0].loadFromRenderedText(gRenderer, GAME_PAGE_10_WORDS[0], GREY, w / 1.3))
             {
                 printf( "Failed to render text texture!\n" );
@@ -128,29 +126,29 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_10_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = -1; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -2; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[0][0] = -3; //Lower bound for health
+                    choice[i].bounds[0][1] = 1; //Upper bound for health
+                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
                     choice[i].bounds[2][0] = -1; //Lower bound for reputation
                     choice[i].bounds[2][1] = 1; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -3; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -1; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -2; //Lower bound for reputation
+                    choice[i].bounds[0][1] = 2; //Upper bound for health
+                    choice[i].bounds[1][0] = -8; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -3; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else  
                 {    
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = -2; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -1; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[0][0] = -4; //Lower bound for health
+                    choice[i].bounds[0][1] = -2; //Upper bound for health
+                    choice[i].bounds[1][0] = -3; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
                     choice[i].bounds[2][1] = 2; //Upper bound for reputation
                 }
@@ -175,18 +173,18 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_13_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = -4; //Lower bound for health
+                    choice[i].bounds[0][0] = -6; //Lower bound for health
                     choice[i].bounds[0][1] = -2; //Upper bound for health
                     choice[i].bounds[1][0] = -2; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[1][1] = 4; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 4; //Upper bound for reputation
+                    choice[i].bounds[2][1] = 3; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -5; //Lower bound for sanity
+                    choice[i].bounds[0][1] = 4; //Upper bound for health
+                    choice[i].bounds[1][0] = -6; //Lower bound for sanity
                     choice[i].bounds[1][1] = -2; //Upper bound for sanity
                     choice[i].bounds[2][0] = -6; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
@@ -197,7 +195,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].bounds[0][0] = -2; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
                     choice[i].bounds[1][0] = -3; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -1; //Upper bound for sanity
+                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
                     choice[i].bounds[2][0] = -2; //Lower bound for reputation
                     choice[i].bounds[2][1] = 1; //Upper bound for reputation
                 }
@@ -209,6 +207,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
 
     //Only load the cowardly option on insanity = true
     if (gamer->getInsane()){
+        cout << "We are insane" << endl;
         textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
         if (textures[1].gFont == NULL)
         {
@@ -216,6 +215,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
             return false;
         }
         //Load in the textures for rendering
+        cout << "choose insane is choice " << chooseInsane() << endl;
         if (!textures[1].loadFromRenderedText(gRenderer, choice[chooseInsane()].text, TAN, w / 1.3))
         {
             printf( "Failed to render text texture!\n" );

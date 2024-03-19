@@ -63,7 +63,7 @@ class ChoicePage
             "    The answer I settled on was:\n",
             "responsibility, accountability, discipline, and love.",
             "Manhood doesn't matter. Just how good of a person you are.",
-            "Being a Christian and following the Christian tenants of love, mercy, and grace."
+            "Following tenants of love, mercy, and grace towards fellow mankind."
         };
         const string GAME_PAGE_13_WORDS[4] = {"Troubled, I thought about my next move.",
             "I stood back up and started sprinting towards the white light, completely disregarding a direct order.",
