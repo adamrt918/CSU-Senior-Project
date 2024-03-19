@@ -33,9 +33,9 @@
 using namespace std;
 
 //Textures Per Page
+const int START_PAGE_TEXTURES = 2;
 const int TASKBAR_TEXTURES = 2;
 const int PLAYER_TEXTURES = 3;
-const int START_PAGE_TEXTURES = 1;
 const int MAIN_MENU_TEXTURES = 4; // 1 texture for each clickable word
 const int TUTORIAL_TEXTURES = 12; // textures for individual highlights and going back to the main menu
 const int QUOTATION_PAGE_TEXTURES = 3;
@@ -79,6 +79,7 @@ const int GAME_PAGE_16 = 160;
 
 /* Words per page */
 const string NEXT_PAGE = "Next Page";
+const string START_PAGE_WORDS = "Click Here to Begin";
 const string TASKBAR_WORDS[TASKBAR_TEXTURES]{"Main Menu", "Exit to Desktop"};
 string PLAYER_WORDS[PLAYER_TEXTURES]{"Health:   ", "Sanity:   ", "Reputation:   "};
 const string MAIN_MENU_WORDS[MAIN_MENU_TEXTURES] = {"Begin", "Tutorial", "Survey", "Exit"};
@@ -275,7 +276,7 @@ bool gaming = true;
 
 //The current page variable so the game knows what to load.
 int currentPage = -1;
-int newPage = 100;
+int newPage = 0;
 
 //Starts up SDL and creates window
 bool init();
@@ -290,7 +291,9 @@ int totalHeight(int tNum);
 //Frees media and shuts down SDL
 void close();
 
-//Event functions to determine what happens for different pages upon mouse events
+//Event functions to determine what happens for different pages upon mouse
+//events
+void startPageEvents();
 void mainMenuEvents();
 void taskBarEvents();
 void quotationPageEvents(int nextPage);
@@ -301,6 +304,7 @@ void outcomeEvents(int nextPage);
 
 //Rendering functions to determine what happens for different loaded text
 //depending on page
+void startPageRenderer();
 void mainMenuRenderer();
 void taskBarRenderer();
 void playerBarRenderer();
@@ -348,6 +352,7 @@ int main( int argc, char* args[] )
             switch (currentPage)
             {
                 case START_PAGE:
+                    startPageEvents();
                     break;
                 case MAIN_MENU_PAGE:                        
                     mainMenuEvents();                    
@@ -483,6 +488,9 @@ int main( int argc, char* args[] )
         /*Begin switch for which frames to Render*/
         switch (currentPage)
         {
+            case START_PAGE:
+                startPageRenderer();
+                break;
             case MAIN_MENU_PAGE:
                 mainMenuRenderer();
                 break;
@@ -724,6 +732,21 @@ bool loadMedia()
     switch (newPage)
     {
         case START_PAGE:
+            if(!textures[0].loadFromFile("resources/title_page.png", renderer, dms.w(), dms.h())){
+                cout << "Failed to load title_page.png" << endl;
+                return false;
+            }
+            textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
+            if (textures[1].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[1].loadFromRenderedText(renderer, START_PAGE_WORDS, TAN))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }  
             break;
         case MAIN_MENU_PAGE:
             for (int i = 0; i < MAIN_MENU_TEXTURES; i++){
@@ -735,7 +758,7 @@ bool loadMedia()
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, MAIN_MENU_WORDS[i], textColor))
+                if (!textures[i].loadFromRenderedText(renderer, MAIN_MENU_WORDS[i], WHITE))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -1167,7 +1190,7 @@ bool loadMedia()
             break;
         case GAME_PAGE_13:
             if(!choicePage.loadMedia(renderer, newPage))
-                cout << "Cannot load choice page" << currentPage << endl;
+                cout << "Cannot load choice page 13" << currentPage << endl;
             break;
         case GAME_PAGE_14_1:
             textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
@@ -1361,27 +1384,37 @@ void close()
 	SDL_Quit();
 }
 
+void startPageEvents(){
+    if (textures[1].isMouseOver(textures[1].getRect())){
+        textColor = RED;
+        if(e.type == SDL_MOUSEBUTTONDOWN){
+            newPage = MAIN_MENU_PAGE;
+        }
+    }
+    else
+        textColor = TAN;
+    textures[1].loadFromRenderedText(renderer, START_PAGE_WORDS, textColor);
+}
+
 void taskBarEvents(){
     for (int i = 0; i < TASKBAR_TEXTURES; i++)
     {
-        if (TASKBAR[i].isMouseOver(TASKBAR[i].getRect()))
-        {   textColor = RED;
+        if (TASKBAR[i].isMouseOver(TASKBAR[i].getRect())) {   
+            textColor = RED;
+            if(e.type == SDL_MOUSEBUTTONDOWN)
             {
-                if(e.type == SDL_MOUSEBUTTONDOWN)
-                {
-                    switch (i){
-                        case 0: 
-                            newPage = MAIN_MENU_PAGE;
-                            gamer.setHealth(10);
-                            gamer.setRep(10);
-                            gamer.setSanity(20);
-                            break;
-                        case 1:
-                            gaming = false;
-                            break;
-                        default:
-                            break;
-                    }
+                switch (i){
+                    case 0: 
+                        newPage = MAIN_MENU_PAGE;
+                        gamer.setHealth(10);
+                        gamer.setRep(10);
+                        gamer.setSanity(20);
+                        break;
+                    case 1:
+                        gaming = false;
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -1515,6 +1548,14 @@ void outcomeEvents(int nextPage){
     textures[OUTCOME_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, "Continue", textColor, dms.w()/1.3);  
 }
 
+void startPageRenderer(){
+    //factor for scaling the image to fit screen width
+    int x = dms.w() / 2 - textures[1].getWidth() / 2;
+    int y = dms.h() / 4 * 3 - textures[1].getHeight() / 2;
+    textures[0].render(dms.w() / 2 - textures[0].getWidth() / 2, dms.h() / 2 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+    textures[1].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+}
+
 void mainMenuRenderer(){
 for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
     textures[i].render((dms.w() * (i + .5) / MAIN_MENU_TEXTURES + 1) - textures[i].getWidth() / 2, ( dms.h() - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
@@ -1555,7 +1596,6 @@ void postChoicePageRenderer(){
 }
 
 void textPageRenderer(){
-
     for (int i = 0; i < TEXT_PAGE_TEXTURES; i++){
         //Formulas for text position based on texture dimensions and screen dimensions
         int x = dms.w() / 2 - textures[i].getWidth() / 2;

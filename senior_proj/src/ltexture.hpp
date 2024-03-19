@@ -34,6 +34,7 @@ class LTexture
 
         //Loads image at specified path
         bool loadFromFile(std::string path, SDL_Renderer* gRenderer);
+        bool loadFromFile(std::string path, SDL_Renderer* gRenderer, int w, int h); //Overload to scale images to monitor size
         
         //Creates image from font string
         bool loadFromRenderedText(SDL_Renderer* gRenderer, std::string textureText, SDL_Color textColor );

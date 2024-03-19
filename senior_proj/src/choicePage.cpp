@@ -131,7 +131,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].bounds[0][0] = -1; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
                     choice[i].bounds[1][0] = -2; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -0; //Upper bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
                     choice[i].bounds[2][0] = -1; //Lower bound for reputation
                     choice[i].bounds[2][1] = 1; //Upper bound for reputation
                 }
@@ -144,7 +144,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].bounds[2][0] = -2; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
-                else 
+                else  
                 {    
                     choice[i].courageLevel = Choices::Heroic;
                     choice[i].bounds[0][0] = -2; //Lower bound for health
