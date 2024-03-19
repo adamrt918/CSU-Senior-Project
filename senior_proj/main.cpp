@@ -1442,7 +1442,8 @@ void mainMenuEvents()
                             newPage = TUTORIAL_PAGE;
                             break;
                         case 2: 
-                            cout << "Here is the survey link: " << endl;
+                            if(SDL_OpenURL("https://forms.gle/RVpN55ZaerSB3iWW8") == -1)
+                                cout << "ERROR ON URL" << endl;
                             break;
                         case 3:
                             gaming = false;
