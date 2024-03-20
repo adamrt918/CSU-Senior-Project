@@ -10,7 +10,6 @@
 #include <../player.hpp>
 #include <../choicePage.hpp>
 #include <../render.hpp>
-#include <vector>
 
 /*Notes
     - The coordinates (0,0) in SDL is the top left of the screen, the y
@@ -18,16 +17,8 @@
       it moves up.
 */
 
-/*TODO
-    - I need to figure out how to get a class to handle the taskbar events and
-      the main page events. It should be repeatable between pages but I keep
-      messing up when I'm copy pasting.
-    - I have the pages class, but now I need to load in all of the pages. I also
-      have to decide how I will hold the textures whether that be in main or in
-      the pages class. Pages class would make sense because then each page can
-      hold its' own texture.
-    - A function to calculate where text should go on a page and ensure that I
-      can break up text if it is on a screen that is too small.
+/*TODO  
+    -Tutorial page should be changed to a .png and scaled
 */
 
 using namespace std;
@@ -257,9 +248,8 @@ SDL_Rect MUTE_BUTTON_SPRITES[2];
 bool playMusic = true;
 Mix_Music *gMusic = NULL; //Music for background
 
-//Pages and Rendering
+//Choice Pages
 ChoicePage choicePage(player, textures);
-Render render(textures);
 
 //Monitor data
 SDL_DisplayMode dimensions;
@@ -268,8 +258,10 @@ Window dms;
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 
-//Renderer
+//Renderer + render class
 SDL_Renderer* renderer;
+Render render(textures, &dms);
+
 
 //Event handler
 SDL_Event e;
@@ -307,20 +299,6 @@ void muteButtonEvents();
 void outcomeEvents(int nextPage);
 void versePageEvents();
 
-//Rendering functions to determine what happens for different loaded text
-//depending on page
-void startPageRenderer();
-void mainMenuRenderer();
-void taskBarRenderer();
-void playerBarRenderer();
-void tutorialRenderer();
-void quotationPageRenderer();
-void postChoicePageRenderer();
-void textPageRenderer();
-void muteButtonRenderer(bool unMute);
-void outcomePageRenderer();
-void versePageRenderer();
-
 int main( int argc, char* args[] )
 {
 	//Start up SDL and create window
@@ -342,7 +320,7 @@ int main( int argc, char* args[] )
     /*GAME LOOP*/
     while( gaming )
     {
-        //Handle events on queue
+        /*EVENTS LOOP*/
         while( SDL_PollEvent( &e ) != 0 )
         {
             //User requests quit
@@ -352,8 +330,7 @@ int main( int argc, char* args[] )
             //User wants to mute/unmute the music
             muteButtonEvents();
 
-            //Handle events based on the page
-            /*START SWITCH STATEMENT FOR EVENTS BASED ON PAGE*/
+            /*EVENTS SWITCH*/
             switch (currentPage)
             {
                 case START_PAGE:
@@ -495,127 +472,127 @@ int main( int argc, char* args[] )
         SDL_RenderClear(renderer);
 
         //Render current frame
-        /*Begin switch for which frames to Render*/
+        /*RENDER SWITCH*/
         switch (currentPage)
         {
             case START_PAGE:
-                startPageRenderer();
+                render.startPageRenderer(renderer);
                 break;
             case MAIN_MENU_PAGE:
-                mainMenuRenderer();
+                render.mainMenuRenderer(renderer);
                 break;
             case TUTORIAL_PAGE:
-                taskBarRenderer();
-                tutorialRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.tutorialRenderer(renderer);
                 break;
             case SURVEY_PAGE:
                 break;
             case GAME_PAGE_1:
-                taskBarRenderer();
-                playerBarRenderer();
-                quotationPageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.quotationPageRenderer(renderer);
                 break;
             case GAME_PAGE_2:
-                taskBarRenderer();
-                playerBarRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
                 render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
                 break;
             case OUTCOME_PAGE:
-                taskBarRenderer();
-                playerBarRenderer();
-                outcomePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.outcomePageRenderer(renderer);
                 break;
             case GAME_PAGE_3_1:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_3_2:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_3_3:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_6:
-                taskBarRenderer();
-                playerBarRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
                 render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
                 break;
             case GAME_PAGE_7_1:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_7_2:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_7_3:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_10:
-                taskBarRenderer();
-                playerBarRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
                 render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
                 break;
             case GAME_PAGE_11_1:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_11_2:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_11_3:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_13:
-                taskBarRenderer();
-                playerBarRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
                 render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
                 break;
             case GAME_PAGE_14_1:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_14_2:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_14_3:
-                taskBarRenderer();
-                playerBarRenderer();
-                postChoicePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_16:
-                taskBarRenderer();
-                playerBarRenderer();
-                versePageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.versePageRenderer(renderer);
                 break;
             default: //Default is for regular text pages
-                taskBarRenderer();
-                playerBarRenderer();
-                textPageRenderer();
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.textPageRenderer(renderer);
                 break;
 
         }
         /*End switch for rendering frames*/
 
         //Render the mute button on top of every frame
-        muteButtonRenderer(playMusic);
+        render.muteButtonRenderer(playMusic, renderer, MUTE_BUTTON_SPRITES, &MUTE_BUTTON);
 
         //Update screen
         SDL_RenderPresent(renderer);
@@ -1609,87 +1586,5 @@ void versePageEvents(){
     textures[VERSE_PAGE_TEXTURES - 1].loadFromRenderedText(renderer, textures[VERSE_PAGE_TEXTURES - 1].getWord(), textColor, dms.w()/1.3);
 }
 
-void startPageRenderer(){
-    //factor for scaling the image to fit screen width
-    int x = dms.w() / 2 - textures[1].getWidth() / 2;
-    int y = dms.h() / 4 * 3 - textures[1].getHeight() / 2;
-    textures[0].render(dms.w() / 2 - textures[0].getWidth() / 2, dms.h() / 2 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-    textures[1].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-}
-
-void mainMenuRenderer(){
-for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
-    textures[i].render((dms.w() * (i + .5) / MAIN_MENU_TEXTURES + 1) - textures[i].getWidth() / 2, ( dms.h() - textures[i].getHeight() ) / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-}
-
-void taskBarRenderer(){
-for (int i = 0; i < TASKBAR_TEXTURES; i++)
-    TASKBAR[i].render((dms.w() * (1 + i) / 3) - (TASKBAR[i].getWidth() / 2), (TASKBAR[i].getHeight() / 2), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-}
-
-void tutorialRenderer(){
-    for (int i = 0; i < TUTORIAL_TEXTURES; i++){
-        if (i == 0)
-            textures[i].render((dms.w() / 2) - textures[i].getWidth() / 2, (dms.h() / 8) - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        else if (i % 2 == 1)
-            textures[i].render((dms.w() / 2) - textures[i].getWidth() / 2, (dms.h() / 8) + totalHeight(i) + 10 * i , NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        else
-            textures[i].render((dms.w() / 2) - textures[i].getWidth() / 2, (dms.h() / 8) + totalHeight(i) + 10 * i, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-    }
-}
-
-void quotationPageRenderer(){
-    textures[0].render(dms.w() / 2 - textures[0].getWidth() / 2, dms.h() / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        for (int i = 1; i < QUOTATION_PAGE_TEXTURES; i++)
-            textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-}
-
-void playerBarRenderer(){
-    for (int i = 0; i < PLAYER_TEXTURES; i++)
-        PLAYER_STATS[i].render((dms.w() * (1 + i) / 4 - PLAYER_STATS[i].getWidth() / 2), dms.h() / 8 - PLAYER_STATS[i].getHeight() * 4, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-}
-
-void postChoicePageRenderer(){
-    textures[0].render(dms.w() / 2 - textures[0].getWidth() / 2, dms.h() / 3 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-    for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
-        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + (i * 20), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-    }
-}
-
-void textPageRenderer(){
-    for (int i = 0; i < TEXT_PAGE_TEXTURES; i++){
-        //Formulas for text position based on texture dimensions and screen dimensions
-        int x = dms.w() / 2 - textures[i].getWidth() / 2;
-        int y = dms.h() / 2 - textures[i].getHeight() / 2 + totalHeight(i) + (i * 20);
-
-        //Validation to keep text on screen
-        if (x > (dms.w() - textures[i].getWidth()))
-            x = dms.w() - textures[i].getWidth();
-        if (y > (dms.h() - textures[i].getHeight()))
-            y = dms.h() - textures[i].getHeight();
-        // cout << "page: " << currentPage << endl;
-        // cout << "Texture[" << i << "].getWidth() = " << textures[i].getWidth() << endl;
-        // cout << "Texture[" << i << "].getHeight() = " << textures[i].getHeight() << endl;
-        // cout << "dms.w() = " << dms.w() << endl;
-        // cout << "dms.h() = " << dms.h() << endl;
-        // cout << " x = " << x << endl;
-        // cout << " y = " << y << endl;
-        textures[i].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-    }
-}
-
-void muteButtonRenderer(bool unMute){
-    MUTE_BUTTON.render(0,0, &MUTE_BUTTON_SPRITES[unMute], 0, NULL, SDL_FLIP_NONE, renderer);
-}
-
-void outcomePageRenderer(){
-    textures[0].render(dms.w() / 2 - textures[0].getWidth() / 15, dms.h() / 2 - textures[0].getHeight() / 2 + totalHeight(0), NULL, 0, NULL, SDL_FLIP_NONE, renderer);    
-    textures[1].render(dms.w() / 2 - textures[1].getWidth() / 2, dms.h() / 2 - textures[1].getHeight() / 2 + totalHeight(1) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-}
-
-void versePageRenderer(){
-    for (int i = 0; i < VERSE_PAGE_TEXTURES; i++)
-        textures[i].render(dms.w() / 2 - textures[i].getWidth() / 2, dms.h() / 2 - textures[i].getHeight() + totalHeight(i) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-}
 
 
