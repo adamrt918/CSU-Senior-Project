@@ -74,6 +74,12 @@ const int GAME_PAGE_17 = 170;
 const int GAME_PAGE_18 = 180;
 const int GAME_PAGE_19 = 190;
 const int GAME_PAGE_20 = 200;
+const int GAME_PAGE_21 = 210;
+const int GAME_PAGE_22 = 220;
+const int GAME_PAGE_23_1 = 231;
+const int GAME_PAGE_23_2 = 232;
+const int GAME_PAGE_23_3 = 233;
+const int GAME_PAGE_24 = 240;
 
 /* Words per page */
 const string NEXT_PAGE = "Next Page";
@@ -145,7 +151,7 @@ const string GAME_PAGE_9_WORDS[TEXT_PAGE_TEXTURES] = { "\"<LAST NAME>, what are 
     "    \"Walking, Corporal!\" I responded inadequately.\n" 
     "    After my team leader promptly ordered another set of burpees, my squad leader, Staff Sergeant Morton, looked at me and told me something I would never forget:\n\n" 
     "    \"You're never just walking, <LAST NAME>. We are Rangers, there's always something we need to be doing. You are scanning for the enemy. Every ten meters you're surveying the ground around you. You're thinking to yourself, 'Where do I take cover if I get shot at from the front? Where do I take cover if I get shot at from the left, right, or rear? Where do I go if I need to break contact or take cover from indirect fire?' If you're a leader, you're thinking, 'What should my men be doing? How can I help them?' You are NEVER just walking.\"\n\n"
-    "    During the testing for my expert infantryman's badge (EIB), I did not give due respect to a ranking NCO who was failing me on a lane for the sake of semantics. In my eyes, this NCO was keeping me from achieving the same level of expertise as my peers for no reason – and I let him know as much. He destroyed me with physical training then grabbed my team leader to tell him what I did. My team leader at the time, Sergeant Davis, calmed the situation down. He told the NCO that he would punish me for my lack of respect and rude behavior, but also that I should pass the lane because I did not fail. The other NCO respected his opinion and his reasoning, passing me through the lane after a long and brutal session of physical exercise. Again, the session crossed the grey area into what many would consider hazing.\n" 
+    "    During the testing for my expert infantryman's badge (EIB), I did not give due respect to a ranking NCO who was failing me on a lane for the sake of semantics. In my eyes, this NCO was keeping me from achieving the same level of expertise as my peers for no reason - and I let him know as much. He destroyed me with physical training then grabbed my team leader to tell him what I did. My team leader at the time, Sergeant Davis, calmed the situation down. He told the NCO that he would punish me for my lack of respect and rude behavior, but also that I should pass the lane because I did not fail. The other NCO respected his opinion and his reasoning, passing me through the lane after a long and brutal session of physical exercise. Again, the session crossed the grey area into what many would consider hazing.\n" 
     "    That was not the end of my punishment.\n"
     "    \"<LAST NAME>, what you did was wrong, childish, and stupid. I want a 4-page paper written in 8 pt font, front and back, about what it means to be a man by tomorrow morning.\" Sergeant Davis ordered at 5pm that evening.\n",
     NEXT_PAGE
@@ -227,6 +233,54 @@ const string GAME_PAGE_18_WORDS[QUOTATION_PAGE_TEXTURES] = {
     "\"I offer neither pay, nor quarters, nor food; I offer only hunger, thirst, forced marches, battles and death. Let him who loves his country with his heart and not merely with his lips, follow me.\"\n", 
     "- Giuseppe Garibaldi"
 };
+const string GAME_PAGE_19_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    \"Get off the bird and load the buses. We're taking you straight to the ready room, jam your magazines and prep your kit, you're going out tonight.\"\n" 
+    "    Not 1 minute before the door had opened and a man left us with those words, the battalion had landed in Afghanistan. The battalion sergeant major and commander jumped off the C-130 with the man. It was my first deployment. I breathed deeply to keep my adrenaline from dumping before it was needed.\n"
+    "    \"Is this normal?\" I asked my senior private.\n"
+    "    \"No.\" He replied, eyes wide.\n"
+    "    My adrenaline dumped. We rushed off the plane and jumped onto buses which were waiting on the runway. The gates were all up in preparation for our movement and we rushed straight through Bagram Airfield to Camp Alpha, the walled off special operations camp in the corner of the base. We quickly disembarked and I followed the crowd up a set of stairs to the ready room. My team leader for the deployment, Corporal Fausey, was on his third Afghanistan deployment at 22 years of age. He had partaken in the events which led to the awarding of Sergeant Anderson's valorous silver star. He was waving me to our team's corner of the ready room. \"Paranoid\" by Black Sabbath blasted through the room as team leaders gave orders and individuals loaded their magazines with the appropriate ammo.\n",
+    NEXT_PAGE
+};
+const string GAME_PAGE_20_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    As I arrived to my locker Corporal Fausey gave me the order, \"Pack 400 rounds armor piercing, 200 rounds armor piercing incendiary, then load your magazines. You have 4 minutes.\"\n"
+    "    He turned back towards his own kit and locked a 200 rd. Drum of 7.62 armor piercing link into his MK48 machine gun. Every 100 rounds of linked 7.62mm ammunition weighs about 7 pounds. This meant for my first mission, I would have 42 pounds of ammunition, my body armor, helmet, my own combat loadout for the M4, a large thermal optic to spot targets, and my own food and water. When we weighed in for the helicopter, I had 110 total pounds of gear on.\n" 
+    "    We loaded the Chinook helicopters, still not knowing what the mission was. The loadmaster briefed us in flight, using imagery from a drone to show us the objective.\n"
+    "    \"Two professors from the college of Kabul have been kidnapped by the Taliban - Kevin King, an American - and Timothy Weeks, an Australian. Our mission is to get them back. The Taliban are currently moving with the two hostages through the desert by trucks. Our mission is to knock out the trucks, kill the Taliban, and rescue the hostages.\" Our platoon leader briefed.\n"
+    "    Easy enough, I guess. He went through the positions of each of the squads and the other platoons once we hit the ground. The adrenaline was pumping and dudes had their game face on. I was too weighed down by my gear to want anything except to get to our firing position to lay down and take my backpack off. Instead, halfway to the target, the helicopters made a sharp bank and turned around. We had been called off the target by the Secretary of Defense, Ash Carter. He had opted to call in a more elite unit, SEAL Team 6, to perform the hostage rescue. This was probably a good idea, as I was still 18 years old and had never trained for a hostage rescue. By the time SEAL Team 6 arrived and executed the mission, it was a dry hole. The hostages had been snuck out of the target compound and were lost. There was no worse way to start a deployment.\n",
+    NEXT_PAGE
+};
+const string GAME_PAGE_21_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    Sometime later we got the call for our next mission, the second part in a legendary trilogy of missions known as operation \"Green Sword.\" The first piece of the mission had been executed by Bravo Company months earlier, and the operation was about dismantling a weapons smuggling ring led by Taliban and ISIL-K Insurgents. Their previous operation had yielded excellent results, with leaders of the smuggling ring being confirmed killed in an airstrike. For our piece, we were to kill or capture a lieutenant who was holed up on the mountainous border of Pakistan and Afghanistan in Paktiya Province. We wanted to get intelligence from the target, not airstrike him. So, we had to hike 16 kilometers through the mountains of Afghanistan to get to his house. Our Company Commander briefed us that the whole area was hostile, and even unarmed military aged males or non-compliant females could be considered combatants. On the way up, we received interim communications (ICOM) chatter from the Taliban which told us they were going to attempt to ambush us. Though brave, the Taliban were in grave danger after dusk in that valley.\n" 
+    "    A vehicle approached us with its' headlights on. Under night vision, we had seen it approaching far before they would be able to see us, and the company took cover under the outcropping of a cliff. In a small ditch we laid trying to maintain the relative secrecy of 150 Rangers and partner forces. For such a considerable footprint, we managed to remain hidden. Once a weapon was positively identified inside the vehicle, 2 Apache helicopters performed gun runs, killing the men who wished to ambush us. Just in case, suppressed rifles opened fire for a short period as well.\n"
+    "    \"Merica...\" Our platoon sergeant keyed through the radio, which I could only hear quietly through Corporal Fausey's headset.",
+    NEXT_PAGE
+};
+const string GAME_PAGE_22_WORDS[CHOICE_PAGE_TEXTURES] = {
+    "In training, nothing had been overtly dangerous - other than the live rounds - which is to be expected during combat; however, I needed to traverse steep and slippery shale slopes up mountains to gain a position over the target compound. One misstep, and I would have tumbled thousands of feet to my death. The most senior members walked upright, straight up the mountain just like an Afghan goat would. Some members crawled. I decided to...",
+    "scramble up the mountain on my hands and knees, clawing at any foothold or handhold to try not to fall with all of my heavy gear.\n",
+    "look to my team leader and say, \"I can't make it. Take my bag of rounds, I'll wait for you at the release point.\"\n",
+    "follow the example of the Afghan goat and feign confidence walking up the mountain.\n"
+};
+const string GAME_PAGE_23_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
+    GAME_PAGE_22_WORDS[1],
+    "I only fell a little bit, but it only cut up my hands and knees on the shale. I'm sure someone will make fun of me for it later but I got to my position.\n",
+    NEXT_PAGE
+};
+const string GAME_PAGE_23_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
+    GAME_PAGE_22_WORDS[2],
+    "Corporal Fausey looked at me sideways, initially thinking that I was joking. He grabbed my bag and shook his head, muttering expletives under his breath before telling the rest of the platoon about my course of action. The platoon sergeant came and ordered me up the mountain, and he half dragged me there since I would not comply. It was dangerous. Any normal person would have done the same in my shoes.\n"
+};
+const string GAME_PAGE_23_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
+    GAME_PAGE_22_WORDS[3],
+    "I took each step with terrifying anxiety. Finally, a piece of shale broke lose and I tumbled down the mountain, unable to slow my descent. Luckily, a tree was there to break my fall. I might have a concussion from the fall and made a ton of noise right outside the target compound. Also, I broke the $40,000 thermal optic mounted on my rifle. That was stupid. I began to fade out of consciousness but came back to a bright light shining in my eyes. Whether it was heaven or my night vision, I wasn't sure.\n"
+};
+const string GAME_PAGE_24_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    Somehow, no one else fell.\n"
+    "    We set up overwatching the compound and watched the raid unfold. The assault point man moved towards the breach when a man stepped out of the house, AK-47 blazing into the night. He was promptly dispatched by the point man. An explosion detonated inside the compound and blew out the wall. The night had gone from smooth and controlled to unadulterated chaos.\n" 
+    "    A young teenager stepped from the house, perhaps only 14, and shouted before detonating a suicide vest with no one nearby. Inside the house a dead woman was found near the impromptu explosion, along with miscellaneous Taliban paraphernalia. The assault team searched the house, grabbing cellphones and hard drives. The man which the team leader had killed was our target, and it was time to leave. As rapid as the operation had begun, it ended, and the night was back to being controlled, smooth, and serene. I slid from my overwatch position down the mountain with 110 pounds of gear.\n" 
+    "    For the movement to extract, I was near the point man in the front of the formation. I watched the point man's infrared illuminator wave back and forth over the terrain, briefly stopping on a tent which sat on top of a spur directly above us. During this brief rest, I thought I saw 4 pixels in my night vision, like the top of someone's head, bob over the threshold of the tent entrance. I wasn't sure. The point man's laser kept scanning before I could find out. I stopped and took a knee, illuminating the tent with my own IR laser.\n",
+    NEXT_PAGE
+};
 
 
 //Colors {r, g, b, alpha}
@@ -286,7 +340,7 @@ bool gaming = true;
 
 //The current page variable so the game knows what to load.
 int currentPage = -1;
-int newPage = 0;
+int newPage = 180;
 int chapterHolder = 0;
 
 //Starts up SDL and creates window
@@ -311,8 +365,7 @@ void muteButtonEvents();
 void outcomeEvents(int nextPage);
 void versePageEvents();
 
-int main( int argc, char* args[] )
-{
+int main( int argc, char* args[] ){
 	//Start up SDL and create window
 	if( !init() )
 		printf( "Failed to initialize!\n" );
@@ -460,13 +513,44 @@ int main( int argc, char* args[] )
                     versePageEvents();
                     taskBarEvents();
                     break;
-                case GAME_PAGE_17: // choice page
+                case GAME_PAGE_17: // choice page end chptr
                     taskBarEvents();
                     newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
                     break;
                 case GAME_PAGE_18:
                     taskBarEvents();
                     quotationPageEvents(GAME_PAGE_19);                    
+                    break;
+                case GAME_PAGE_19:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_20);
+                    break;
+                case GAME_PAGE_20:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_21);
+                    break;
+                case GAME_PAGE_21:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_22);
+                    break;
+                case GAME_PAGE_22: //choice page
+                    taskBarEvents();
+                    newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
+                    break;
+                case GAME_PAGE_23_1:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_24);
+                    break;
+                case GAME_PAGE_23_2:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_24);
+                    break;
+                case GAME_PAGE_23_3:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_24);
+                    break;
+                case GAME_PAGE_24: // Stubbed
+                    taskBarEvents();
                     break;
                 default:
                     taskBarEvents();
@@ -494,7 +578,7 @@ int main( int argc, char* args[] )
 
         /*RENDER SWITCH*/
         switch (currentPage)
-        {
+            {
             case START_PAGE:
                 render.startPageRenderer(renderer);
                 break;
@@ -612,6 +696,26 @@ int main( int argc, char* args[] )
                 render.playerBarRenderer(renderer, PLAYER_STATS);
                 render.quotationPageRenderer(renderer);
                 break;
+            case GAME_PAGE_22:
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.choicePageRenderer(renderer, player);
+                break;
+            case GAME_PAGE_23_1:
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
+                break;
+            case GAME_PAGE_23_2:
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
+                break;
+            case GAME_PAGE_23_3:
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
+                break;
             default: //Default is for regular text pages
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
@@ -632,8 +736,7 @@ int main( int argc, char* args[] )
 	return 0;
 }
 
-bool init()
-{
+bool init(){
 	//Initialize SDL
 	if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 )
 	{
@@ -701,8 +804,7 @@ bool init()
 	return true;
 }
 
-bool loadMedia()
-{
+bool loadMedia(){
     //Load the Taskbar textures
     for (int i = 0; i < TASKBAR_TEXTURES; i++){
         TASKBAR[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
@@ -1376,6 +1478,165 @@ bool loadMedia()
                 }
             }
             break;
+        case GAME_PAGE_19:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_19_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_20:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_20_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_21:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_21_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_22:
+            if(!choicePage.loadMedia(renderer, newPage))
+                cout << "Cannot load choice page 22" << currentPage << endl;
+            break;
+        case GAME_PAGE_23_1:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                cout << "texture 0" << endl;
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_23_1_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                cout << "word 0" << endl;
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_23_1_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_23_2:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                cout << "texture 0" << endl;
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_23_2_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                cout << "word 0" << endl;
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_23_2_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_23_3:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                cout << "texture 0" << endl;
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_23_3_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                cout << "word 0" << endl;
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_23_3_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_24:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_24_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
     } // End Switch
 	return true;
 }
@@ -1410,8 +1671,7 @@ bool loadPlayerMedia(){
     return true;
 }
 
-void close()
-{
+void close(){
 	//Free loaded textures, images, and font
     for (int i = 0; i < 20; i++){
         textures[i].free();
@@ -1479,8 +1739,7 @@ void taskBarEvents(){
     }
 }
 
-void mainMenuEvents()
-{
+void mainMenuEvents(){
     for (int i = 0; i < MAIN_MENU_TEXTURES; i++)
     {
         if (textures[i].isMouseOver(textures[i].getRect()))

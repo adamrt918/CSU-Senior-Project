@@ -49,6 +49,14 @@ class ChoicePage
         static const int GAME_PAGE_16 = 160;
         static const int GAME_PAGE_17 = 170;
         static const int GAME_PAGE_18 = 180;
+        static const int GAME_PAGE_19 = 190;
+        static const int GAME_PAGE_20 = 200;
+        static const int GAME_PAGE_21 = 210;
+        static const int GAME_PAGE_22 = 220;
+        static const int GAME_PAGE_23_1 = 231;
+        static const int GAME_PAGE_23_2 = 232;
+        static const int GAME_PAGE_23_3 = 233;
+        static const int GAME_PAGE_24 = 240;
 
         static const int CHOICE_PAGE_TEXTURES = 4;
 
@@ -73,6 +81,12 @@ class ChoicePage
             "I stood back up and started sprinting towards the white light, completely disregarding a direct order.",
             "I remained laying on the ground, waiting to see what my team leader would do next.",
             "I took a knee and tried to convince the corporal that something was wrong."
+        };
+        const string GAME_PAGE_22_WORDS[CHOICE_PAGE_TEXTURES] = {
+            "In training, nothing had been overtly dangerous - other than the live rounds - which is to be expected during combat; however, I needed to traverse steep and slippery shale slopes up mountains to gain a position over the target compound. One misstep, and I would have tumbled thousands of feet to my death. The most senior members walked upright, straight up the mountain just like an Afghan goat would. Some members crawled. I decided to...",
+            "scramble up the mountain on my hands and knees, clawing at any foothold or handhold to try not to fall with all of my heavy gear.\n",
+            "look to my team leader and say, \"I can't make it. Take my bag of rounds, I'll wait for you at the release point.\"\n",
+            "follow the example of the Afghan goat and feign confidence walking up the mountain.\n"
         };
         const string END_CHAPTER_PAGE_WORDS[CHOICE_PAGE_TEXTURES] = {"You have finished the chapter, how will you continue?", 
             "Roll for health restoration", 
