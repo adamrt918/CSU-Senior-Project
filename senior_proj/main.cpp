@@ -18,7 +18,9 @@
 */
 
 /*TODO  
-    -Tutorial page should be changed to a .png and scaled
+    - Tutorial page should be changed to a .png and scaled
+        * Need to re-write tutorial
+    - Partial Health restoral at the end of the chapter
 */
 
 using namespace std;
@@ -44,7 +46,6 @@ const int MAIN_MENU_PAGE = 1;
 const int TUTORIAL_PAGE = 2;
 const int SURVEY_PAGE = 3;
 const int OUTCOME_PAGE = 4;
-const int END_CHAPTER_PAGE = 9;
 const int GAME_PAGE_1 = 10;
 const int GAME_PAGE_2 = 20;
 const int GAME_PAGE_3_1 = 31;
@@ -69,6 +70,10 @@ const int GAME_PAGE_14_2 = 142;
 const int GAME_PAGE_14_3 = 143;
 const int GAME_PAGE_15 = 150;
 const int GAME_PAGE_16 = 160;
+const int GAME_PAGE_17 = 170;
+const int GAME_PAGE_18 = 180;
+const int GAME_PAGE_19 = 190;
+const int GAME_PAGE_20 = 200;
 
 /* Words per page */
 const string NEXT_PAGE = "Next Page";
@@ -212,7 +217,17 @@ const string GAME_PAGE_16_WORDS[VERSE_PAGE_TEXTURES] = {
     "    Though you have not seen him, you love him. Though you do not now see him, you believe in him and rejoice with joy that is inexpressible and filled with glory, obtaining the outcome of your faith, the salvation of your souls.",
     "-- 1 Peter 1: 6-9, ESV"
 };
-string END_CHAPTER_PAGE_WORDS[END_CHAPTER_PAGE_TEXTURES] = {"You have finished the chapter", "Next Chapter"};
+const string END_CHAPTER_PAGE_WORDS[CHOICE_PAGE_TEXTURES] = {"You have finished the chapter, how will you continue?", 
+    "Roll for health restoration", 
+    "Roll for sanity restoration",
+    "Roll for reputation increase"        
+};
+const string GAME_PAGE_18_WORDS[QUOTATION_PAGE_TEXTURES] = {
+    "Chapter 2",
+    "\"I offer neither pay, nor quarters, nor food; I offer only hunger, thirst, forced marches, battles and death. Let him who loves his country with his heart and not merely with his lips, follow me.\"\n", 
+    "- Giuseppe Garibaldi"
+};
+
 
 //Colors {r, g, b, alpha}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
@@ -280,9 +295,6 @@ bool init();
 //Loads media
 bool loadMedia();
 bool loadPlayerMedia(); //Load the player textures and fonts
-
-//Calculates total height of all rendered words in a section
-int totalHeight(int tNum);
 
 //Frees media and shuts down SDL
 void close();
@@ -448,12 +460,21 @@ int main( int argc, char* args[] )
                     versePageEvents();
                     taskBarEvents();
                     break;
+                case GAME_PAGE_17: // choice page
+                    taskBarEvents();
+                    newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
+                    break;
+                case GAME_PAGE_18:
+                    taskBarEvents();
+                    quotationPageEvents(GAME_PAGE_19);                    
+                    break;
                 default:
                     taskBarEvents();
                     break;
             /*END EVENTS BASED ON PAGE SWITCH STATEMENT*/
             }
         }
+
         //Load new media whenever the page we are on does not match the new page we
         //are supposed to be on
         if (currentPage != newPage) 
@@ -471,7 +492,6 @@ int main( int argc, char* args[] )
         SDL_SetRenderDrawColor(renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
         SDL_RenderClear(renderer);
 
-        //Render current frame
         /*RENDER SWITCH*/
         switch (currentPage)
         {
@@ -495,7 +515,7 @@ int main( int argc, char* args[] )
             case GAME_PAGE_2:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
-                render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
+                render.choicePageRenderer(renderer, player);
                 break;
             case OUTCOME_PAGE:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -520,7 +540,7 @@ int main( int argc, char* args[] )
             case GAME_PAGE_6:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
-                render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
+                render.choicePageRenderer(renderer, player);
                 break;
             case GAME_PAGE_7_1:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -540,7 +560,7 @@ int main( int argc, char* args[] )
             case GAME_PAGE_10:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
-                render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
+                render.choicePageRenderer(renderer, player);
                 break;
             case GAME_PAGE_11_1:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -560,7 +580,7 @@ int main( int argc, char* args[] )
             case GAME_PAGE_13:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
-                render.choicePageRenderer(choicePage.chooseInsane(), renderer, player);
+                render.choicePageRenderer(renderer, player);
                 break;
             case GAME_PAGE_14_1:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -581,6 +601,16 @@ int main( int argc, char* args[] )
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
                 render.versePageRenderer(renderer);
+                break;
+            case GAME_PAGE_17:
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.choicePageRenderer(renderer, player);
+                break;
+            case GAME_PAGE_18:
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.quotationPageRenderer(renderer);
                 break;
             default: //Default is for regular text pages
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -729,7 +759,7 @@ bool loadMedia()
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                 return false;
             }
-            if (!textures[1].loadFromRenderedText(renderer, START_PAGE_WORDS, TAN))
+            if (!textures[1].loadFromRenderedText(renderer, START_PAGE_WORDS, WHITE))
             {
                 printf( "Failed to render text texture!\n" );
                 return false;
@@ -1315,16 +1345,31 @@ bool loadMedia()
                 }
             }
             break;
-        case END_CHAPTER_PAGE:
-            for (int i = 0; i < END_CHAPTER_PAGE_TEXTURES; i++){
-                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+        case GAME_PAGE_17:
+            if(!choicePage.loadMedia(renderer, newPage))
+                cout << "Cannot load END CHAPTER 1" << endl;
+            break;
+        case GAME_PAGE_18:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_18_WORDS[0], TAN, dms.w() / 3))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < QUOTATION_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", QUOTATION);
                 if (textures[i].gFont == NULL)
                 {
                     printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
                     return false;
                 }
                 //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, END_CHAPTER_PAGE_WORDS[i], TAN, dms.w() / 3))
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_18_WORDS[i], TAN, dms.w() / 3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
@@ -1363,13 +1408,6 @@ bool loadPlayerMedia(){
         }
     }
     return true;
-}
-
-int totalHeight(int tNum){
-    int height = 0;
-    for (int i = 0; i < tNum; i++)
-        height += textures[i].getHeight();
-    return height;
 }
 
 void close()
@@ -1411,7 +1449,7 @@ void startPageEvents(){
         }
     }
     else
-        textColor = TAN;
+        textColor = WHITE;
     textures[1].loadFromRenderedText(renderer, START_PAGE_WORDS, textColor);
 }
 
@@ -1481,7 +1519,13 @@ void quotationPageEvents(int nextPage) {
     switch (currentPage){
         case GAME_PAGE_1:
             chapterHolder = GAME_PAGE_1;
-            if (textures[2].isMouseOver(textures[2].getRect())){
+            break;
+        case GAME_PAGE_18:
+            chapterHolder = GAME_PAGE_18;
+        default:
+            break;
+    }
+    if (textures[2].isMouseOver(textures[2].getRect())){
                 textColor = GREY;
                 textures[2].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", QUOTATION + 2);                        
                 if(e.type == SDL_MOUSEBUTTONDOWN)
@@ -1492,11 +1536,7 @@ void quotationPageEvents(int nextPage) {
                 textColor = TAN;
                 textures[2].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", QUOTATION);
             }
-            textures[2].loadFromRenderedText(renderer, GAME_PAGE_1_WORDS[2], textColor, dms.w()/3);
-            break;
-        default:
-            break;
-    }
+            textures[2].loadFromRenderedText(renderer, textures[2].getWord(), textColor, dms.w()/3);
 }
 
 void textPageEvents(int nextPage){
@@ -1577,7 +1617,7 @@ void versePageEvents(){
         textColor = GREY;
         textures[VERSE_PAGE_TEXTURES - 1].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
         if(e.type == SDL_MOUSEBUTTONDOWN)
-            newPage = END_CHAPTER_PAGE;
+            newPage = GAME_PAGE_17;
     }
     else{
         textColor = WHITE;

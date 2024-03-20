@@ -88,7 +88,7 @@ void Render::quotationPageRenderer(SDL_Renderer* renderer){
             textures[i].render(dms->w() / 2 - textures[i].getWidth() / 2, dms->h() / 2 - textures[i].getHeight() + totalHeight(i) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
-void Render::choicePageRenderer(int chooser, SDL_Renderer* renderer, Player* gamer)
+void Render::choicePageRenderer(SDL_Renderer* renderer, Player* gamer)
 {
     if (!gamer->checkInsanity())
         for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++){
@@ -123,8 +123,8 @@ void Render::textPageRenderer(SDL_Renderer* renderer){
         int y = dms->h() / 2 - textures[i].getHeight() / 2 + totalHeight(i) + (i * 20);
 
         //Validation to keep text on screen
-        validateX(x, textures[i].getWidth());
-        validateY(y, textures[i].getHeight()); 
+        x = validateX(x, textures[i].getWidth());
+        y = validateY(y, textures[i].getHeight()); 
 
         //Render
         textures[i].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);

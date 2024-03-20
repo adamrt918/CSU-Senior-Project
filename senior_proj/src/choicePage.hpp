@@ -47,31 +47,38 @@ class ChoicePage
         static const int GAME_PAGE_14_3 = 143;
         static const int GAME_PAGE_15 = 150;
         static const int GAME_PAGE_16 = 160;
+        static const int GAME_PAGE_17 = 170;
+        static const int GAME_PAGE_18 = 180;
+
+        static const int CHOICE_PAGE_TEXTURES = 4;
 
         /* Words per page */
-        const string GAME_PAGE_2_WORDS[4] = {"    \"What does it mean to be a man?\" My father asked me, a young 17-year-old boy preparing to embark upon the adventures only found on the precipice of manhood. ",
+        const string GAME_PAGE_2_WORDS[CHOICE_PAGE_TEXTURES] = {"    \"What does it mean to be a man?\" My father asked me, a young 17-year-old boy preparing to embark upon the adventures only found on the precipice of manhood. ",
             "\"Military service.\"", 
             "\"There\'s no such thing.\"", 
             "\"I don\'t know.\""
         };
-        const string GAME_PAGE_6_WORDS[4] = {"\"Where were you?\" the sergeant asks. ",
+        const string GAME_PAGE_6_WORDS[CHOICE_PAGE_TEXTURES] = {"\"Where were you?\" the sergeant asks. ",
             "\"I couldn't find my belt, sergeant.\"",
             "\"I was sleeping and didn't set an alarm.\"",
             "\"I don't want to be a ranger anymore. I quit."};
-        const string GAME_PAGE_10_WORDS[4] = {
+        const string GAME_PAGE_10_WORDS[CHOICE_PAGE_TEXTURES] = {
             "    I spent the whole night typing in tiny font to finish this essay. The question my Dad had asked me was at the forefront of my mind. What have I been doing all this time? I'm going through my time in service, but do I have what it takes to be a man?\n" 
             "    The answer I settled on was:\n",
             "responsibility, accountability, discipline, and love.",
             "Manhood doesn't matter. Just how good of a person you are.",
             "Following tenants of love, mercy, and grace towards fellow mankind."
         };
-        const string GAME_PAGE_13_WORDS[4] = {"Troubled, I thought about my next move.",
+        const string GAME_PAGE_13_WORDS[CHOICE_PAGE_TEXTURES] = {"Troubled, I thought about my next move.",
             "I stood back up and started sprinting towards the white light, completely disregarding a direct order.",
             "I remained laying on the ground, waiting to see what my team leader would do next.",
             "I took a knee and tried to convince the corporal that something was wrong."
         };
-
-        const int CHOICE_PAGE_TEXTURES = 4;
+        const string END_CHAPTER_PAGE_WORDS[CHOICE_PAGE_TEXTURES] = {"You have finished the chapter, how will you continue?", 
+            "Roll for health restoration", 
+            "Roll for sanity restoration",
+            "Roll for reputation increase"        
+        };
         
         //Colors
         const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
@@ -81,7 +88,6 @@ class ChoicePage
         const SDL_Color WHITE = {255, 255, 255, SDL_ALPHA_OPAQUE};
 
         //Font sizes
-        //Text sizes
         const int HEADING_1 = 72;
         const int HEADING_2 = 48;
         const int HEADING_3 = 36;
