@@ -57,6 +57,12 @@ class ChoicePage
         static const int GAME_PAGE_23_2 = 232;
         static const int GAME_PAGE_23_3 = 233;
         static const int GAME_PAGE_24 = 240;
+        static const int GAME_PAGE_25 = 250;
+        static const int GAME_PAGE_26_1 = 261;
+        static const int GAME_PAGE_26_2 = 262;
+        static const int GAME_PAGE_26_3 = 263;
+        static const int GAME_PAGE_27 = 270;
+        static const int GAME_PAGE_28 = 280;
 
         static const int CHOICE_PAGE_TEXTURES = 4;
 
@@ -87,6 +93,13 @@ class ChoicePage
             "scramble up the mountain on my hands and knees, clawing at any foothold or handhold to try not to fall with all of my heavy gear.\n",
             "look to my team leader and say, \"I can't make it. Take my bag of rounds, I'll wait for you at the release point.\"\n",
             "follow the example of the Afghan goat and feign confidence walking up the mountain.\n"
+        };
+        const string GAME_PAGE_25_WORDS[CHOICE_PAGE_TEXTURES] = {
+            "    \"<LAST NAME>, keep up.\" Corporal Fausey hissed, thinking I was too tired and trying to take a break.\n"
+            "    I readied my rifle, flipped my weapon to fire, and took a deep breath as I pulled the slack out of the trigger. Should I shoot through the tent? Would I be justified? I didn't have enough time to decide.\n",
+            "    I squeeze the trigger. I am an Army Ranger, and I will not put my platoon in danger.\n",
+            "    Disregard the orders of my team leader, place my weapon on fire but wait for the situation to develop.\n",
+            "    It's my first real mission. I should just listen to my team leader and not lag behind. "
         };
         const string END_CHAPTER_PAGE_WORDS[CHOICE_PAGE_TEXTURES] = {"You have finished the chapter, how will you continue?", 
             "Roll for health restoration", 

@@ -80,6 +80,13 @@ const int GAME_PAGE_23_1 = 231;
 const int GAME_PAGE_23_2 = 232;
 const int GAME_PAGE_23_3 = 233;
 const int GAME_PAGE_24 = 240;
+const int GAME_PAGE_25 = 250;
+const int GAME_PAGE_26_1 = 261;
+const int GAME_PAGE_26_2 = 262;
+const int GAME_PAGE_26_3 = 263;
+const int GAME_PAGE_27 = 270;
+const int GAME_PAGE_28 = 280;
+
 
 /* Words per page */
 const string NEXT_PAGE = "Next Page";
@@ -268,17 +275,55 @@ const string GAME_PAGE_23_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
 };
 const string GAME_PAGE_23_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
     GAME_PAGE_22_WORDS[2],
-    "Corporal Fausey looked at me sideways, initially thinking that I was joking. He grabbed my bag and shook his head, muttering expletives under his breath before telling the rest of the platoon about my course of action. The platoon sergeant came and ordered me up the mountain, and he half dragged me there since I would not comply. It was dangerous. Any normal person would have done the same in my shoes.\n"
+    "Corporal Fausey looked at me sideways, initially thinking that I was joking. He grabbed my bag and shook his head, muttering expletives under his breath before telling the rest of the platoon about my course of action. The platoon sergeant came and ordered me up the mountain, and he half dragged me there since I would not comply. It was dangerous. Any normal person would have done the same in my shoes.\n",
+    NEXT_PAGE
 };
 const string GAME_PAGE_23_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
     GAME_PAGE_22_WORDS[3],
-    "I took each step with terrifying anxiety. Finally, a piece of shale broke lose and I tumbled down the mountain, unable to slow my descent. Luckily, a tree was there to break my fall. I might have a concussion from the fall and made a ton of noise right outside the target compound. Also, I broke the $40,000 thermal optic mounted on my rifle. That was stupid. I began to fade out of consciousness but came back to a bright light shining in my eyes. Whether it was heaven or my night vision, I wasn't sure.\n"
+    "    I took each step with terrifying anxiety. Finally, a piece of shale broke lose and I tumbled down the mountain, unable to slow my descent. Luckily, a tree was there to break my fall. I might have a concussion from the fall and made a ton of noise right outside the target compound. Also, I broke the $40,000 thermal optic mounted on my rifle. That was stupid. I began to fade out of consciousness but came back to a bright light shining in my eyes. Whether it was heaven or my night vision, I wasn't sure.\n",
+    NEXT_PAGE
 };
 const string GAME_PAGE_24_WORDS[TEXT_PAGE_TEXTURES] = {
     "    Somehow, no one else fell.\n"
     "    We set up overwatching the compound and watched the raid unfold. The assault point man moved towards the breach when a man stepped out of the house, AK-47 blazing into the night. He was promptly dispatched by the point man. An explosion detonated inside the compound and blew out the wall. The night had gone from smooth and controlled to unadulterated chaos.\n" 
     "    A young teenager stepped from the house, perhaps only 14, and shouted before detonating a suicide vest with no one nearby. Inside the house a dead woman was found near the impromptu explosion, along with miscellaneous Taliban paraphernalia. The assault team searched the house, grabbing cellphones and hard drives. The man which the team leader had killed was our target, and it was time to leave. As rapid as the operation had begun, it ended, and the night was back to being controlled, smooth, and serene. I slid from my overwatch position down the mountain with 110 pounds of gear.\n" 
     "    For the movement to extract, I was near the point man in the front of the formation. I watched the point man's infrared illuminator wave back and forth over the terrain, briefly stopping on a tent which sat on top of a spur directly above us. During this brief rest, I thought I saw 4 pixels in my night vision, like the top of someone's head, bob over the threshold of the tent entrance. I wasn't sure. The point man's laser kept scanning before I could find out. I stopped and took a knee, illuminating the tent with my own IR laser.\n",
+    NEXT_PAGE
+};
+const string GAME_PAGE_25_WORDS[CHOICE_PAGE_TEXTURES] = {
+    "    \"<LAST NAME>, keep up.\" Corporal Fausey hissed, thinking I was too tired and trying to take a break.\n"
+    "    I readied my rifle, flipped my weapon to fire, and took a deep breath as I pulled the slack out of the trigger. Should I shoot through the tent? Would I be justified? I didn't have enough time to decide.\n",
+    "    I squeeze the trigger. I am an Army Ranger, and I will not put my platoon in danger.\n",
+    "    Disregard the orders of my team leader, place my weapon on fire but wait for the situation to develop.\n",
+    "    It's my first real mission. I should just listen to my team leader and not lag behind. "
+};
+const string GAME_PAGE_26_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
+    GAME_PAGE_25_WORDS[1],
+    "    The thump of my suppressed rifle bullets hitting the thick blankets which fashioned the tent penetrate the silence of the movement. The voice of a man cries out, and the squad next to me assaults up the spur towards the tent with automatic weapons and rifles, finishing off whatever I had started.\n" 
+	"    \"Good kill, <LAST NAME>.\" Corporal Fausey patted me on the back.\n" 
+	"    But what if he was innocent?",
+    NEXT_PAGE
+};
+const string GAME_PAGE_26_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
+    GAME_PAGE_25_WORDS[2],
+    "    A man came around the corner of the tent. Corporal Fausey saw my IR laser illuminate the man's chest. On the last ounce of strength to break the trigger, I stopped and let off. He was unarmed. An interpreter was brought up and he yelled at the man to go back inside.\n" 
+    "    \"You shoot next time, <LAST NAME>.\" Corporal Fausey instructed.\n"
+    "    \"Roger, Corporal.\" I acknowledged, not needing an explanation.\n"
+    "    He could have thrown a grenade or detonated an IED. Though the man ultimately lived that night, the risk was too high. He could have killed me or one of my friends.\n",
+    NEXT_PAGE
+};
+const string GAME_PAGE_26_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
+    GAME_PAGE_25_WORDS[3],
+    "    \"I thought I saw something, corporal.\" I explained, not wanting to seem like I was tired.\n"
+    "    Just then, there was commotion as men readied their rifles and yelled up towards the tent. The interpreter came and told the man to go back to sleep.\n"
+    "    \"<LAST NAME>, if you know something, which contradicts my orders, you should never second guess yourself.\" Corporal Fausey stated.\n"
+    "    I would surely pay for this when I got back to base. How could I have put the platoon in danger because I was too scared to disobey orders? I anxiously walked, knowing what physical tortures awaited me when the mission ended. My mindset continued to put the team in danger as I could not focus on the mission.\n",
+    NEXT_PAGE
+};
+const string GAME_PAGE_27_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    As we continued the walk down the draw on the side of the mountain, into the valley, the leaders of the formation put up the hand sign for halt and get down. Wshhh, wshhh, wshhh...BOOM! BOOM! BOOM! The other side of the draw we were on was hit by the 40mm BOFORS cannon of the AC-130 circling overhead. Body parts went flying over the spur into our patrol. \n"
+    "    “Two guys were prepping frags to throw over here.” Corporal Fausey relayed to me, intently listening to the radio.\n"
+    "    As we continued movement, we heard more explosions from the AC-130, but too far off for us to stop the movement.",
     NEXT_PAGE
 };
 
@@ -549,7 +594,27 @@ int main( int argc, char* args[] ){
                     taskBarEvents();
                     postChoicePageEvents(GAME_PAGE_24);
                     break;
-                case GAME_PAGE_24: // Stubbed
+                case GAME_PAGE_24:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_25);
+                    break;
+                case GAME_PAGE_25: //Choice Page
+                    taskBarEvents();
+                    newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
+                    break;
+                case GAME_PAGE_26_1:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_27);
+                    break;
+                case GAME_PAGE_26_2:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_27);
+                    break;
+                case GAME_PAGE_26_3:
+                    taskBarEvents();
+                    postChoicePageEvents(GAME_PAGE_27);
+                    break; 
+                case GAME_PAGE_27://STubbed
                     taskBarEvents();
                     break;
                 default:
@@ -712,6 +777,26 @@ int main( int argc, char* args[] ){
                 render.postChoicePageRenderer(renderer);
                 break;
             case GAME_PAGE_23_3:
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
+                break;
+            case GAME_PAGE_25:
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.choicePageRenderer(renderer, player);
+                break;
+            case GAME_PAGE_26_1:
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
+                break;
+            case GAME_PAGE_26_2:
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.postChoicePageRenderer(renderer);
+                break;
+            case GAME_PAGE_26_3:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
                 render.postChoicePageRenderer(renderer);
@@ -990,7 +1075,7 @@ bool loadMedia(){
                 }
             break;
         case GAME_PAGE_3_1:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1017,7 +1102,7 @@ bool loadMedia(){
             }
             break;
         case GAME_PAGE_3_2:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1044,7 +1129,7 @@ bool loadMedia(){
             }
             break;
         case GAME_PAGE_3_3:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1108,7 +1193,7 @@ bool loadMedia(){
                 cout << "Cannot load choice page 6" << endl;
             break;
         case GAME_PAGE_7_1:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1134,7 +1219,7 @@ bool loadMedia(){
             }
             break;
         case GAME_PAGE_7_2:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1160,7 +1245,7 @@ bool loadMedia(){
             }
             break;
         case GAME_PAGE_7_3:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1224,7 +1309,7 @@ bool loadMedia(){
                 cout << "Cannot load choice page 10" << endl;
             break;
         case GAME_PAGE_11_1:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1253,7 +1338,7 @@ bool loadMedia(){
             }
             break;
         case GAME_PAGE_11_2:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1280,7 +1365,7 @@ bool loadMedia(){
             }
             break;        
         case GAME_PAGE_11_3:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1328,7 +1413,7 @@ bool loadMedia(){
                 cout << "Cannot load choice page 13" << currentPage << endl;
             break;
         case GAME_PAGE_14_1:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1357,7 +1442,7 @@ bool loadMedia(){
             }
             break;
         case GAME_PAGE_14_2:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1386,7 +1471,7 @@ bool loadMedia(){
             }
             break;
         case GAME_PAGE_14_3:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1534,7 +1619,7 @@ bool loadMedia(){
                 cout << "Cannot load choice page 22" << currentPage << endl;
             break;
         case GAME_PAGE_23_1:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1563,7 +1648,7 @@ bool loadMedia(){
             }
             break;
         case GAME_PAGE_23_2:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1592,7 +1677,7 @@ bool loadMedia(){
             }
             break;
         case GAME_PAGE_23_3:
-            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
             if (textures[0].gFont == NULL)
             {
                 printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
@@ -1631,6 +1716,114 @@ bool loadMedia(){
                 }
                 //Load in the textures for rendering
                 if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_24_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_25:
+            if(!choicePage.loadMedia(renderer, newPage))
+                cout << "Cannot load choice page 25" << currentPage << endl;
+            break;
+        case GAME_PAGE_26_1:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                cout << "texture 0" << endl;
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_26_1_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                cout << "word 0" << endl;
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_26_1_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_26_2:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                cout << "texture 0" << endl;
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_26_2_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                cout << "word 0" << endl;
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_26_2_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_26_3:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                cout << "texture 0" << endl;
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_26_3_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                cout << "word 0" << endl;
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_26_3_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_27:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_27_WORDS[i], TAN, dms.w() / 1.3))
                 {
                     printf( "Failed to render text texture!\n" );
                     return false;
