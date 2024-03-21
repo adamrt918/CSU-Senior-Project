@@ -25,6 +25,12 @@ void Render::muteButtonRenderer(bool unMute, SDL_Renderer* renderer, SDL_Rect* M
     MUTE_BUTTON->render(0,0, &MUTE_BUTTON_SPRITES[unMute], 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
+void Render::timerRenderer(SDL_Renderer* renderer, SDL_Rect* timerSprites, LTexture* timerTexture, int seconds){
+    if (seconds < 11 && seconds >=0)
+        timerTexture->render(dms->w() - timerSprites[seconds].w, dms->h() / 3 - timerSprites[seconds].h, &timerSprites[seconds], 0, NULL, SDL_FLIP_NONE, renderer);
+}
+
+
 void Render::mainMenuRenderer(SDL_Renderer* renderer){
     for (int i = 0; i < MAIN_MENU_TEXTURES; i++){
         //Formulas for text position based on texture dimensions and screen dimensions

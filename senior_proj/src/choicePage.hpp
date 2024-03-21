@@ -8,6 +8,7 @@
 #include <../ltexture.hpp>
 #include <../player.hpp>
 #include <../window.hpp>
+#include <../timer.hpp>
 #include <string>
 #include <iostream>
 
@@ -158,10 +159,10 @@ class ChoicePage
         int h;
         LTexture* textures;
         struct Choices{
-            string text;
-            int bounds[3][2];
+            string text; //The answer being selected
+            int bounds[3][2]; //3 metrics with an upper and lower bound each
             int statChange[3]; //0 health, 1 sanity, 2 reputation
-            enum ChoiceType {Heroic, Average, Cowardly};
+            enum ChoiceType {Heroic, Average, Cowardly}; //The type of decision being made
             ChoiceType courageLevel;
         };
         //A max of 3 choices per page

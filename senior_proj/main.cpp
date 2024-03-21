@@ -10,6 +10,7 @@
 #include <../player.hpp>
 #include <../choicePage.hpp>
 #include <../render.hpp>
+#include <../timer.hpp>
 
 /*Notes
     - The coordinates (0,0) in SDL is the top left of the screen, the y
@@ -362,6 +363,9 @@ SDL_Rect MUTE_BUTTON_SPRITES[2];
 bool playMusic = true;
 Mix_Music *gMusic = NULL; //Music for background
 
+//Timer variables
+Timer timer;
+
 //Choice Pages
 ChoicePage choicePage(player, textures);
 
@@ -600,6 +604,7 @@ int main( int argc, char* args[] ){
                     break;
                 case GAME_PAGE_25: //Choice Page
                     taskBarEvents();
+                    // timer.timerEvents();
                     newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
                     break;
                 case GAME_PAGE_26_1:
@@ -622,7 +627,7 @@ int main( int argc, char* args[] ){
                     break;
             /*END EVENTS BASED ON PAGE SWITCH STATEMENT*/
             }
-        }
+        } /*END EVENTS LOOP*/
 
         //Load new media whenever the page we are on does not match the new page we
         //are supposed to be on
@@ -785,6 +790,7 @@ int main( int argc, char* args[] ){
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
                 render.choicePageRenderer(renderer, player);
+                // render.timerRenderer(renderer, timer.getTimerSprites(), timer.getTimerTexture(), timer.getSeconds());
                 break;
             case GAME_PAGE_26_1:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -812,6 +818,8 @@ int main( int argc, char* args[] ){
 
         //Render the mute button on top of every frame
         render.muteButtonRenderer(playMusic, renderer, MUTE_BUTTON_SPRITES, &MUTE_BUTTON);
+        timer.timerEvents();
+        render.timerRenderer(renderer, timer.getTimerSprites(), timer.getTimerTexture(), timer.getSeconds());
 
         //Update screen
         SDL_RenderPresent(renderer);
@@ -931,6 +939,7 @@ bool loadMedia(){
         MUTE_BUTTON_SPRITES[1].h = MUTE_BUTTON.getHeight();
     }
 
+    timer.loadTimer(renderer);
 
     //This is for loading the different page textures
     switch (newPage)
@@ -2035,8 +2044,6 @@ void muteButtonEvents(){
                 playMusic = false;
                 Mix_VolumeMusic(0);
             }
-    
-
 }
 
 void outcomeEvents(int nextPage){

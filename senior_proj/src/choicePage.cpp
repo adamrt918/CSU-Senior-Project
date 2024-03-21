@@ -246,7 +246,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 }
             }
             break;
-            case GAME_PAGE_25:
+        case GAME_PAGE_25:
             //Load the game text
             textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
             if (textures[0].gFont == NULL)
@@ -945,7 +945,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
             } // End insane events
             break;
         case GAME_PAGE_25:
-            if (!gamer->checkInsanity()){
+            if (!gamer->checkInsanity()) {
                 //Iterating over choice textures    
                 for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
                 {

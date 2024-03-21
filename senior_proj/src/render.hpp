@@ -32,6 +32,7 @@ class Render
         //Renderers for the different pages
         void startPageRenderer(SDL_Renderer* renderer);
         void muteButtonRenderer(bool unMute, SDL_Renderer* renderer, SDL_Rect* MUTE_BUTTON_SPRITES, LTexture* MUTE_BUTTON);
+        void timerRenderer(SDL_Renderer* renderer, SDL_Rect* timerSprites, LTexture* timerTexture, int seconds);
         void mainMenuRenderer(SDL_Renderer* renderer);
         void tutorialRenderer(SDL_Renderer* renderer);
         void taskBarRenderer(SDL_Renderer* renderer, LTexture* TASKBAR);
