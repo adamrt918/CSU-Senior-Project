@@ -38,7 +38,7 @@ class Render
         void taskBarRenderer(SDL_Renderer* renderer, LTexture* TASKBAR);
         void playerBarRenderer(SDL_Renderer* renderer, LTexture* PLAYER_STATS);
         void quotationPageRenderer(SDL_Renderer* renderer);
-        void choicePageRenderer(SDL_Renderer* renderer, Player* gamer); //Renders the choice page based on sanity   
+        void choicePageRenderer(SDL_Renderer* renderer, Player* gamer, bool isOut); //Renders the choice page based on sanity   
         void postChoicePageRenderer(SDL_Renderer* renderer);
         void outcomePageRenderer(SDL_Renderer* renderer);
         void versePageRenderer(SDL_Renderer* renderer);

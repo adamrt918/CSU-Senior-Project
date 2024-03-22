@@ -24,6 +24,7 @@ class Timer
         SDL_Rect* getTimerSprites();
         int getSeconds();
         void setSeconds(int count);
+        bool isOut();
 
     private:
         LTexture timerTexture;
@@ -32,6 +33,7 @@ class Timer
         Uint32 startTime = SDL_GetTicks();
         Uint32 deltaTime = 0;
         Uint32 countdownInterval = 1000; //1 second
+        bool outOfTime;
 };
 
 #include "timer.cpp"

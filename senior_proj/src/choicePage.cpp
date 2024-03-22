@@ -359,7 +359,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
             return false;
         }
         //Load in the textures for rendering
-        if (!textures[1].loadFromRenderedText(gRenderer, choice[chooseInsane()].text, TAN, w / 1.3))
+        if (!textures[1].loadFromRenderedText(gRenderer, choice[chooseCowardly()].text, TAN, w / 1.3))
         {
             printf( "Failed to render text texture!\n" );
             return false;
@@ -385,14 +385,12 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
     return true;
 } //End function
 
-int ChoicePage::chooseInsane(){
-    
-    //Return the cowardly choice if the gamer is insane
-    if (gamer->checkInsanity())
-        for (int i = 0; i < 3; i++)
-            if (choice[i].courageLevel == Choices::Cowardly)
-                return i;
-    return -1;
+int ChoicePage::chooseCowardly(){
+    int j = 0;  
+    for (int i = 0; i < 3; i++)
+        if (choice[i].courageLevel == Choices::Cowardly)
+            j = i;
+    return j;
 }
 
 int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer){
@@ -471,22 +469,22 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                     { 
                         newPage = OUTCOME_PAGE;
                         storePage = GAME_PAGE_3_2;
-                        decision = chooseInsane();
+                        decision = chooseCowardly();
                         //iterating over each metric with k
                         for (int k = 0; k < 3; k++)
-                            choice[chooseInsane()].statChange[k] = gamer->random(choice[chooseInsane()].bounds[k]);
+                            choice[chooseCowardly()].statChange[k] = gamer->random(choice[chooseCowardly()].bounds[k]);
                         
                         //Set the new value with the change in stats
-                        gamer->setHealth(gamer->getHealth() + choice[chooseInsane()].statChange[0]);
-                        gamer->setSanity(gamer->getSanity() + choice[chooseInsane()].statChange[1]);
-                        gamer->setRep(gamer->getRep() + choice[chooseInsane()].statChange[2]);
+                        gamer->setHealth(gamer->getHealth() + choice[chooseCowardly()].statChange[0]);
+                        gamer->setSanity(gamer->getSanity() + choice[chooseCowardly()].statChange[1]);
+                        gamer->setRep(gamer->getRep() + choice[chooseCowardly()].statChange[2]);
                     }
                 }
                 else{
                     *textColor = TAN;
                     textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 }
-                textures[1].loadFromRenderedText(renderer, choice[chooseInsane()].text, *textColor, w/1.3);
+                textures[1].loadFromRenderedText(renderer, choice[chooseCowardly()].text, *textColor, w/1.3);
             } // End insane events
             break;
         case GAME_PAGE_6:
@@ -562,22 +560,22 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                     { 
                         newPage = OUTCOME_PAGE;
                         storePage = GAME_PAGE_7_3;
-                        decision = chooseInsane();
+                        decision = chooseCowardly();
                         //iterating over each metric with k
                         for (int k = 0; k < 3; k++)
-                            choice[chooseInsane()].statChange[k] = gamer->random(choice[chooseInsane()].bounds[k]);
+                            choice[chooseCowardly()].statChange[k] = gamer->random(choice[chooseCowardly()].bounds[k]);
                         
                         //Set the new value with the change in stats
-                        gamer->setHealth(gamer->getHealth() + choice[chooseInsane()].statChange[0]);
-                        gamer->setSanity(gamer->getSanity() + choice[chooseInsane()].statChange[1]);
-                        gamer->setRep(gamer->getRep() + choice[chooseInsane()].statChange[2]);
+                        gamer->setHealth(gamer->getHealth() + choice[chooseCowardly()].statChange[0]);
+                        gamer->setSanity(gamer->getSanity() + choice[chooseCowardly()].statChange[1]);
+                        gamer->setRep(gamer->getRep() + choice[chooseCowardly()].statChange[2]);
                     }
                 }
                 else{
                     *textColor = TAN;
                     textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 }
-                textures[1].loadFromRenderedText(renderer, choice[chooseInsane()].text, *textColor, w/1.3);
+                textures[1].loadFromRenderedText(renderer, choice[chooseCowardly()].text, *textColor, w/1.3);
             } // End insane events
             break;
         case GAME_PAGE_10:
@@ -653,22 +651,22 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                     { 
                         newPage = OUTCOME_PAGE;
                         storePage = GAME_PAGE_11_2;
-                        decision = chooseInsane();
+                        decision = chooseCowardly();
                         //iterating over each metric with k
                         for (int k = 0; k < 3; k++)
-                            choice[chooseInsane()].statChange[k] = gamer->random(choice[chooseInsane()].bounds[k]);
+                            choice[chooseCowardly()].statChange[k] = gamer->random(choice[chooseCowardly()].bounds[k]);
                         
                         //Set the new value with the change in stats
-                        gamer->setHealth(gamer->getHealth() + choice[chooseInsane()].statChange[0]);
-                        gamer->setSanity(gamer->getSanity() + choice[chooseInsane()].statChange[1]);
-                        gamer->setRep(gamer->getRep() + choice[chooseInsane()].statChange[2]);
+                        gamer->setHealth(gamer->getHealth() + choice[chooseCowardly()].statChange[0]);
+                        gamer->setSanity(gamer->getSanity() + choice[chooseCowardly()].statChange[1]);
+                        gamer->setRep(gamer->getRep() + choice[chooseCowardly()].statChange[2]);
                     }
                 }
                 else{
                     *textColor = TAN;
                     textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 }
-                textures[1].loadFromRenderedText(renderer, choice[chooseInsane()].text, *textColor, w/1.3);
+                textures[1].loadFromRenderedText(renderer, choice[chooseCowardly()].text, *textColor, w/1.3);
             } // End insane events
             break;
         case GAME_PAGE_13:
@@ -744,22 +742,22 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                     { 
                         newPage = OUTCOME_PAGE;
                         storePage = GAME_PAGE_14_2;
-                        decision = chooseInsane();
+                        decision = chooseCowardly();
                         //iterating over each metric with k
                         for (int k = 0; k < 3; k++)
-                            choice[chooseInsane()].statChange[k] = gamer->random(choice[chooseInsane()].bounds[k]);
+                            choice[chooseCowardly()].statChange[k] = gamer->random(choice[chooseCowardly()].bounds[k]);
                         
                         //Set the new value with the change in stats
-                        gamer->setHealth(gamer->getHealth() + choice[chooseInsane()].statChange[0]);
-                        gamer->setSanity(gamer->getSanity() + choice[chooseInsane()].statChange[1]);
-                        gamer->setRep(gamer->getRep() + choice[chooseInsane()].statChange[2]);
+                        gamer->setHealth(gamer->getHealth() + choice[chooseCowardly()].statChange[0]);
+                        gamer->setSanity(gamer->getSanity() + choice[chooseCowardly()].statChange[1]);
+                        gamer->setRep(gamer->getRep() + choice[chooseCowardly()].statChange[2]);
                     }
                 }
                 else{
                     *textColor = TAN;
                     textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 }
-                textures[1].loadFromRenderedText(renderer, choice[chooseInsane()].text, *textColor, w/1.3);
+                textures[1].loadFromRenderedText(renderer, choice[chooseCowardly()].text, *textColor, w/1.3);
             } // End insane events
             break;
         case GAME_PAGE_17:
@@ -835,22 +833,22 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                     { 
                         newPage = OUTCOME_PAGE;
                         storePage = GAME_PAGE_18;
-                        decision = chooseInsane();
+                        decision = chooseCowardly();
                         //iterating over each metric with k
                         for (int k = 0; k < 3; k++)
-                            choice[chooseInsane()].statChange[k] = gamer->random(choice[chooseInsane()].bounds[k]);
+                            choice[chooseCowardly()].statChange[k] = gamer->random(choice[chooseCowardly()].bounds[k]);
                         
                         //Set the new value with the change in stats
-                        gamer->setHealth(gamer->getHealth() + choice[chooseInsane()].statChange[0]);
-                        gamer->setSanity(gamer->getSanity() + choice[chooseInsane()].statChange[1]);
-                        gamer->setRep(gamer->getRep() + choice[chooseInsane()].statChange[2]);
+                        gamer->setHealth(gamer->getHealth() + choice[chooseCowardly()].statChange[0]);
+                        gamer->setSanity(gamer->getSanity() + choice[chooseCowardly()].statChange[1]);
+                        gamer->setRep(gamer->getRep() + choice[chooseCowardly()].statChange[2]);
                     }
                 }
                 else{
                     *textColor = TAN;
                     textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 }
-                textures[1].loadFromRenderedText(renderer, choice[chooseInsane()].text, *textColor, w/1.3);
+                textures[1].loadFromRenderedText(renderer, choice[chooseCowardly()].text, *textColor, w/1.3);
             } // End insane events
             break;
         case GAME_PAGE_22:
@@ -926,26 +924,36 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                     { 
                         newPage = OUTCOME_PAGE;
                         storePage = GAME_PAGE_23_2;
-                        decision = chooseInsane();
+                        decision = chooseCowardly();
                         //iterating over each metric with k
                         for (int k = 0; k < 3; k++)
-                            choice[chooseInsane()].statChange[k] = gamer->random(choice[chooseInsane()].bounds[k]);
+                            choice[chooseCowardly()].statChange[k] = gamer->random(choice[chooseCowardly()].bounds[k]);
                         
                         //Set the new value with the change in stats
-                        gamer->setHealth(gamer->getHealth() + choice[chooseInsane()].statChange[0]);
-                        gamer->setSanity(gamer->getSanity() + choice[chooseInsane()].statChange[1]);
-                        gamer->setRep(gamer->getRep() + choice[chooseInsane()].statChange[2]);
+                        gamer->setHealth(gamer->getHealth() + choice[chooseCowardly()].statChange[0]);
+                        gamer->setSanity(gamer->getSanity() + choice[chooseCowardly()].statChange[1]);
+                        gamer->setRep(gamer->getRep() + choice[chooseCowardly()].statChange[2]);
                     }
                 }
                 else{
                     *textColor = TAN;
                     textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 }
-                textures[1].loadFromRenderedText(renderer, choice[chooseInsane()].text, *textColor, w/1.3);
+                textures[1].loadFromRenderedText(renderer, choice[chooseCowardly()].text, *textColor, w/1.3);
             } // End insane events
             break;
+        
+        default:
+            break;
+    } //End Page number switch
+    return newPage;
+}
+
+int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer, bool isOut){
+    int newPage = currentPage;
+    switch (currentPage){
         case GAME_PAGE_25:
-            if (!gamer->checkInsanity()) {
+            if (!gamer->checkInsanity() && !isOut) {
                 //Iterating over choice textures    
                 for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
                 {
@@ -1017,28 +1025,30 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                     { 
                         newPage = OUTCOME_PAGE;
                         storePage = GAME_PAGE_26_3;
-                        decision = chooseInsane();
+                        decision = chooseCowardly();
+
                         //iterating over each metric with k
                         for (int k = 0; k < 3; k++)
-                            choice[chooseInsane()].statChange[k] = gamer->random(choice[chooseInsane()].bounds[k]);
+                            choice[chooseCowardly()].statChange[k] = gamer->random(choice[chooseCowardly()].bounds[k]);
                         
                         //Set the new value with the change in stats
-                        gamer->setHealth(gamer->getHealth() + choice[chooseInsane()].statChange[0]);
-                        gamer->setSanity(gamer->getSanity() + choice[chooseInsane()].statChange[1]);
-                        gamer->setRep(gamer->getRep() + choice[chooseInsane()].statChange[2]);
+                        gamer->setHealth(gamer->getHealth() + choice[chooseCowardly()].statChange[0]);
+                        gamer->setSanity(gamer->getSanity() + choice[chooseCowardly()].statChange[1]);
+                        gamer->setRep(gamer->getRep() + choice[chooseCowardly()].statChange[2]);
                     }
                 }
                 else{
                     *textColor = TAN;
                     textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
                 }
-                textures[1].loadFromRenderedText(renderer, choice[chooseInsane()].text, *textColor, w/1.3);
+                textures[1].loadFromRenderedText(renderer, choice[chooseCowardly()].text, *textColor, w/1.3);
             } // End insane events
             break;
         default:
             break;
-    } //End Page number switch
+    } //END Page Events
     return newPage;
+
 }
 
 int* ChoicePage::getStatChange(){

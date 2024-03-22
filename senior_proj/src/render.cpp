@@ -26,8 +26,8 @@ void Render::muteButtonRenderer(bool unMute, SDL_Renderer* renderer, SDL_Rect* M
 }
 
 void Render::timerRenderer(SDL_Renderer* renderer, SDL_Rect* timerSprites, LTexture* timerTexture, int seconds){
-    if (seconds < 11 && seconds >=0)
-        timerTexture->render(dms->w() - timerSprites[seconds].w, dms->h() / 3 - timerSprites[seconds].h, &timerSprites[seconds], 0, NULL, SDL_FLIP_NONE, renderer);
+    if (seconds < 11 && seconds >= 0)
+        timerTexture->render(dms->w() - timerSprites[seconds].w, 0, &timerSprites[seconds], 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 
@@ -94,9 +94,9 @@ void Render::quotationPageRenderer(SDL_Renderer* renderer){
             textures[i].render(dms->w() / 2 - textures[i].getWidth() / 2, dms->h() / 2 - textures[i].getHeight() + totalHeight(i) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
-void Render::choicePageRenderer(SDL_Renderer* renderer, Player* gamer)
+void Render::choicePageRenderer(SDL_Renderer* renderer, Player* gamer, bool isOut)
 {
-    if (!gamer->checkInsanity())
+    if (!gamer->checkInsanity() && !isOut)
         for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++){
             //Formulas for text position based on texture dimensions and screen dimensions
             int x = dms->w() / 2 - textures[i].getWidth() / 2;

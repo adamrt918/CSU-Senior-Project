@@ -389,7 +389,7 @@ bool gaming = true;
 
 //The current page variable so the game knows what to load.
 int currentPage = -1;
-int newPage = 180;
+int newPage = 250;
 int chapterHolder = 0;
 
 //Starts up SDL and creates window
@@ -605,7 +605,7 @@ int main( int argc, char* args[] ){
                 case GAME_PAGE_25: //Choice Page
                     taskBarEvents();
                     // timer.timerEvents();
-                    newPage = choicePage.choicePageEvents(currentPage, color, e, renderer);
+                    newPage = choicePage.choicePageEvents(currentPage, color, e, renderer, timer.isOut());
                     break;
                 case GAME_PAGE_26_1:
                     taskBarEvents();
@@ -669,7 +669,7 @@ int main( int argc, char* args[] ){
             case GAME_PAGE_2:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
-                render.choicePageRenderer(renderer, player);
+                render.choicePageRenderer(renderer, player, timer.isOut());
                 break;
             case OUTCOME_PAGE:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -694,7 +694,7 @@ int main( int argc, char* args[] ){
             case GAME_PAGE_6:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
-                render.choicePageRenderer(renderer, player);
+                render.choicePageRenderer(renderer, player, timer.isOut());
                 break;
             case GAME_PAGE_7_1:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -714,7 +714,7 @@ int main( int argc, char* args[] ){
             case GAME_PAGE_10:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
-                render.choicePageRenderer(renderer, player);
+                render.choicePageRenderer(renderer, player, timer.isOut());
                 break;
             case GAME_PAGE_11_1:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -734,7 +734,7 @@ int main( int argc, char* args[] ){
             case GAME_PAGE_13:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
-                render.choicePageRenderer(renderer, player);
+                render.choicePageRenderer(renderer, player, timer.isOut());
                 break;
             case GAME_PAGE_14_1:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -759,7 +759,7 @@ int main( int argc, char* args[] ){
             case GAME_PAGE_17:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
-                render.choicePageRenderer(renderer, player);
+                render.choicePageRenderer(renderer, player, timer.isOut());
                 break;
             case GAME_PAGE_18:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -769,7 +769,7 @@ int main( int argc, char* args[] ){
             case GAME_PAGE_22:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
-                render.choicePageRenderer(renderer, player);
+                render.choicePageRenderer(renderer, player, timer.isOut());
                 break;
             case GAME_PAGE_23_1:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -789,8 +789,9 @@ int main( int argc, char* args[] ){
             case GAME_PAGE_25:
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
-                render.choicePageRenderer(renderer, player);
-                // render.timerRenderer(renderer, timer.getTimerSprites(), timer.getTimerTexture(), timer.getSeconds());
+                render.choicePageRenderer(renderer, player, timer.isOut());
+                timer.timerEvents(); //Timer events outside of event loop
+                render.timerRenderer(renderer, timer.getTimerSprites(), timer.getTimerTexture(), timer.getSeconds());
                 break;
             case GAME_PAGE_26_1:
                 render.taskBarRenderer(renderer, TASKBAR);
@@ -818,8 +819,6 @@ int main( int argc, char* args[] ){
 
         //Render the mute button on top of every frame
         render.muteButtonRenderer(playMusic, renderer, MUTE_BUTTON_SPRITES, &MUTE_BUTTON);
-        timer.timerEvents();
-        render.timerRenderer(renderer, timer.getTimerSprites(), timer.getTimerTexture(), timer.getSeconds());
 
         //Update screen
         SDL_RenderPresent(renderer);

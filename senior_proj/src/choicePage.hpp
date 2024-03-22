@@ -131,9 +131,11 @@ class ChoicePage
 
         //Chooses what to do based on the choice page
         int choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer);
+        int choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Event e, SDL_Renderer* renderer, bool isOut); //Overload for timer
 
-        //Chooses which media should be rendered in case of insanity.
-        int chooseInsane();
+        //Chooses which media should be rendered in case of insanity or timer
+        //run out.
+        int chooseCowardly();
 
         //Gets the 3 stat changes for the decision
         int* getStatChange();
