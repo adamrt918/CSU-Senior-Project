@@ -44,6 +44,12 @@ LTexture* Timer::getTimerTexture(){return &timerTexture;}
 SDL_Rect* Timer::getTimerSprites(){return timerSprites;}
 void Timer::setSeconds(int count){ seconds = count; }
 int Timer::getSeconds(){return seconds;}
-bool Timer::isOut(){return outOfTime;}
+bool Timer::isOut(){
+    if (seconds > 0)
+        outOfTime = false;
+    else
+        outOfTime = true;
+    return outOfTime;
+}
 
 #endif

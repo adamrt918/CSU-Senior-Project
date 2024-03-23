@@ -64,6 +64,18 @@ class ChoicePage
         static const int GAME_PAGE_26_3 = 263;
         static const int GAME_PAGE_27 = 270;
         static const int GAME_PAGE_28 = 280;
+        static const int GAME_PAGE_29_1 = 291;
+        static const int GAME_PAGE_29_2 = 292;
+        static const int GAME_PAGE_29_3 = 293;
+        static const int GAME_PAGE_30 = 300;
+        static const int GAME_PAGE_31 = 310;
+        static const int GAME_PAGE_32_1 = 321;
+        static const int GAME_PAGE_32_2 = 322;
+        static const int GAME_PAGE_32_3 = 323;
+        static const int GAME_PAGE_33 = 330;
+        static const int GAME_PAGE_34 = 340;
+        static const int GAME_PAGE_35 = 350;
+        static const int GAME_PAGE_36 = 360;
 
         static const int CHOICE_PAGE_TEXTURES = 4;
 
@@ -71,8 +83,7 @@ class ChoicePage
         const string GAME_PAGE_2_WORDS[CHOICE_PAGE_TEXTURES] = {"    \"What does it mean to be a man?\" My father asked me, a young 17-year-old boy preparing to embark upon the adventures only found on the precipice of manhood. ",
             "\"Military service.\"", 
             "\"There\'s no such thing.\"", 
-            "\"I don\'t know.\""
-        };
+            "\"I don\'t know.\""};
         const string GAME_PAGE_6_WORDS[CHOICE_PAGE_TEXTURES] = {"\"Where were you?\" the sergeant asks. ",
             "\"I couldn't find my belt, sergeant.\"",
             "\"I was sleeping and didn't set an alarm.\"",
@@ -82,31 +93,36 @@ class ChoicePage
             "    The answer I settled on was:\n",
             "responsibility, accountability, discipline, and love.",
             "Manhood doesn't matter. Just how good of a person you are.",
-            "Following tenants of love, mercy, and grace towards fellow mankind."
-        };
+            "Following tenants of love, mercy, and grace towards fellow mankind."};
         const string GAME_PAGE_13_WORDS[CHOICE_PAGE_TEXTURES] = {"Troubled, I thought about my next move.",
             "I stood back up and started sprinting towards the white light, completely disregarding a direct order.",
             "I remained laying on the ground, waiting to see what my team leader would do next.",
-            "I took a knee and tried to convince the corporal that something was wrong."
-        };
+            "I took a knee and tried to convince the corporal that something was wrong."};
         const string GAME_PAGE_22_WORDS[CHOICE_PAGE_TEXTURES] = {
             "In training, nothing had been overtly dangerous - other than the live rounds - which is to be expected during combat; however, I needed to traverse steep and slippery shale slopes up mountains to gain a position over the target compound. One misstep, and I would have tumbled thousands of feet to my death. The most senior members walked upright, straight up the mountain just like an Afghan goat would. Some members crawled. I decided to...",
             "scramble up the mountain on my hands and knees, clawing at any foothold or handhold to try not to fall with all of my heavy gear.\n",
             "look to my team leader and say, \"I can't make it. Take my bag of rounds, I'll wait for you at the release point.\"\n",
-            "follow the example of the Afghan goat and feign confidence walking up the mountain.\n"
-        };
+            "follow the example of the Afghan goat and feign confidence walking up the mountain.\n"};
         const string GAME_PAGE_25_WORDS[CHOICE_PAGE_TEXTURES] = {
             "    \"<LAST NAME>, keep up.\" Corporal Fausey hissed, thinking I was too tired and trying to take a break.\n"
             "    I readied my rifle, flipped my weapon to fire, and took a deep breath as I pulled the slack out of the trigger. Should I shoot through the tent? Would I be justified? I didn't have enough time to decide.\n",
             "    I squeeze the trigger. I am an Army Ranger, and I will not put my platoon in danger.\n",
             "    Disregard the orders of my team leader, place my weapon on fire but wait for the situation to develop.\n",
-            "    It's my first real mission. I should just listen to my team leader and not lag behind. "
-        };
+            "    It's my first real mission. I should just listen to my team leader and not lag behind. "};
+        const string GAME_PAGE_28_WORDS[CHOICE_PAGE_TEXTURES] = {
+            "    We reached the bottom of the mountain and exited our draw into the valley below. The point man lased the ground. Two members of the Taliban lay splayed open, shredded apart by the gunship. We walked between the two bodies, stepping on the various fluids which soaked into the ground. I deliberately looked at each of those bodies, stopping to closely examine the seemingly indignant contortion of their bodies.\n",
+            "    I will remember this forever.\n",
+            "    It sucks to suck, bud.\n",
+            "    Father, forgive them.\n"};        
+        const string GAME_PAGE_31_WORDS[CHOICE_PAGE_TEXTURES] = {
+            "    Sitting in my barracks room, two days before leaving the military on January 17, 2019, I learned that Sergeant Cameron Meddock, was killed in action.\n",
+            "    Why?",
+            "    That could have been me.",
+            "    Its always the good ones."};
         const string END_CHAPTER_PAGE_WORDS[CHOICE_PAGE_TEXTURES] = {"You have finished the chapter, how will you continue?", 
             "Roll for health restoration", 
             "Roll for sanity restoration",
-            "Roll for reputation increase"        
-        };
+            "Roll for reputation increase"};
         
         //Colors
         const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
