@@ -30,7 +30,6 @@ void Render::timerRenderer(SDL_Renderer* renderer, SDL_Rect* timerSprites, LText
         timerTexture->render(dms->w() - timerSprites[seconds].w, 0, &timerSprites[seconds], 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
-
 void Render::mainMenuRenderer(SDL_Renderer* renderer){
     for (int i = 0; i < MAIN_MENU_TEXTURES; i++){
         //Formulas for text position based on texture dimensions and screen dimensions
@@ -94,8 +93,7 @@ void Render::quotationPageRenderer(SDL_Renderer* renderer){
             textures[i].render(dms->w() / 2 - textures[i].getWidth() / 2, dms->h() / 2 - textures[i].getHeight() + totalHeight(i) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
-void Render::choicePageRenderer(SDL_Renderer* renderer, Player* gamer, bool isOut)
-{
+void Render::choicePageRenderer(SDL_Renderer* renderer, Player* gamer, bool isOut) {
     if (!gamer->checkInsanity() && !isOut)
         for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++){
             //Formulas for text position based on texture dimensions and screen dimensions

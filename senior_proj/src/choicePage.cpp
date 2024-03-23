@@ -34,17 +34,17 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].bounds[0][0] = 0; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
                     choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 3; //Upper bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 2; //Upper bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -7; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -1; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -4; //Lower bound for reputation
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else 
@@ -52,10 +52,10 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].courageLevel = Choices::Average;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -2; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 3; //Upper bound for reputation
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
             }
             break;
@@ -78,31 +78,31 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_6_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = -1; //Lower bound for health
-                    choice[i].bounds[0][1] = 1; //Upper bound for health
-                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -1; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 1; //Upper bound for reputation
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = -5; //Lower bound for health
-                    choice[i].bounds[0][1] = -2; //Upper bound for health
-                    choice[i].bounds[1][0] = -1; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 2; //Upper bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else 
                 {    
                     choice[i].courageLevel = Choices::Cowardly;
-                    choice[i].bounds[0][0] = -4; //Lower bound for health
-                    choice[i].bounds[0][1] = 2; //Upper bound for health
-                    choice[i].bounds[1][0] = -7; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -2; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -4; //Lower bound for reputation
-                    choice[i].bounds[2][1] = -1; //Upper bound for reputation
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
             }
             break;
@@ -124,31 +124,31 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_10_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = -3; //Lower bound for health
-                    choice[i].bounds[0][1] = 1; //Upper bound for health
-                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 1; //Upper bound for reputation
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 2; //Upper bound for health
-                    choice[i].bounds[1][0] = -8; //Lower bound for sanity
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
                     choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -3; //Lower bound for reputation
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else  
                 {    
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = -4; //Lower bound for health
-                    choice[i].bounds[0][1] = -2; //Upper bound for health
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
                     choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 2; //Upper bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
             }
             break;
@@ -171,31 +171,31 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_13_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = -6; //Lower bound for health
-                    choice[i].bounds[0][1] = -2; //Upper bound for health
-                    choice[i].bounds[1][0] = -2; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 4; //Upper bound for sanity
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 3; //Upper bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 4; //Upper bound for health
-                    choice[i].bounds[1][0] = -6; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -2; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -6; //Lower bound for reputation
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else 
                 {    
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = -2; //Lower bound for health
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = -3; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -2; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 1; //Upper bound for reputation
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
             }
             break;
@@ -218,31 +218,31 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_22_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = -1; //Lower bound for health
-                    choice[i].bounds[0][1] = 2; //Upper bound for health
-                    choice[i].bounds[1][0] = -1; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 3; //Upper bound for sanity
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 2; //Upper bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 4; //Upper bound for health
-                    choice[i].bounds[1][0] = -8; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -2; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -4; //Lower bound for reputation
-                    choice[i].bounds[2][1] = -2; //Upper bound for reputation
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else 
                 {    
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = -6; //Lower bound for health
-                    choice[i].bounds[0][1] = -2; //Upper bound for health
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
                     choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 3; //Upper bound for reputation
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
             }
             break;
@@ -265,31 +265,140 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_25_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = 1; //Lower bound for health
-                    choice[i].bounds[0][1] = 4; //Upper bound for health
-                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 3; //Upper bound for reputation
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Heroic;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 4; //Upper bound for health
-                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
                     choice[i].bounds[1][1] = 0; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 2; //Upper bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else 
                 {    
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 2; //Upper bound for health
-                    choice[i].bounds[1][0] = -5; //Lower bound for sanity
-                    choice[i].bounds[1][1] = -1; //Upper bound for sanity
-                    choice[i].bounds[2][0] = -4; //Lower bound for reputation
-                    choice[i].bounds[2][1] = -1; //Upper bound for reputation
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                }
+            }
+            break;
+        case GAME_PAGE_28:
+            //Load the game text
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }  
+
+            if (!textures[0].loadFromRenderedText(gRenderer, GAME_PAGE_28_WORDS[0], GREY, w / 1.3))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }          
+
+            for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++) {
+                textures[i].gFont = TTF_OpenFont("resources/NotoSans-Italic.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }  
+
+                if (!textures[i].loadFromRenderedText(gRenderer, GAME_PAGE_28_WORDS[i], GREY, w / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }          
+            }
+            //Instance the possible choices
+            for (int i = 0; i < 3; i++){
+                choice[i].text = GAME_PAGE_28_WORDS[i + 1];
+                if (i == 0){
+                    choice[i].courageLevel = Choices::Average;
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                }
+                else if ( i == 1){
+                    choice[i].courageLevel = Choices::Cowardly;
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                }
+                else 
+                {    
+                    choice[i].courageLevel = Choices::Heroic;
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                }
+            }
+            break;
+        case GAME_PAGE_31:
+            //Load the game text
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }  
+
+            if (!textures[0].loadFromRenderedText(gRenderer, GAME_PAGE_31_WORDS[0], GREY, w / 1.3))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }          
+            //Instance the possible choices
+            for (int i = 0; i < 3; i++){
+                choice[i].text = GAME_PAGE_31_WORDS[i + 1];
+                if (i == 0){
+                    choice[i].courageLevel = Choices::Heroic;
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                }
+                else if ( i == 1){
+                    choice[i].courageLevel = Choices::Cowardly;
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                }
+                else 
+                {    
+                    choice[i].courageLevel = Choices::Average;
+                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
             }
             break;
@@ -383,7 +492,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
         }
     }
     return true;
-} //End function
+}
 
 int ChoicePage::chooseCowardly(){
     int j = 0;  
@@ -876,7 +985,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                                     gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
                                     gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
                                     break;
-                                case Choices::ChoiceType::Cowardly:
+                                case Choices::ChoiceType::Heroic:
                                     newPage = OUTCOME_PAGE;
                                     storePage = GAME_PAGE_23_2;
                                     decision = j;
@@ -890,7 +999,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                                     gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
                                     gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
                                     break;
-                                case Choices::ChoiceType::Heroic:
+                                case Choices::ChoiceType::Cowardly:
                                     newPage = OUTCOME_PAGE;
                                     storePage = GAME_PAGE_23_3;
                                     decision = j;
@@ -923,7 +1032,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                     if(e.type == SDL_MOUSEBUTTONDOWN)
                     { 
                         newPage = OUTCOME_PAGE;
-                        storePage = GAME_PAGE_23_2;
+                        storePage = GAME_PAGE_23_3;
                         decision = chooseCowardly();
                         //iterating over each metric with k
                         for (int k = 0; k < 3; k++)
@@ -942,7 +1051,279 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                 textures[1].loadFromRenderedText(renderer, choice[chooseCowardly()].text, *textColor, w/1.3);
             } // End insane events
             break;
-        
+        case GAME_PAGE_28:
+            if (!gamer->checkInsanity()){
+                //Iterating over choice textures    
+                for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
+                {
+                    int j = i - 1;
+                    if (textures[i].isMouseOver(textures[i].getRect())){
+                        *textColor = GREY;
+                        textures[i].gFont = TTF_OpenFont("resources/NotoSans-BoldItalic.ttf", WRITING + 2);
+                        if(e.type == SDL_MOUSEBUTTONDOWN)
+                        { 
+                            switch (choice[j].courageLevel){
+                                case Choices::ChoiceType::Average: 
+                                    newPage = OUTCOME_PAGE;
+                                    storePage = GAME_PAGE_29_1;
+                                    decision = j;
+                                    //iterating over each metric with k
+                                    for (int k = 0; k < 3; k++)
+                                        choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
+                                    
+                                    //Set the new value with the change in stats
+                                    gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                    gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                    gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
+                                    break;
+                                case Choices::ChoiceType::Cowardly:
+                                    newPage = OUTCOME_PAGE;
+                                    storePage = GAME_PAGE_29_2;
+                                    decision = j;
+
+                                    //iterating over each metric with k
+                                    for (int k = 0; k < 3; k++)
+                                        choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
+                                    
+                                    //Set the new value with the change in stats
+                                    gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                    gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                    gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
+                                    break;
+                                case Choices::ChoiceType::Heroic:
+                                    newPage = OUTCOME_PAGE;
+                                    storePage = GAME_PAGE_29_3;
+                                    decision = j;
+                                    //iterating over each metric with k
+                                    for (int k = 0; k < 3; k++)
+                                        choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
+                                    
+                                    //Set the new value with the change in stats
+                                    gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                    gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                    gamer->setRep(gamer->getRep() + choice[j].statChange[2]);                             
+                                    break;
+                                default:
+                                    break;
+                            } //End courage level switch
+                        } // End Mouse button down events                  
+                    } //End Mouse Over events
+                    else
+                    {
+                        *textColor = TAN;
+                        textures[i].gFont = TTF_OpenFont("resources/NotoSans-Italic.ttf", WRITING);
+                    }
+                    textures[i].loadFromRenderedText(renderer, choice[j].text, *textColor, w/1.3);
+                } //End the texture for loop
+            } // End Sane events
+            else{
+                if (textures[1].isMouseOver(textures[1].getRect())){
+                    *textColor = GREY;
+                    textures[1].gFont = TTF_OpenFont("NotoSans-BoldItalic.ttf", WRITING + 2);
+                    if(e.type == SDL_MOUSEBUTTONDOWN)
+                    { 
+                        newPage = OUTCOME_PAGE;
+                        storePage = GAME_PAGE_29_2;
+                        decision = chooseCowardly();
+                        //iterating over each metric with k
+                        for (int k = 0; k < 3; k++)
+                            choice[chooseCowardly()].statChange[k] = gamer->random(choice[chooseCowardly()].bounds[k]);
+                        
+                        //Set the new value with the change in stats
+                        gamer->setHealth(gamer->getHealth() + choice[chooseCowardly()].statChange[0]);
+                        gamer->setSanity(gamer->getSanity() + choice[chooseCowardly()].statChange[1]);
+                        gamer->setRep(gamer->getRep() + choice[chooseCowardly()].statChange[2]);
+                    }
+                }
+                else{
+                    *textColor = TAN;
+                    textures[1].gFont = TTF_OpenFont("resources/NotoSans-Italic.ttf", WRITING);
+                }
+                textures[1].loadFromRenderedText(renderer, choice[chooseCowardly()].text, *textColor, w/1.3);
+            } // End insane events
+            break;
+        case GAME_PAGE_31:
+            if (!gamer->checkInsanity()){
+                //Iterating over choice textures    
+                for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
+                {
+                    int j = i - 1;
+                    if (textures[i].isMouseOver(textures[i].getRect())){
+                        *textColor = GREY;
+                        textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
+                        if(e.type == SDL_MOUSEBUTTONDOWN)
+                        { 
+                            switch (choice[j].courageLevel){
+                                case Choices::ChoiceType::Heroic: 
+                                    newPage = OUTCOME_PAGE;
+                                    storePage = GAME_PAGE_32_1;
+                                    decision = j;
+                                    //iterating over each metric with k
+                                    for (int k = 0; k < 3; k++)
+                                        choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
+                                    
+                                    //Set the new value with the change in stats
+                                    gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                    gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                    gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
+                                    break;
+                                case Choices::ChoiceType::Average:
+                                    newPage = OUTCOME_PAGE;
+                                    storePage = GAME_PAGE_32_3;
+                                    decision = j;
+
+                                    //iterating over each metric with k
+                                    for (int k = 0; k < 3; k++)
+                                        choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
+                                    
+                                    //Set the new value with the change in stats
+                                    gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                    gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                    gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
+                                    break;
+                                case Choices::ChoiceType::Cowardly:
+                                    newPage = OUTCOME_PAGE;
+                                    storePage = GAME_PAGE_32_2;
+                                    decision = j;
+                                    //iterating over each metric with k
+                                    for (int k = 0; k < 3; k++)
+                                        choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
+                                    
+                                    //Set the new value with the change in stats
+                                    gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                    gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                    gamer->setRep(gamer->getRep() + choice[j].statChange[2]);                             
+                                    break;
+                                default:
+                                    break;
+                            } //End courage level switch
+                        } // End Mouse button down events                  
+                    } //End Mouse Over events
+                    else
+                    {
+                        *textColor = TAN;
+                        textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                    }
+                    textures[i].loadFromRenderedText(renderer, choice[j].text, *textColor, w/1.3);
+                } //End the texture for loop
+            } // End Sane events
+            else{
+                if (textures[1].isMouseOver(textures[1].getRect())){
+                    *textColor = GREY;
+                    textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
+                    if(e.type == SDL_MOUSEBUTTONDOWN)
+                    { 
+                        newPage = OUTCOME_PAGE;
+                        storePage = GAME_PAGE_32_3;
+                        decision = chooseCowardly();
+                        //iterating over each metric with k
+                        for (int k = 0; k < 3; k++)
+                            choice[chooseCowardly()].statChange[k] = gamer->random(choice[chooseCowardly()].bounds[k]);
+                        
+                        //Set the new value with the change in stats
+                        gamer->setHealth(gamer->getHealth() + choice[chooseCowardly()].statChange[0]);
+                        gamer->setSanity(gamer->getSanity() + choice[chooseCowardly()].statChange[1]);
+                        gamer->setRep(gamer->getRep() + choice[chooseCowardly()].statChange[2]);
+                    }
+                }
+                else{
+                    *textColor = TAN;
+                    textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                }
+                textures[1].loadFromRenderedText(renderer, choice[chooseCowardly()].text, *textColor, w/1.3);
+            } // End insane events
+            break;
+        case GAME_PAGE_35:
+            if (!gamer->checkInsanity()){
+                //Iterating over choice textures    
+                for (int i = 1; i < CHOICE_PAGE_TEXTURES; i++)
+                {
+                    int j = i - 1;
+                    if (textures[i].isMouseOver(textures[i].getRect())){
+                        *textColor = GREY;
+                        textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
+                        if(e.type == SDL_MOUSEBUTTONDOWN)
+                        { 
+                            switch (choice[j].courageLevel){
+                                case Choices::ChoiceType::Heroic: 
+                                    newPage = OUTCOME_PAGE;
+                                    storePage = GAME_PAGE_36;
+                                    decision = j;
+                                    //iterating over each metric with k
+                                    for (int k = 0; k < 3; k++)
+                                        choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
+                                    
+                                    //Set the new value with the change in stats
+                                    gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                    gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                    gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
+                                    break;
+                                case Choices::ChoiceType::Cowardly:
+                                    newPage = OUTCOME_PAGE;
+                                    storePage = GAME_PAGE_36;
+                                    decision = j;
+
+                                    //iterating over each metric with k
+                                    for (int k = 0; k < 3; k++)
+                                        choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
+                                    
+                                    //Set the new value with the change in stats
+                                    gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                    gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                    gamer->setRep(gamer->getRep() + choice[j].statChange[2]);
+                                    break;
+                                case Choices::ChoiceType::Average:
+                                    newPage = OUTCOME_PAGE;
+                                    storePage = GAME_PAGE_36;
+                                    decision = j;
+                                    //iterating over each metric with k
+                                    for (int k = 0; k < 3; k++)
+                                        choice[j].statChange[k] = gamer->random(choice[j].bounds[k]);
+                                    
+                                    //Set the new value with the change in stats
+                                    gamer->setHealth(gamer->getHealth() + choice[j].statChange[0]);
+                                    gamer->setSanity(gamer->getSanity() + choice[j].statChange[1]);
+                                    gamer->setRep(gamer->getRep() + choice[j].statChange[2]);                             
+                                    break;
+                                default:
+                                    break;
+                            } //End courage level switch
+                        } // End Mouse button down events                  
+                    } //End Mouse Over events
+                    else
+                    {
+                        *textColor = TAN;
+                        textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                    }
+                    textures[i].loadFromRenderedText(renderer, choice[j].text, *textColor, w/1.3);
+                } //End the texture for loop
+            } // End Sane events
+            else{
+                if (textures[1].isMouseOver(textures[1].getRect())){
+                    *textColor = GREY;
+                    textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std_Bold.ttf", WRITING + 2);
+                    if(e.type == SDL_MOUSEBUTTONDOWN)
+                    { 
+                        newPage = OUTCOME_PAGE;
+                        storePage = GAME_PAGE_36;
+                        decision = chooseCowardly();
+                        //iterating over each metric with k
+                        for (int k = 0; k < 3; k++)
+                            choice[chooseCowardly()].statChange[k] = gamer->random(choice[chooseCowardly()].bounds[k]);
+                        
+                        //Set the new value with the change in stats
+                        gamer->setHealth(gamer->getHealth() + choice[chooseCowardly()].statChange[0]);
+                        gamer->setSanity(gamer->getSanity() + choice[chooseCowardly()].statChange[1]);
+                        gamer->setRep(gamer->getRep() + choice[chooseCowardly()].statChange[2]);
+                    }
+                }
+                else{
+                    *textColor = TAN;
+                    textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                }
+                textures[1].loadFromRenderedText(renderer, choice[chooseCowardly()].text, *textColor, w/1.3);
+            } // End insane events
+            break;
         default:
             break;
     } //End Page number switch
@@ -1048,7 +1429,6 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
             break;
     } //END Page Events
     return newPage;
-
 }
 
 int* ChoicePage::getStatChange(){
