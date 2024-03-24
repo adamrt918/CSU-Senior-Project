@@ -4,5 +4,5 @@ A Solemn Evolution is intended to help everyday people get a sense for decisions
 
 ## Compile/Deploy
 Download from https://adamrt918.itch.io/asolemnevolution
-Open the file and run main.exe
+Extract the file and run main.exe on any windows x64 system
 Disregard warnings about unkown files
