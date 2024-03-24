@@ -46,14 +46,7 @@ void Render::mainMenuRenderer(SDL_Renderer* renderer){
 }
 
 void Render::tutorialRenderer(SDL_Renderer* renderer){
-    for (int i = 0; i < TUTORIAL_TEXTURES; i++){
-        if (i == 0)
-            textures[i].render((dms->w() / 2) - textures[i].getWidth() / 2, (dms->h() / 8) - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        else if (i % 2 == 1)
-            textures[i].render((dms->w() / 2) - textures[i].getWidth() / 2, (dms->h() / 8) + totalHeight(i) + 10 * i , NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        else
-            textures[i].render((dms->w() / 2) - textures[i].getWidth() / 2, (dms->h() / 8) + totalHeight(i) + 10 * i, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-    }
+    textures[0].render((dms->w() / 2) - textures[0].getWidth() / 2, dms->h() / 2 - textures[0].getHeight() / 2, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
 }
 
 void Render::taskBarRenderer(SDL_Renderer* renderer, LTexture* TASKBAR){

@@ -19,9 +19,8 @@
 */
 
 /*TODO  
-    - Tutorial page should be changed to a .png and scaled
-        * Need to re-write tutorial
-    - Partial Health restoral at the end of the chapter
+    - Taskbar events don't work on choice page
+        - Hitting main menu on choice page resets stats
 */
 
 using namespace std;
@@ -99,6 +98,14 @@ const int GAME_PAGE_33 = 330;
 const int GAME_PAGE_34 = 340;
 const int GAME_PAGE_35 = 350;
 const int GAME_PAGE_36 = 360;
+const int GAME_PAGE_37 = 370;
+const int GAME_PAGE_38_HERO = 381;
+const int GAME_PAGE_38_AVERAGE = 382;
+const int GAME_PAGE_38_COWARD = 383;
+const int GAME_PAGE_38_4_AVERAGE = 384;
+const int GAME_PAGE_39 = 390;
+const int GAME_PAGE_40 = 400;
+const int GAME_PAGE_41 = 410;
 
 
 /* Words per page */
@@ -107,19 +114,6 @@ const string START_PAGE_WORDS = "Click Here to Begin";
 const string TASKBAR_WORDS[TASKBAR_TEXTURES]{"Main Menu", "Exit to Desktop"};
 string PLAYER_WORDS[PLAYER_TEXTURES]{"Health:   ", "Sanity:   ", "Reputation:   "};
 const string MAIN_MENU_WORDS[MAIN_MENU_TEXTURES] = {"Begin", "Tutorial", "Survey", "Exit"};
-const string TUTORIAL_WORDS[TUTORIAL_TEXTURES] = {"Tutorial", 
-    "    The novel will measure three metrics throughout the chapter, health and sanity which affect the individual player, and reputation, which affects the games ending. The metrics are affected through user-made decisions. The page of the visual novel is turned by clicking the interactive text. The novel is only advanced when a decision is made or when the timer runs out. Once the game ends, the player can choose to return to the main menu or exit the game. Progress is not saved, but the game should only take about 20 minutes to complete. Once complete, please fill out the survey.",  
-    "Health", 
-    "    Losing all your health during a chapter will result in losing the ability to make the most heroic decision for the rest of the chapter, but restoring your health. Health restores at the beginning of a new chapter. Heroic decisions affect your health the most but have the least impact on your sanity.", 
-    "Sanity", 
-    "    Losing all of your sanity in a chapter will immediately train track your actions and prevent player choice, forcing the player to make cowardly decisions which impact reputation. Choices which are cowardly affect sanity the most but save your health. A new chapter will result in a restoration of sanity.", 
-    "Reputation",
-    "    Reputation will continue with you throughout the novel and will determine your game ending. To achieve the most favorable outcome, you must be willing to take risks and decide heroically. However, if you always choose the most heroic outcome, there is a chance that you will die. To make it to the end without dying, you must make decisions which are less heroic.",
-    "Ending", 
-    "    There are 3 endings. Play the game as a hero, as a human, or as a coward to see each ending." ,
-    "Decisions",
-    "    At various points throughout the novel, the player will need to make decisions by clicking on them with their mouse. It is not always clear what the right choice is in these decisions, as it is not always clear in life what decisions one should make. Often, decisions which are competent and correct in one situation are deluded and ineffective in another. Sometimes, there is no correct decision. Other times, decisions need to be made quickly. The decisions in this game are no different. It is meant to display the futility of choice in certain situations and the need for a higher power. Decisions affect health and/or sanity, and reputation."
-};
 const string GAME_PAGE_1_WORDS[QUOTATION_PAGE_TEXTURES] = {"Chapter 1", 
     "To each there comes in their lifetime a special moment when they are figuratively tapped on the shoulder and offered the chance to do a very special thing, unique to them and fitted to their talents. What a tragedy if that moment finds them unprepared or unqualified for that which could have been their finest hour.",  
     "- Winston Churchill"};
@@ -155,7 +149,7 @@ const string GAME_PAGE_7_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_6_WORDS
     "I half lie between repetitions.\n    I was dead asleep when Marsden's repeated calls broke through my phone's do not disturb rule.\n    \"So, you just didn't tell anyone and didn't answer your phone. Not only are you late, you're also out of uniform. Everyone, hang from the cage.\" I'm sure he knew I had been dead asleep.",
      NEXT_PAGE};
 const string GAME_PAGE_7_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_6_WORDS[2],
-    "    You say with utmost honesty, not mentioning your missing belt.\n    \"Well, at least you're honest.\" The sergeant said. \"Everyone else get up. <LAST NAME>, what is your least favorite exercise?\" he asks, smiling.\n    \"Burpees.\" You gasp, winded from the set of decline pushups.\n    \"Maybe too honest. Do burpees,\" He orders, not cutting you a break for your honesty, \"and then after that, hang from the cage.\"\n    You knock out your 25 burpees and jump up to begin your hang.",
+    "    You say with utmost honesty, not mentioning your missing belt.\n    \"Well, at least you're honest.\" The sergeant said. \"Everyone else get up. Thiemann, what is your least favorite exercise?\" he asks, smiling.\n    \"Burpees.\" You gasp, winded from the set of decline pushups.\n    \"Maybe too honest. Do burpees,\" He orders, not cutting you a break for your honesty, \"and then after that, hang from the cage.\"\n    You knock out your 25 burpees and jump up to begin your hang.",
     NEXT_PAGE};
 const string GAME_PAGE_7_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_6_WORDS[3],
     "    I state, wanting to get out of the impending physical destruction which awaits me. The anxiety of watching my comrades suffer because of my actions has broken me.\n"
@@ -166,14 +160,14 @@ const string GAME_PAGE_8_WORDS[TEXT_PAGE_TEXTURES] = {"    Ranger squads reside 
     "    The protective paint on the chain link had worn off from the privates who had to hang on the cage before me, and the privates who had to hang on the cage before them, and so on. The bodyweight of the individual caused the raw metal chain link to tear skin like a sandpaper blade directly to the joints of one\'s fingers. Eventually, the chain link would saw deep enough to draw blood. One could not hold on much longer than a minute or so, but with a team leader breathing fire down my neck, I must have held onto the chain link for about fifteen minutes - an eternity in such a situation. Hazing cuts deeper than the skin, but not as deep as artillery shrapnel or a bullet.\n"
     "    I did not consider these incidents hazing, but training, and they occurred often during my years as a private. These incidents taught me valuable lessons. There was a shoot house on HAAF named after Bradley Crose, a fallen Ranger. For physical exercise in the morning, the squad would sometimes run about two miles to the shoot house with full kit, weapons, and night vision to practice close quarters battle (CQB). Unfortunately, this was 2015. I was new to Ranger Regiment, so the entire trip to Bradley Crose consisted of my team leader crushing the new guys of the squad.", 
     NEXT_PAGE};
-const string GAME_PAGE_9_WORDS[TEXT_PAGE_TEXTURES] = { "\"<LAST NAME>, what are you doing?\" My team leader barked as I walked in a mock patrol, breathing heavily from the most recent set of burpees.\n" 
+const string GAME_PAGE_9_WORDS[TEXT_PAGE_TEXTURES] = { "\"Thiemann, what are you doing?\" My team leader barked as I walked in a mock patrol, breathing heavily from the most recent set of burpees.\n" 
     "    My night vision goggles were pointed straight at the ground, fogging up from the perspiration evaporating off my body, as I just tried to put one foot in front of the next.\n" 
     "    \"Walking, Corporal!\" I responded inadequately.\n" 
     "    After my team leader promptly ordered another set of burpees, my squad leader, Staff Sergeant Morton, looked at me and told me something I would never forget:\n\n" 
-    "    \"You're never just walking, <LAST NAME>. We are Rangers, there's always something we need to be doing. You are scanning for the enemy. Every ten meters you're surveying the ground around you. You're thinking to yourself, 'Where do I take cover if I get shot at from the front? Where do I take cover if I get shot at from the left, right, or rear? Where do I go if I need to break contact or take cover from indirect fire?' If you're a leader, you're thinking, 'What should my men be doing? How can I help them?' You are NEVER just walking.\"\n\n"
+    "    \"You're never just walking, Thiemann. We are Rangers, there's always something we need to be doing. You are scanning for the enemy. Every ten meters you're surveying the ground around you. You're thinking to yourself, 'Where do I take cover if I get shot at from the front? Where do I take cover if I get shot at from the left, right, or rear? Where do I go if I need to break contact or take cover from indirect fire?' If you're a leader, you're thinking, 'What should my men be doing? How can I help them?' You are NEVER just walking.\"\n\n"
     "    During the testing for my expert infantryman's badge (EIB), I did not give due respect to a ranking NCO who was failing me on a lane for the sake of semantics. In my eyes, this NCO was keeping me from achieving the same level of expertise as my peers for no reason - and I let him know as much. He destroyed me with physical training then grabbed my team leader to tell him what I did. My team leader at the time, Sergeant Davis, calmed the situation down. He told the NCO that he would punish me for my lack of respect and rude behavior, but also that I should pass the lane because I did not fail. The other NCO respected his opinion and his reasoning, passing me through the lane after a long and brutal session of physical exercise. Again, the session crossed the grey area into what many would consider hazing.\n" 
     "    That was not the end of my punishment.\n"
-    "    \"<LAST NAME>, what you did was wrong, childish, and stupid. I want a 4-page paper written in 8 pt font, front and back, about what it means to be a man by tomorrow morning.\" Sergeant Davis ordered at 5pm that evening.\n",
+    "    \"Thiemann, what you did was wrong, childish, and stupid. I want a 4-page paper written in 8 pt font, front and back, about what it means to be a man by tomorrow morning.\" Sergeant Davis ordered at 5pm that evening.\n",
     NEXT_PAGE};
 const string GAME_PAGE_10_WORDS[CHOICE_PAGE_TEXTURES] = {
     "    I spent the whole night typing in tiny font to finish this essay. The question my Dad had asked me was at the forefront of my mind. What have I been doing all this time? I'm going through my time in service, but do I have what it takes to be a man?\n" 
@@ -183,16 +177,16 @@ const string GAME_PAGE_10_WORDS[CHOICE_PAGE_TEXTURES] = {
     "Being a Christian and following the Christian tenants of love, mercy, and grace."};
 const string GAME_PAGE_11_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_10_WORDS[1],
 	"    Sergeant Davis and I made purposeful eye contact, and I saw the pride he had from reading my paper. I reached out to shake his hand. He looked down at my hand, with a slight dampening of his demeanor.\n"
-    "    \"I'm still your team leader, <LAST NAME>, not your buddy or your father. Drop.\"\n"
+    "    \"I'm still your team leader, Thiemann, not your buddy or your father. Drop.\"\n"
     "    I dropped and began knocking out my decline pushups. Why are these values the values which my father taught me?\n",
     NEXT_PAGE};
 const string GAME_PAGE_11_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_10_WORDS[2],
     "    As long as I follow my own moral code, I am in the right. As such, rank doesn't matter as long as I follow my own idea of right and wrong. The sergeant was treating me like I was inferior and I was right to stand up for myself.\n"
-    "    \"<LAST NAME>, you missed the point on this one. I don't know what kind of childhood you had, but in my team you will be a man, respect authority, and be accountable for your actions, no matter what they are. Re-write the paper by tomorrow morning about respect and accountability.\" Sergeant Davis ordered.\n"
+    "    \"Thiemann, you missed the point on this one. I don't know what kind of childhood you had, but in my team you will be a man, respect authority, and be accountable for your actions, no matter what they are. Re-write the paper by tomorrow morning about respect and accountability.\" Sergeant Davis ordered.\n"
     "    Regardless, my actions were justified.",
     NEXT_PAGE};
 const string GAME_PAGE_11_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_10_WORDS[3],
-    "    \"<LAST NAME>, we are Army Rangers. We close with to kill and destroy the enemy in cold blood with our bare hands if necessary. I don't know what kind of Bible you are reading, but when the Israelites stormed the walls of Jericho, they killed every man, woman, and child. So help me God you will be the best at killing. Hold squat.\" Sergeant Davis ordered.\n"
+    "    \"Thiemann, we are Army Rangers. We close with to kill and destroy the enemy in cold blood with our bare hands if necessary. I don't know what kind of Bible you are reading, but when the Israelites stormed the walls of Jericho, they killed every man, woman, and child. So help me God you will be the best at killing. Hold squat.\" Sergeant Davis ordered.\n"
     "    He smoked me relentlessly to drive the point home... and drive the point home he did. Perhaps being a Christian was not only about these notably soft virtues, but also boldness, discipline, and savagery when the time calls? If God could allow such an awful thing as war, then surely He must provision a way for us to be made righteous within that anguish?\n",
     NEXT_PAGE};
 const string GAME_PAGE_12_WORDS[TEXT_PAGE_TEXTURES] = {
@@ -216,7 +210,7 @@ const string GAME_PAGE_14_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_13_WOR
 	"    The team leader grabbed the litter off my back and performed the litter drill himself, telling me to get out of his way. My team leader treated me like dirt, unable to perform my duties under austere circumstances. But how was I supposed to know? I listened to him. He was wrong.",
     NEXT_PAGE};
 const string GAME_PAGE_14_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_13_WORDS[3],
-    "    \"You don't get to make the calls around here, <LAST NAME>! It is a live fire, and it is training. Whatever trouble Aimesbury's team is having they will work through. The squad leader will give us a call and we will maneuver on the targets when Aimesbury is set.\" The team leader wisely responded.\n"
+    "    \"You don't get to make the calls around here, Thiemann! It is a live fire, and it is training. Whatever trouble Aimesbury's team is having they will work through. The squad leader will give us a call and we will maneuver on the targets when Aimesbury is set.\" The team leader wisely responded.\n"
     "    Static came over radio, then a voice feverishly called for a stretcher bearer.\n"
     "    \"GO!\" The team leader screamed in my ear.\n"
     "    I ran towards the light as fast as I could, tripping and smashing my night vision into my face, but arriving as Aimesbury took his last breaths. I performed my litter drill under night vision, the team leader grabbed the heat blanket and opened it up once I had prepared the stretcher. I had known something was wrong. I should have acted sooner.\n",
@@ -282,7 +276,7 @@ const string GAME_PAGE_24_WORDS[TEXT_PAGE_TEXTURES] = {
     "    For the movement to extract, I was near the point man in the front of the formation. I watched the point man's infrared illuminator wave back and forth over the terrain, briefly stopping on a tent which sat on top of a spur directly above us. During this brief rest, I thought I saw 4 pixels in my night vision, like the top of someone's head, bob over the threshold of the tent entrance. I wasn't sure. The point man's laser kept scanning before I could find out. I stopped and took a knee, illuminating the tent with my own IR laser.\n",
     NEXT_PAGE};
 const string GAME_PAGE_25_WORDS[CHOICE_PAGE_TEXTURES] = {
-    "    \"<LAST NAME>, keep up.\" Corporal Fausey hissed, thinking I was too tired and trying to take a break.\n"
+    "    \"Thiemann, keep up.\" Corporal Fausey hissed, thinking I was too tired and trying to take a break.\n"
     "    I readied my rifle, flipped my weapon to fire, and took a deep breath as I pulled the slack out of the trigger. Should I shoot through the tent? Would I be justified? I didn't have enough time to decide.\n",
     "    I squeeze the trigger. I am an Army Ranger, and I will not put my platoon in danger.\n",
     "    Disregard the orders of my team leader, place my weapon on fire but wait for the situation to develop.\n",
@@ -290,13 +284,13 @@ const string GAME_PAGE_25_WORDS[CHOICE_PAGE_TEXTURES] = {
 const string GAME_PAGE_26_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
     GAME_PAGE_25_WORDS[1],
     "    The thump of my suppressed rifle bullets hitting the thick blankets which fashioned the tent penetrate the silence of the movement. The voice of a man cries out, and the squad next to me assaults up the spur towards the tent with automatic weapons and rifles, finishing off whatever I had started.\n" 
-	"    \"Good kill, <LAST NAME>.\" Corporal Fausey patted me on the back.\n" 
+	"    \"Good kill, Thiemann.\" Corporal Fausey patted me on the back.\n" 
 	"    But what if he was innocent?",
     NEXT_PAGE};
 const string GAME_PAGE_26_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
     GAME_PAGE_25_WORDS[2],
     "    A man came around the corner of the tent. Corporal Fausey saw my IR laser illuminate the man's chest. On the last ounce of strength to break the trigger, I stopped and let off. He was unarmed. An interpreter was brought up and he yelled at the man to go back inside.\n" 
-    "    \"You shoot next time, <LAST NAME>.\" Corporal Fausey instructed.\n"
+    "    \"You shoot next time, Thiemann.\" Corporal Fausey instructed.\n"
     "    \"Roger, Corporal.\" I acknowledged, not needing an explanation.\n"
     "    He could have thrown a grenade or detonated an IED. Though the man ultimately lived that night, the risk was too high. He could have killed me or one of my friends.\n",
     NEXT_PAGE};
@@ -304,7 +298,7 @@ const string GAME_PAGE_26_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
     GAME_PAGE_25_WORDS[3],
     "    \"I thought I saw something, corporal.\" I explained, not wanting to seem like I was tired.\n"
     "    Just then, there was commotion as men readied their rifles and yelled up towards the tent. The interpreter came and told the man to go back to sleep.\n"
-    "    \"<LAST NAME>, if you know something, which contradicts my orders, you should never second guess yourself.\" Corporal Fausey stated.\n"
+    "    \"Thiemann, if you know something, which contradicts my orders, you should never second guess yourself.\" Corporal Fausey stated.\n"
     "    I would surely pay for this when I got back to base. How could I have put the platoon in danger because I was too scared to disobey orders? I anxiously walked, knowing what physical tortures awaited me when the mission ended. My mindset continued to put the team in danger as I could not focus on the mission.\n",
     NEXT_PAGE};
 const string GAME_PAGE_27_WORDS[TEXT_PAGE_TEXTURES] = {
@@ -331,7 +325,7 @@ const string GAME_PAGE_29_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_28_WOR
 const string GAME_PAGE_30_WORDS[TEXT_PAGE_TEXTURES] = {
     "    The last 8 kilometers to extract was uneventful, and a brutal slog. I am not proud to admit I found myself looking straight down at my feet, attempting to step on an IED to rid myself of the weight of my 110 pounds of gear forever. I was not successful, and we returned to base dehydrated and aching.\n"
     "    No missions I did after were any more eventful than this first one, though some not less. I felt as if I never fired my weapon in combat during my time in service with the US Military, though the platoon killed roughly 20 members of the Taliban in direct fire over the course of the deployment. After we returned, Corporal Fausey, a war hero in my eyes, fell into an intense bout of drinking and drug use. Despite this, he was honorably separated from the Army. Last I heard he had found sobriety at home and reprieve in running long distances. Though combat was a unique experience in many ways, it felt all too much like training. I was too proud for training.\n\n"
-    "    Nonetheless, it would be another year of training and Ranger School before I got to deploy to Afghanistan the second time, where our mission was to train the Afghan special operations forces – not go out and kill the Taliban. It was time for me to get out of the military. The war was winding down, and I had missed my shot. 2nd Ranger Battalion, with my friends Ethan and Cameron Meddock, relieved 1st Ranger Battalion at the end of 2018, and I headed home without having the chance to see them.  I would stop chasing the elusive dragon of manhood through combat.\n",
+    "    Nonetheless, it would be another year of training and Ranger School before I got to deploy to Afghanistan the second time, where our mission was to train the Afghan special operations forces - not go out and kill the Taliban. It was time for me to get out of the military. The war was winding down, and I had missed my shot. 2nd Ranger Battalion, with my friends Ethan and Cameron Meddock, relieved 1st Ranger Battalion at the end of 2018, and I headed home without having the chance to see them.  I would stop chasing the elusive dragon of manhood through combat.\n",
     NEXT_PAGE};
 const string GAME_PAGE_31_WORDS[CHOICE_PAGE_TEXTURES] = {
     "    Sitting in my barracks room, two days before leaving the military on January 17, 2019, I learned that Sergeant Cameron Meddock, was killed in action.\n",
@@ -339,23 +333,46 @@ const string GAME_PAGE_31_WORDS[CHOICE_PAGE_TEXTURES] = {
     "    That could have been me.",
     "    Its always the good ones."};
 const string GAME_PAGE_32_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = { GAME_PAGE_31_WORDS[1],
-    "    Who wouldn’t ask why in this situation? God put us on this Earth, and I had every right to ask that question. The least of my worries were that Cameron was my good friend from basic training and RASP. He had married his fiancé just 3 months before the deployment, and she was already pregnant with their first child. Three months of marriage, and already widowed with their unborn daughter. She would carry the baby to term and raise it to know her father through numerous meetings with the 2nd Ranger Battalion, and the men who fought alongside Cameron that faithful night. It was fitting he would have had a daughter first. A daughter to go along with his Texas chivalry would have been the perfect complement to his personality.\n" 
-    "    I went to the gym to try and shake my depression. It didn’t work, but I crushed myself to the point of exhaustion. I drifted into a workout induced coma.\n", 
+    "    Who wouldn't ask why in this situation? God put us on this Earth, and I had every right to ask that question. The least of my worries were that Cameron was my good friend from basic training and RASP. He had married his fiancé just 3 months before the deployment, and she was already pregnant with their first child. Three months of marriage, and already widowed with their unborn daughter. She would carry the baby to term and raise it to know her father through numerous meetings with the 2nd Ranger Battalion, and the men who fought alongside Cameron that faithful night. It was fitting he would have had a daughter first. A daughter to go along with his Texas chivalry would have been the perfect complement to his personality.\n" 
+    "    I went to the gym to try and shake my depression. It didn't work, but I crushed myself to the point of exhaustion. I drifted into a workout induced coma.\n", 
     NEXT_PAGE};
 const string GAME_PAGE_32_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = { GAME_PAGE_31_WORDS[2],
-    "    It certainly could have been me, if I had just gotten married and my wife had our first child on the way. Only then could it have been 1/16th as sad as it was. But it wasn’t me, and I didn’t have a wife or a child on the way. It was a selfish thought. Cameron’s brand-new wife, after only 3 months of marriage, had been widowed with their unborn daughter. She would carry the baby to term and raise it to know her father through numerous meetings with the 2nd Ranger Battalion, and the men who fought alongside Cameron that faithful night. It was fitting he would have had a daughter first. A daughter to go along with his Texas chivalry would have been the perfect complement to his personality.\n"
-	"    I knocked out a set of pushups to ease the pain, but it didn’t work. I grabbed a beer instead. It was going to be a long night.\n",
+    "    It certainly could have been me, if I had just gotten married and my wife had our first child on the way. Only then could it have been 1/16th as sad as it was. But it wasn't me, and I didn't have a wife or a child on the way. It was a selfish thought. Cameron's brand-new wife, after only 3 months of marriage, had been widowed with their unborn daughter. She would carry the baby to term and raise it to know her father through numerous meetings with the 2nd Ranger Battalion, and the men who fought alongside Cameron that faithful night. It was fitting he would have had a daughter first. A daughter to go along with his Texas chivalry would have been the perfect complement to his personality.\n"
+	"    I knocked out a set of pushups to ease the pain, but it didn't work. I grabbed a beer instead. It was going to be a long night.\n",
     NEXT_PAGE};
 const string GAME_PAGE_32_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {GAME_PAGE_31_WORDS[3],
-    "    Cameron was a good friend to me in RASP. Despite our differences, he was the one who would always uphold Christian virtue alongside the army standards. Not to mention, his moral code was impeccable. That was a man I wanted to emulate. Not only that, but he had married the love of his life just 3 months earlier and she was pregnant with their first child, a daughter. Cameron’s widow would carry the baby to term and raise it to know her father through numerous meetings with the 2nd Ranger Battalion, and the men who fought alongside Cameron that faithful night. It was fitting he would have had a daughter first. A daughter to go along with his Texas chivalry would have been the perfect complement to his personality.\n" 
-	"    I tried to sweat off my sadness in the gym. It didn’t work, but I crushed myself anyways. When I got back I sat, unable to even fix my protein shake. Screw this. I grabbed a beer for the Airborne Ranger in the Sky.\n",
+    "    Cameron was a good friend to me in RASP. Despite our differences, he was the one who would always uphold Christian virtue alongside the army standards. Not to mention, his moral code was impeccable. That was a man I wanted to emulate. Not only that, but he had married the love of his life just 3 months earlier and she was pregnant with their first child, a daughter. Cameron's widow would carry the baby to term and raise it to know her father through numerous meetings with the 2nd Ranger Battalion, and the men who fought alongside Cameron that faithful night. It was fitting he would have had a daughter first. A daughter to go along with his Texas chivalry would have been the perfect complement to his personality.\n" 
+	"    I tried to sweat off my sadness in the gym. It didn't work, but I crushed myself anyways. When I got back I sat, unable to even fix my protein shake. Screw this. I grabbed a beer for the Airborne Ranger in the Sky.\n",
     NEXT_PAGE};
 const string GAME_PAGE_33_WORDS[TEXT_PAGE_TEXTURES] = {
-    "    Meddock made the second Ranger I had known that was killed in just a 1-year span. The first was another one of the best men I have ever known, Sergeant First Class Christopher Celiz, who was killed in action, leaving behind his wife and daughter. War simply took men of irreplaceable caliber from my life and added nothing – or so I believed. SFC Celiz was posthumously awarded the Medal of Honor, whatever consolation that was to his family or us who knew him.\n",
+    "    Meddock made the second Ranger I had known that was killed in just a 1-year span. The first was another one of the best men I have ever known, Sergeant First Class Christopher Celiz, who was killed in action, leaving behind his wife and daughter. War simply took men of irreplaceable caliber from my life and added nothing - or so I believed. SFC Celiz was posthumously awarded the Medal of Honor, whatever consolation that was to his family or us who knew him.\n",
     "    Rangers Lead the Way"};
 const string GAME_PAGE_34_WORDS[VERSE_PAGE_TEXTURES] = {
-    "    ’Absolute futility,’ says the Teacher. ‘Absolute futility. Everything is futile.’ -- There is no remembrance of those who came before; and of those who will come after there will also be no remembrance by those who follow them.”\n",
+    "    \"'Absolute futility,' says the Teacher. 'Absolute futility. Everything is futile.' -- There is no remembrance of those who came before; and of those who will come after there will also be no remembrance by those who follow them.\"\n",
     " - Ecclesiastes 1: 2, 11 CSB"};
+const string GAME_PAGE_36_WORDS[QUOTATION_PAGE_TEXTURES] = {"Epilogue",
+    "    The desire for safety goes against every great and noble enterprise.\n\n",
+    "- Tacitus"};
+const string GAME_PAGE_37_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    The years drew on. My Christian walk became less new and more normal. As a single man living in absolute abundance, I couldn't help but to feel as if my life was not being used for its' correct purpose. Growing up, all I had ever wanted to do was be in the military. While in the military, all I ever wanted to do was get out. Now, I just found myself working an IT job – something neither I nor my family could have seen coming. It paid the bills and then some, but there was no point. My college degree in computing, though at a Baptist university, had little purpose outside of my classes related to the Bible. It was not the path I was meant to follow in life, and I was sure of it. Through fervent prayer and discernment that comes only through divine revelation, I concluded the experiences I have, and the expertise in soldiering could be put to good use elsewhere. Not only could it be put to good use, it was not Christian for me to leave those skills unused to follow a path along white picket fences and suburban households in the United States.\n" 
+    "    Before following my call, questions nagged at the back of my mind. Did I ever really learn what it means to be a man? How would my Father feel to have poured his life's work into me just for me to go off and die in another war without having children? Could I overcome the insecurities of my youth to do good under austere circumstances? Would my character withstand the trials of combat without the discipline of the U.S. Military? I thought back to the decisions which I had made in my previous life.\n",
+    "Was I a hero?"};
+const string GAME_PAGE_38_HERO_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    My choices were morally upstanding. I have few regrets about anything I did. Those choices would made my Father proud, and certainly I was that much more of a man for it. Perhaps I was too much of an idealist though, not coping fully with the cynical realities with which humans are faced on this Earth. I would go on to fight in Ukraine, and many friends and family members would weep over my casket. I would certainly see them again in Heaven, but heroes don't get to live forever. My comrades would stand next to my casket and bury me with full military honors, dress uniforms, a 21-gun salute, and all the usual ceremonial proceedings. They may as well have been wearing Halloween costumes and dancing in a school play for all my parents cared. My parents would receive the folded flag of a foreign country in place of a daughter-in-law and grandchildren. They would have a nice medal, “Order of Bohdan Khemelnytsky” in place of their son. They would get a funeral instead of a wedding, a memorial placard with my name on Khreschatyk Street instead of decades spent with their son. Yet, against all hope, there was still the faith which remained in their hearts knowing I did what was right, and the promises of Christ to carry them to the end.\n",
+        NEXT_PAGE};
+const string GAME_PAGE_38_AVERAGE_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    My choices did not make me a hero. I was scared. My mind was cynical. I often went against the teachings of my father and the Bible. Nonetheless, my choices were rooted in reality and often prevented myself or others from needing to be heroes, which was a blessing. I was no hero, and I don't think I'll ever know what it takes to be one. God allows war on this Earth, so I know he has made provision for the despicable choices one must make in so doing. Executing a life sentence on a human for being in the wrong place at the wrong time may have saved my comrades, but it didn't feel good after the war ended and I thought about the life that individual might be living. Corporal Fausey's words stuck with me, and in Ukraine, I killed an unarmed man for non-compliance – shooting him in the back as he tried to run from our element. He might have called for artillery on us. Or he just might have been scared.\n" 
+    "    I got married and had kids, but the forlorn choices I made due to temporal circumstances always left a rift between me and other humans, even my wife, children and my immediate family. They were very proud of what I had accomplished, yet thankful that I was not too morally upstanding. They considered me a hero, but I know who the heroes really are: Corporal Andrew Aimesbury, Sergeant First Class Christopher Celiz, Corporal Fausey, Olecksii Chubashev, Gregorii Tsekhmistrenko, and Daniel Swift, just to name a few.\n",
+    NEXT_PAGE
+    };
+const string GAME_PAGE_38_4_AVERAGE_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    I stood at Gregorii's funeral in Kyiv, Ukraine. The longest I've ever had to stand at parade rest was while I listened to the shrieks of my best friend's mother as she stroked her son's putrefied face for the last time. Out of the corner of my unmoving gaze, his grandmother collapsed under the weight of seeing her dead grandson lying in a casket. Behind me, one of the best men to have ever walked this Earth lay still at room-temperature, his eyes shut forever. I stood at parade rest as a guard to his casket, a paltry offering for the man that he was when he was alive. In exchange for the radiant life of their son, I would instead stand in a military uniform which may as well have been a Halloween costume. They would get a funeral instead of grandchildren. They would get a folded flag instead of a daughter-in-law. Rather than joyous memories of Greg's future, they would be haunted ceaselessly by the memories of his past. These were the cynical realities of war. Though painful, I could always rely on the one who carried me through my darkest hours and allowed me to experience joy once again. And it was painful, but it was possible. My children grew up to know the character of such men, just as my father had taught me.\n",
+    NEXT_PAGE};
+const string GAME_PAGE_38_COWARD_WORDS[TEXT_PAGE_TEXTURES] = {
+    "    My choices were mine to make, and many people would have done the same in my situation. I tried not to take sides and just stand up for myself. I don't need to prove myself to anyone, and my goal was just to get through alive. Perhaps the white picket fence life is for me, despite the calling I feel on my life. I'm sure I can show my children what it means to be a man, even though I don't try at it very hard. My lost friends were from another life, they wouldn't know who I have become. Though my relationship with my family suffered somewhat, I have many good friends and live a happy life. I don't need to go anywhere to prove anything. If the world doesn't do anything crazy, my life will continue in an abundance of material wealth and my focus can remain on my immediate family. The wars in Ukraine and Israel are far away and don't affect me. The closest I get to war these days is watching politics on the news. That's enough anxiety for me.\n",
+    NEXT_PAGE};
+const string GAME_PAGE_40_WORDS[POST_CHOICE_PAGE_TEXTURES] = {"Written, Developed, and Produced by Adam Thiemann", "In memory of fallen comrades", NEXT_PAGE};
+const string GAME_PAGE_41_WORDS[TEXT_PAGE_TEXTURES] = {"Thank you for playing my game! please return to the main menu and take the survey.", "Return to main menu"};
 
 //Colors {r, g, b, alpha}
 const SDL_Color BACKGROUND_COLOR = {0, 0, 0, SDL_ALPHA_OPAQUE}; //Background color black
@@ -417,7 +434,7 @@ bool gaming = true;
 
 //The current page variable so the game knows what to load.
 int currentPage = -1;
-int newPage = 180;
+int newPage = START_PAGE;
 int chapterHolder = 0;
 
 //Starts up SDL and creates window
@@ -701,6 +718,41 @@ int main( int argc, char* args[] ){
                     break;
                 case GAME_PAGE_36:
                     taskBarEvents();
+                    quotationPageEvents(GAME_PAGE_37);
+                    break;
+                case GAME_PAGE_37:
+                    taskBarEvents();
+                    if (player->getRep() > 29)
+                        textPageEvents(GAME_PAGE_38_HERO);
+                    else if (player->getRep() > 10)
+                        textPageEvents(GAME_PAGE_38_AVERAGE);
+                    else 
+                        textPageEvents(GAME_PAGE_38_COWARD);
+                    break;
+                case GAME_PAGE_38_HERO:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_39);
+                    break;
+                case GAME_PAGE_38_AVERAGE:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_38_4_AVERAGE);
+                    break;
+                case GAME_PAGE_38_COWARD:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_39);
+                    break;
+                case GAME_PAGE_38_4_AVERAGE:
+                    taskBarEvents();
+                    textPageEvents(GAME_PAGE_39);
+                    break;
+                case GAME_PAGE_39:
+                    textPageEvents(GAME_PAGE_40);
+                    break;
+                case GAME_PAGE_40:
+                    postChoicePageEvents(GAME_PAGE_41);
+                    break;
+                case GAME_PAGE_41:
+                    textPageEvents(MAIN_MENU_PAGE);
                     break;
                 default:
                     taskBarEvents();
@@ -940,6 +992,17 @@ int main( int argc, char* args[] ){
                 render.playerBarRenderer(renderer, PLAYER_STATS);
                 render.choicePageRenderer(renderer, player, timer.isOut());
                 break;
+            case GAME_PAGE_36:
+                render.taskBarRenderer(renderer, TASKBAR);
+                render.playerBarRenderer(renderer, PLAYER_STATS);
+                render.quotationPageRenderer(renderer);
+                break;
+            case GAME_PAGE_39:
+                render.startPageRenderer(renderer);
+                break;
+            case GAME_PAGE_40:
+                render.postChoicePageRenderer(renderer);
+                break;
             default: //Default is for regular text pages
                 render.taskBarRenderer(renderer, TASKBAR);
                 render.playerBarRenderer(renderer, PLAYER_STATS);
@@ -1110,25 +1173,9 @@ bool loadMedia(){
             }
             break;
         case TUTORIAL_PAGE:
-            for (int i = 0; i < TUTORIAL_TEXTURES; i++){
-                //Open the font
-                if (i == 0)
-                    textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
-                else if (i % 2 == 1)
-                    textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
-                else if (i % 2 == 0)
-                    textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
-                if (textures[i].gFont == NULL)
-                {
-                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
-                    return false;
-                }
-                //Load in the textures for rendering
-                if (!textures[i].loadFromRenderedText(renderer, TUTORIAL_WORDS[i], textColor, dms.w() / 1.3))
-                {
-                    printf( "Failed to render text texture!\n" );
-                    return false;
-                }
+            if(!textures[0].loadFromFile("resources/tutorial.png", renderer, dms.w(), dms.h())) {
+                cout << "Failed to load title_page.png" << endl;
+                return false;
             }
             break;  
         case SURVEY_PAGE:
@@ -2205,6 +2252,183 @@ bool loadMedia(){
         case GAME_PAGE_35:
             if(!choicePage.loadMedia(renderer, newPage))
                 cout << "Cannot load end chptr page " << currentPage << endl;
+            break;
+        case GAME_PAGE_36:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_1);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_36_WORDS[0], TAN, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            for (int i = 1; i < QUOTATION_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", QUOTATION);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_36_WORDS[i], TAN, dms.w() / 3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+
+        case GAME_PAGE_37:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_37_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_38_HERO:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_38_HERO_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_38_AVERAGE:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_38_AVERAGE_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_38_COWARD:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_38_COWARD_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_38_4_AVERAGE:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_38_4_AVERAGE_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_39:
+            if(!textures[0].loadFromFile("resources/end.png", renderer, dms.w(), dms.h())){
+                cout << "Failed to load end.png" << endl;
+                return false;
+            }
+            textures[1].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+            if (textures[1].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                return false;
+            }
+            //Load in the textures for rendering
+            if (!textures[1].loadFromRenderedText(renderer, NEXT_PAGE, TAN, dms.w() / 1.3))
+            {
+                printf( "Failed to render text texture!\n" );
+                return false;
+            }
+            break;
+        case GAME_PAGE_40:
+            textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", HEADING_3);
+            if (textures[0].gFont == NULL)
+            {
+                printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                cout << "texture 0" << endl;
+                return false;
+            }
+            if (!textures[0].loadFromRenderedText(renderer, GAME_PAGE_40_WORDS[0], GREY, dms.w() / 2.5))
+            {
+                printf( "Failed to render text texture!\n" );
+                cout << "word 0" << endl;
+                return false;
+            }
+            for (int i = 1; i < POST_CHOICE_PAGE_TEXTURES; i++){
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_40_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    cout << "word " << i  << endl;
+                    return false;
+                }
+            }
+            break;
+        case GAME_PAGE_41:
+            for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)
+            {
+                textures[i].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
+                if (textures[i].gFont == NULL)
+                {
+                    printf( "Failed to load font! SDL_ttf Error: %s\n", TTF_GetError() );
+                    return false;
+                }
+                //Load in the textures for rendering
+                if (!textures[i].loadFromRenderedText(renderer, GAME_PAGE_41_WORDS[i], TAN, dms.w() / 1.3))
+                {
+                    printf( "Failed to render text texture!\n" );
+                    return false;
+                }
+            }
             break;
         default:
             for (int i = 0; i < TEXT_PAGE_TEXTURES; i++)

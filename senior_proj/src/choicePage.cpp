@@ -36,15 +36,15 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].bounds[1][0] = 0; //Lower bound for sanity
                     choice[i].bounds[1][1] = 0; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[2][1] = 1; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -1; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else 
@@ -52,10 +52,10 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].courageLevel = Choices::Average;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[1][0] = -3; //Lower bound for sanity
                     choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 1; //Upper bound for reputation
                 }
             }
             break;
@@ -78,31 +78,31 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_6_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][0] = -2; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[1][0] = -1; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 3; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 1; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[0][0] = -3; //Lower bound for health
+                    choice[i].bounds[0][1] = -1; //Upper bound for health
                     choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 2; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 4; //Upper bound for reputation
                 }
                 else 
                 {    
                     choice[i].courageLevel = Choices::Cowardly;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][0] = -1; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[1][0] = -6; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -2; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -4; //Lower bound for reputation
+                    choice[i].bounds[2][1] = -2; //Upper bound for reputation
                 }
             }
             break;
@@ -124,31 +124,31 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_10_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[0][0] = -1; //Lower bound for health
+                    choice[i].bounds[0][1] = 1; //Upper bound for health
+                    choice[i].bounds[1][0] = -2; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 1; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
+                    choice[i].bounds[0][0] = 1; //Lower bound for health
+                    choice[i].bounds[0][1] = 4; //Upper bound for health
+                    choice[i].bounds[1][0] = -3; //Lower bound for sanity
                     choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[2][0] = -2; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else  
                 {    
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][0] = -2; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
                     choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 2; //Upper bound for reputation
                 }
             }
             break;
@@ -171,31 +171,31 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_13_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][0] = -3; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
                     choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[1][1] = 6; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 4; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[0][1] = 2; //Upper bound for health
+                    choice[i].bounds[1][0] = -8; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -2; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -4; //Lower bound for reputation
+                    choice[i].bounds[2][1] = -1; //Upper bound for reputation
                 }
                 else 
                 {    
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][0] = -2; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[1][0] = -2; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 2; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 1; //Upper bound for reputation
                 }
             }
             break;
@@ -218,30 +218,30 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_22_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][0] = -2; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
                     choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[1][1] = 4; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 2; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[0][1] = 3; //Upper bound for health
+                    choice[i].bounds[1][0] = -6; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -2; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -3; //Lower bound for reputation
+                    choice[i].bounds[2][1] = -1; //Upper bound for reputation
                 }
                 else 
                 {    
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[0][0] = -4; //Lower bound for health
+                    choice[i].bounds[0][1] = -1; //Upper bound for health
+                    choice[i].bounds[1][0] = -3; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -1; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -2; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
             }
@@ -266,29 +266,29 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 if (i == 0){
                     choice[i].courageLevel = Choices::Average;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[0][1] = 2; //Upper bound for health
+                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -1; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 2; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][0] = -2; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[1][0] = 1; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 5; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[2][1] = 2; //Upper bound for reputation
                 }
                 else 
                 {    
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[0][1] = 3; //Upper bound for health
+                    choice[i].bounds[1][0] = -5; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -2; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -2; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
             }
@@ -327,31 +327,31 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_28_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[0][0] = -2; //Lower bound for health
+                    choice[i].bounds[0][1] = 2; //Upper bound for health
+                    choice[i].bounds[1][0] = -3; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 1; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 1; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[0][1] = 4; //Upper bound for health
+                    choice[i].bounds[1][0] = -6; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -2; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -3; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else 
                 {    
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
+                    choice[i].bounds[0][0] = -3; //Lower bound for health
+                    choice[i].bounds[0][1] = -1; //Upper bound for health
                     choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[1][1] = 4; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 2; //Upper bound for reputation
                 }
             }
             break;
@@ -374,31 +374,31 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                 choice[i].text = GAME_PAGE_31_WORDS[i + 1];
                 if (i == 0){
                     choice[i].courageLevel = Choices::Heroic;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
+                    choice[i].bounds[0][0] = -2; //Lower bound for health
                     choice[i].bounds[0][1] = 0; //Upper bound for health
                     choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[1][1] = 4; //Upper bound for sanity
+                    choice[i].bounds[2][0] = 1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 3; //Upper bound for reputation
                 }
                 else if ( i == 1){
                     choice[i].courageLevel = Choices::Cowardly;
                     choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 0; //Lower bound for reputation
+                    choice[i].bounds[0][1] = 3; //Upper bound for health
+                    choice[i].bounds[1][0] = -4; //Lower bound for sanity
+                    choice[i].bounds[1][1] = -1; //Upper bound for sanity
+                    choice[i].bounds[2][0] = -2; //Lower bound for reputation
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else 
                 {    
                     choice[i].courageLevel = Choices::Average;
-                    choice[i].bounds[0][0] = 0; //Lower bound for health
-                    choice[i].bounds[0][1] = 0; //Upper bound for health
-                    choice[i].bounds[1][0] = 0; //Lower bound for sanity
-                    choice[i].bounds[1][1] = 0; //Upper bound for sanity
+                    choice[i].bounds[0][0] = -2; //Lower bound for health
+                    choice[i].bounds[0][1] = 1; //Upper bound for health
+                    choice[i].bounds[1][0] = -2; //Lower bound for sanity
+                    choice[i].bounds[1][1] = 3; //Upper bound for sanity
                     choice[i].bounds[2][0] = 0; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 0; //Upper bound for reputation
+                    choice[i].bounds[2][1] = 1; //Upper bound for reputation
                 }
             }
             break;
@@ -420,7 +420,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
             for (int i = 0; i < 3; i++){
                 choice[i].text = END_CHAPTER_PAGE_WORDS[i + 1];
                 if (i == 0){ //Health Roll based on reputation level
-                    int healthMod = gamer->getRep() / 1.5;
+                    int healthMod = gamer->getRep() / 1.25;
                     //Verify health > 1
                     if (healthMod < 1)
                         healthMod = 1;
@@ -433,7 +433,7 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].bounds[2][1] = 0; //Upper bound for reputation
                 }
                 else if ( i == 1){ //Sanity Roll based on reputation level
-                    int sanityMod = gamer->getRep() * 1.25 / 2;
+                    int sanityMod = gamer->getRep();
                     //Verify sanity is > 4 to prevent breaking the random number
                     if (sanityMod < 4)
                         sanityMod = 4;
@@ -452,8 +452,8 @@ bool ChoicePage::loadMedia(SDL_Renderer* gRenderer, int pgNum){
                     choice[i].bounds[0][1] = 0; //Upper bound for health
                     choice[i].bounds[1][0] = 0; //Lower bound for sanity
                     choice[i].bounds[1][1] = 0; //Upper bound for sanity
-                    choice[i].bounds[2][0] = 2; //Lower bound for reputation
-                    choice[i].bounds[2][1] = 6; //Upper bound for reputation
+                    choice[i].bounds[2][0] = 1; //Lower bound for reputation
+                    choice[i].bounds[2][1] = 4; //Upper bound for reputation
                 }
             }            
             break;

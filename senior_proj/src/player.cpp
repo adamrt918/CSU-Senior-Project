@@ -36,13 +36,30 @@ void Player::resetStats(){
 }
 
 int Player::getHealth(){ return health;}
-void Player::setHealth(int num){health = num;}
+void Player::setHealth(int num){
+    if (num >= 0)
+        health = num;
+    else 
+        health = 0;
+}
 
 int Player::getSanity(){return sanity; }
-void Player::setSanity(int num){sanity = num;}
+void Player::setSanity(int num){
+    if (num >= 0)
+        sanity = num;
+    else 
+        sanity = 0;
+    sanity = num;
+}
 
 int Player::getRep(){return reputation;}
-void Player::setRep(int num){reputation = num;}
+void Player::setRep(int num){
+    if (num >= 0)
+        reputation = num;
+    else 
+        reputation = 0;
+    reputation = num;
+}
 
 
 #endif
