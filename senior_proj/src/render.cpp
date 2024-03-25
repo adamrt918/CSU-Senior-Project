@@ -101,8 +101,17 @@ void Render::choicePageRenderer(SDL_Renderer* renderer, Player* gamer, bool isOu
             textures[i].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
         }
     else{
-        textures[0].render(dms->w() / 2 - textures[0].getWidth() / 2, dms->h() / 2 - textures[0].getHeight() + totalHeight(0), NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-        textures[1].render(dms->w() / 2 - textures[1].getWidth() / 2, dms->h() / 2 - textures[1].getHeight() + totalHeight(1) + 20, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        for (int i = 0; i < 2; i++){
+            int x = dms->w() / 2 - textures[i].getWidth() / 2;
+            int y = dms->h() / 2 - textures[i].getHeight() + totalHeight(i);
+            
+            //Validation to keep text on screen
+            x = validateX(x, textures[i].getWidth());
+            y = validateY(y, textures[i].getHeight()); 
+
+            textures[0].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+            textures[1].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+        }
     }
 }
 

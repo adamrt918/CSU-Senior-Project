@@ -104,7 +104,7 @@ class ChoicePage
             "look to my team leader and say, \"I can't make it. Take my bag of rounds, I'll wait for you at the release point.\"\n",
             "follow the example of the Afghan goat and feign confidence walking up the mountain.\n"};
         const string GAME_PAGE_25_WORDS[CHOICE_PAGE_TEXTURES] = {
-            "    \"<LAST NAME>, keep up.\" Corporal Fausey hissed, thinking I was too tired and trying to take a break.\n"
+            "    \"Thiemann, keep up.\" Corporal Fausey hissed, thinking I was too tired and trying to take a break.\n"
             "    I readied my rifle, flipped my weapon to fire, and took a deep breath as I pulled the slack out of the trigger. Should I shoot through the tent? Would I be justified? I didn't have enough time to decide.\n",
             "    I squeeze the trigger. I am an Army Ranger, and I will not put my platoon in danger.\n",
             "    Disregard the orders of my team leader, place my weapon on fire but wait for the situation to develop.\n",
