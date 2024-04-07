@@ -259,11 +259,11 @@ const string GAME_PAGE_22_WORDS[CHOICE_PAGE_TEXTURES] = {
     "follow the example of the Afghan goat and feign confidence walking up the mountain.\n"};
 const string GAME_PAGE_23_1_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
     GAME_PAGE_22_WORDS[1],
-    "I only fell a little bit, but it only cut up my hands and knees on the shale. I'm sure someone will make fun of me for it later but I got to my position.\n",
+    "    I only fell a little bit, but it only cut up my hands and knees on the shale. I'm sure someone will make fun of me for it later but I got to my position.\n",
     NEXT_PAGE};
 const string GAME_PAGE_23_2_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
     GAME_PAGE_22_WORDS[2],
-    "Corporal Fausey looked at me sideways, initially thinking that I was joking. He grabbed my bag and shook his head, muttering expletives under his breath before telling the rest of the platoon about my course of action. The platoon sergeant came and ordered me up the mountain, and he half dragged me there since I would not comply. It was dangerous. Any normal person would have done the same in my shoes.\n",
+    "    Corporal Fausey looked at me sideways, initially thinking that I was joking. He grabbed my bag and shook his head, muttering expletives under his breath before telling the rest of the platoon about my course of action. The platoon sergeant came and ordered me up the mountain, and he half dragged me there since I would not comply. It was dangerous. Any normal person would have done the same in my shoes.\n",
     NEXT_PAGE};
 const string GAME_PAGE_23_3_WORDS[POST_CHOICE_PAGE_TEXTURES] = {
     GAME_PAGE_22_WORDS[3],

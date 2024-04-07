@@ -987,7 +987,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                                     break;
                                 case Choices::ChoiceType::Heroic:
                                     newPage = OUTCOME_PAGE;
-                                    storePage = GAME_PAGE_23_2;
+                                    storePage = GAME_PAGE_23_3;
                                     decision = j;
 
                                     //iterating over each metric with k
@@ -1001,7 +1001,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                                     break;
                                 case Choices::ChoiceType::Cowardly:
                                     newPage = OUTCOME_PAGE;
-                                    storePage = GAME_PAGE_23_3;
+                                    storePage = GAME_PAGE_23_2;
                                     decision = j;
                                     //iterating over each metric with k
                                     for (int k = 0; k < 3; k++)

@@ -161,7 +161,6 @@ int Render::validateX(int xx, int textureWidth){
     int x = xx;
     if (x > (dms->w() - textureWidth))
         x = 0;
-    cout << "Validate x = " << x << endl;
     return x;
 }
 
