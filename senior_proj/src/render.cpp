@@ -33,7 +33,7 @@ void Render::timerRenderer(SDL_Renderer* renderer, SDL_Rect* timerSprites, LText
 void Render::mainMenuRenderer(SDL_Renderer* renderer){
     for (int i = 0; i < MAIN_MENU_TEXTURES; i++){
         //Formulas for text position based on texture dimensions and screen dimensions
-        int x = (dms->w() * (i + 1) / (MAIN_MENU_TEXTURES + 1 )) - textures[i].getWidth() / 2;
+        int x = (dms->w() * (i + 1) / (MAIN_MENU_TEXTURES + 1)) - textures[i].getWidth() / 2;
         int y = dms->h() / 2 - textures[i].getHeight() / 2;
 
         //Validation to keep text on screen
@@ -87,11 +87,13 @@ void Render::quotationPageRenderer(SDL_Renderer* renderer){
 }
 
 void Render::choicePageRenderer(SDL_Renderer* renderer, Player* gamer, bool isOut) {
-    if (!gamer->checkInsanity() && !isOut)
+    int x;
+    int y;
+    if (!gamer->checkInsanity() && !isOut){
         for (int i = 0; i < CHOICE_PAGE_TEXTURES; i++){
             //Formulas for text position based on texture dimensions and screen dimensions
-            int x = dms->w() / 2 - textures[i].getWidth() / 2;
-            int y = dms->h() / 2 - totalHeight(4) / 2 + totalHeight(i) + (i * 20);
+            x = dms->w() / 2 - textures[i].getWidth() / 2;
+            y = dms->h() / 2 - totalHeight(4) / 2 + totalHeight(i) + (i * 20);
 
             //Validation to keep text on screen
             x = validateX(x, textures[i].getWidth());
@@ -100,17 +102,18 @@ void Render::choicePageRenderer(SDL_Renderer* renderer, Player* gamer, bool isOu
             //Render    
             textures[i].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
         }
+    }
     else{
         for (int i = 0; i < 2; i++){
-            int x = dms->w() / 2 - textures[i].getWidth() / 2;
-            int y = dms->h() / 2 - textures[i].getHeight() + totalHeight(i);
+            x = dms->w() / 2 - textures[i].getWidth() / 2;
+            y = dms->h() / 2 - totalHeight(2) / 2 + totalHeight(i) + (i * 20);
             
             //Validation to keep text on screen
             x = validateX(x, textures[i].getWidth());
             y = validateY(y, textures[i].getHeight()); 
 
-            textures[0].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
-            textures[1].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
+            //Render    
+            textures[i].render(x, y, NULL, 0, NULL, SDL_FLIP_NONE, renderer);
         }
     }
 }
@@ -157,7 +160,8 @@ int Render::totalHeight(int tNum){
 int Render::validateX(int xx, int textureWidth){
     int x = xx;
     if (x > (dms->w() - textureWidth))
-        x = dms->w() - textureWidth;
+        x = 0;
+    cout << "Validate x = " << x << endl;
     return x;
 }
 

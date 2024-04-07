@@ -722,7 +722,7 @@ int main( int argc, char* args[] ){
                     break;
                 case GAME_PAGE_37:
                     taskBarEvents();
-                    if (player->getRep() > 29)
+                    if (player->getRep() > 20)
                         textPageEvents(GAME_PAGE_38_HERO);
                     else if (player->getRep() > 10)
                         textPageEvents(GAME_PAGE_38_AVERAGE);

@@ -1397,7 +1397,7 @@ int ChoicePage::choicePageEvents(int currentPage, SDL_Color* textColor, SDL_Even
                     }
                     textures[i].loadFromRenderedText(renderer, choice[j].text, *textColor, w/1.3);
                 } //End the texture for loop
-            } // End Sane events
+            } // End Sane events or timer is out
             else{
                 if (textures[1].isMouseOver(textures[1].getRect())){
                     *textColor = GREY;

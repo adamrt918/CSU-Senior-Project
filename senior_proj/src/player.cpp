@@ -49,7 +49,6 @@ void Player::setSanity(int num){
         sanity = num;
     else 
         sanity = 0;
-    sanity = num;
 }
 
 int Player::getRep(){return reputation;}
@@ -58,7 +57,6 @@ void Player::setRep(int num){
         reputation = num;
     else 
         reputation = 0;
-    reputation = num;
 }
 
 
