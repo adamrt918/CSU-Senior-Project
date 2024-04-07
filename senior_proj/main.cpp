@@ -1226,7 +1226,7 @@ bool loadMedia(){
             if (gamer.checkDeath())
                 OUTCOME_PAGE_WORDS.append("You have died a hero, but you are dead nonetheless.\n");
             else if (gamer.checkInsanity())
-                OUTCOME_PAGE_WORDS.append("You have gone insane. You will choose self-preservation at any cost. Your reputation will be heavily impacted.\n");
+                OUTCOME_PAGE_WORDS.append("You have gone insane. \nYou will choose self-preservation at any cost. \nYour choices will impact your reputation.\n");
                 
             textures[0].gFont = TTF_OpenFont("resources/Abadi_MT_Std.ttf", WRITING);
             if (textures[0].gFont == NULL)
